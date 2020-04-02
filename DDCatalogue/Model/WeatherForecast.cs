@@ -1,6 +1,6 @@
 using System;
 
-namespace DDCatalogue
+namespace DDCatalogue.Models
 {
     public class WeatherForecast
     {

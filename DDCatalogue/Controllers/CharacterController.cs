@@ -10,7 +10,7 @@ namespace DDCatalogue.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class CharacterController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
@@ -19,7 +19,7 @@ namespace DDCatalogue.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public CharacterController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
