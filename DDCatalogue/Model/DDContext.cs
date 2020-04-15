@@ -5,6 +5,7 @@ using Microsoft.Extensions.Localization.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -80,7 +81,8 @@ namespace DDCatalogue.Model
         public bool Inspiration { get; set; }
     }
 
-    public enum Alignment { 
+    public enum Alignment
+    {
         LG,
         LN,
         LE,
@@ -97,7 +99,7 @@ namespace DDCatalogue.Model
         public string Senses { get; set; }
         public double Challenge { get; set; }
         public int DefeatXp { get; set; }
-        public List<string> Actions { get; set; } 
+        public List<string> Actions { get; set; }
         public List<string> LegendaryActions { get; set; }
     }
 
@@ -130,7 +132,37 @@ namespace DDCatalogue.Model
 
     public class Municipality
     {
-        public int Id { get; set; }
+        public int MunicipalityId { get; set; }
         public string Name { get; set; }
+        public Country Country { get; set; }
+        public List<Building> Buildings { get; set; }
+        public byte[] Map { get; set; }
+    }
+
+    public class Building
+    {
+        public int BuildingId { get; set; }
+        public Municipality Municipality { get; set; }
+        public byte[] Map { get; set; }
+    }
+
+    public class Dungeon
+    {
+        public int DungeonId { get; set; }
+    }
+
+    public class Country
+    {
+        public int CountryId { get; set; }
+        public List<Municipality> Municipalities { get; set; }
+        public Continent Continent { get; set; }
+        public byte[] Map { get; set; }
+    }
+
+    public class Continent
+    {
+        public int ContinentId { get; set; }
+        public List<Country> Countries { get; set; }
+        public byte[] Map { get; set; }
     }
 }
