@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDCatalogue.Migrations
 {
-    [DbContext(typeof(CharacterContext))]
+    [DbContext(typeof(DDContext))]
     [Migration("20200401175918_InitialCreate")]
     partial class InitialCreate
     {
