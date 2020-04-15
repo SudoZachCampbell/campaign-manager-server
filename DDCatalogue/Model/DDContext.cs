@@ -1,17 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.Extensions.Localization.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
     public class DDContext : DbContext
     {
-        public DbSet<Character> Characters { get; set; }
-        public DbSet<Player> Players { get; set; }
+        public DbSet<CharacterBase> Characters { get; set; }
+        public DbSet<Character> Players { get; set; }
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Npc> Npcs { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -23,26 +25,87 @@ namespace DDCatalogue.Model
 
     }
 
-    public class Character
+    public class CharacterBase
     {
         public int CharacterId { get; set; }
         public string Name { get; set; }
+        public int? Str { get; set; }
+        public int? Dex { get; set; }
+        public int? Con { get; set; }
+        public int? Int { get; set; }
+        public int? Wis { get; set; }
+        public int? Cha { get; set; }
+        public bool? Acrobatics { get; set; }
+        public bool? AnimalHandling { get; set; }
+        public bool? Arcana { get; set; }
+        public bool? Athletics { get; set; }
+        public bool? Deception { get; set; }
+        public bool? History { get; set; }
+        public bool? Insight { get; set; }
+        public bool? Intimidation { get; set; }
+        public bool? Investigations { get; set; }
+        public bool? Medicine { get; set; }
+        public bool? Nature { get; set; }
+        public bool? Perception { get; set; }
+        public bool? Performance { get; set; }
+        public bool? Persuasion { get; set; }
+        public bool? Religion { get; set; }
+        public bool? SleightOfHand { get; set; }
+        public bool? Stealth { get; set; }
+        public bool? Survival { get; set; }
+        public bool? SavStr { get; set; }
+        public bool? SavDex { get; set; }
+        public bool? SavCon { get; set; }
+        public bool? SavInt { get; set; }
+        public bool? SavWis { get; set; }
+        public bool? SavCha { get; set; }
+        public int Ac { get; set; }
+        public int Hp { get; set; }
+        public string HitDice { get; set; }
+        public string Speed { get; set; }
+        public string Languages { get; set; }
+        public List<string> Traits { get; set; }
+        public Alignment Alignment { get; set; }
     }
 
-    public class Player : Character
+    public class Character : CharacterBase
     {
+        public bool Player { get; set; }
         public string PlayerName { get; set; }
+        public int Level { get; set; }
+        public string Background { get; set; }
+        public string Faction { get; set; }
+        public string Race { get; set; }
+        public int Xp { get; set; }
+        public bool Inspiration { get; set; }
     }
 
-    public class Monster : Character
+    public enum Alignment { 
+        LG,
+        LN,
+        LE,
+        NG,
+        TN,
+        NE,
+        CG,
+        CN,
+        CE
+    }
+
+    public class Monster : CharacterBase
+    {
+        public string Senses { get; set; }
+        public double Challenge { get; set; }
+        public int DefeatXp { get; set; }
+        public List<string> Actions { get; set; } 
+        public List<string> LegendaryActions { get; set; }
+    }
+
+    public class Npc
     {
 
     }
 
-    public class Npc : Character
-    {
-
-    }
 
     public class Item
     {
