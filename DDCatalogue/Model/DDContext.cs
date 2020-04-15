@@ -13,7 +13,6 @@ namespace DDCatalogue.Model
 {
     public class DDContext : DbContext
     {
-        public DbSet<CharacterBase> Characters { get; set; }
         public DbSet<Character> Players { get; set; }
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Npc> Npcs { get; set; }
@@ -22,8 +21,31 @@ namespace DDCatalogue.Model
         public DbSet<Armour> Armours { get; set; }
         public DbSet<Treasure> Treasures { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Continent> Continents { get; set; }
+        public DbSet<Dungeon> Dungeons { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(@"Server=192.168.0.41;Database=DDCatalogue;User Id=sa;Password=Microsoft1!");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CharacterBase>()
+            .Property(e => e.Traits)
+            .HasConversion(
+                v => string.Join('/', v),
+                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
 
+            modelBuilder.Entity<Monster>()
+            .Property(e => e.Actions)
+            .HasConversion(
+                v => string.Join('/', v),
+                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
+
+            modelBuilder.Entity<Monster>()
+            .Property(e => e.LegendaryActions)
+            .HasConversion(
+                v => string.Join('/', v),
+                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
+        }
     }
 
     public class CharacterBase
@@ -65,7 +87,7 @@ namespace DDCatalogue.Model
         public string HitDice { get; set; }
         public string Speed { get; set; }
         public string Languages { get; set; }
-        public List<string> Traits { get; set; }
+        public string[] Traits { get; set; }
         public Alignment Alignment { get; set; }
     }
 
@@ -99,13 +121,13 @@ namespace DDCatalogue.Model
         public string Senses { get; set; }
         public double Challenge { get; set; }
         public int DefeatXp { get; set; }
-        public List<string> Actions { get; set; }
-        public List<string> LegendaryActions { get; set; }
+        public string[] Actions { get; set; }
+        public string[] LegendaryActions { get; set; }
     }
 
     public class Npc
     {
-
+        public string NpcId { get; set; }
     }
 
 
