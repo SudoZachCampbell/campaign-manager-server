@@ -17,19 +17,19 @@ export default function FetchData(props) {
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Name</th>
+                        <th>Armour Class</th>
+                        <th>Hit Points</th>
+                        <th>Alignment</th>
                     </tr>
                 </thead>
                 <tbody>
                     {characters.map(character =>
-                        <tr key={character.date}>
-                            <td>{character.date}</td>
-                            <td>{character.temperatureC}</td>
-                            <td>{character.temperatureF}</td>
-                            <td>{character.summary}</td>
+                        <tr key={character.name}>
+                            <td>{character.name}</td>
+                            <td>{character.ac}</td>
+                            <td>{character.hp}</td>
+                            <td>{character.alignment}</td>
                         </tr>
                     )}
                 </tbody>
