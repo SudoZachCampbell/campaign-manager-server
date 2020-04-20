@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 export default function FetchData(props) {
     const [displayName, setDisplayName] = useState(FetchData.name);
-    const [forecasts, setForecasts] = useState([]);
+    const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const populateWeatherData = async () => {
-        const response = await fetch('weatherforecast');
+    const populateCharactersData = async () => {
+        const response = await fetch('character');
         const data = await response.json();
-        setForecasts(data);
+        setCharacters(data);
         setLoading(false);
     }
 
-    const renderForecastsTable = forecasts => {
+    const renderCharactersTable = characters => {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
@@ -24,12 +24,12 @@ export default function FetchData(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {forecasts.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
+                    {characters.map(character =>
+                        <tr key={character.date}>
+                            <td>{character.date}</td>
+                            <td>{character.temperatureC}</td>
+                            <td>{character.temperatureF}</td>
+                            <td>{character.summary}</td>
                         </tr>
                     )}
                 </tbody>
@@ -39,11 +39,11 @@ export default function FetchData(props) {
 
     const contents = loading
         ? <p><em>Loading...</em></p>
-        : renderForecastsTable(forecasts);
+        : renderCharactersTable(characters);
 
 
     useEffect(() => {
-        populateWeatherData();
+        populateCharactersData();
     }, [])
 
     return (

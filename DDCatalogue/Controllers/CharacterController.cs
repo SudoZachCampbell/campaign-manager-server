@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using DDCatalogue.Model;
 
 namespace DDCatalogue.Controllers
 {
@@ -17,9 +18,9 @@ namespace DDCatalogue.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<CharacterController> _logger;
 
-        public CharacterController(ILogger<WeatherForecastController> logger)
+        public CharacterController(ILogger<CharacterController> logger)
         {
             _logger = logger;
         }
@@ -27,6 +28,10 @@ namespace DDCatalogue.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            using(DDContext db = new DDContext())
+            {
+                db.Add(new Character() { Name = "Playboi", Ac = })
+            }
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

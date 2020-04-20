@@ -13,7 +13,7 @@ namespace DDCatalogue.Model
 {
     public class DDContext : DbContext
     {
-        public DbSet<Character> Players { get; set; }
+        public DbSet<Character> Characters { get; set; }
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Npc> Npcs { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -50,6 +50,13 @@ namespace DDCatalogue.Model
 
     public class CharacterBase
     {
+        public CharacterBase(string name, int ac, int hp, Alignment alignment)
+        {
+            Name = name;
+            Ac = ac;
+            Hp = hp;
+            Alignment = alignment;
+        }
         public int CharacterId { get; set; }
         public string Name { get; set; }
         public int? Str { get; set; }
@@ -93,14 +100,15 @@ namespace DDCatalogue.Model
 
     public class Character : CharacterBase
     {
-        public bool Player { get; set; }
+        public Character(string name, int ac, int hp, Alignment alignment) : base(name, ac, hp, alignment) { }
+        public bool Player = false;
         public string PlayerName { get; set; }
-        public int Level { get; set; }
+        public int Level = 1;
         public string Background { get; set; }
         public string Faction { get; set; }
         public string Race { get; set; }
-        public int Xp { get; set; }
-        public bool Inspiration { get; set; }
+        public int Xp = 0;
+        public bool Inspiration = false;
     }
 
     public enum Alignment
@@ -118,6 +126,7 @@ namespace DDCatalogue.Model
 
     public class Monster : CharacterBase
     {
+        public Monster(string name, int ac, int hp, Alignment alignment) : base(name, ac, hp, alignment) { }
         public string Senses { get; set; }
         public double Challenge { get; set; }
         public int DefeatXp { get; set; }
