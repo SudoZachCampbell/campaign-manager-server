@@ -1,1 +1,1 @@
-{"version":3,"file":"Character.js","sourceRoot":"","sources":["Character.tsx"],"names":[],"mappings":";;AAAA,6BAA+B;AAE/B,SAAwB,SAAS,CAAC,KAAS;IACvC,OAAO,CACH;;QAAW,KAAK,CAAC,EAAE,CAAO,CAC7B,CAAA;AACL,CAAC;AAJD,4BAIC"}
+{"version":3,"file":"Character.js","sourceRoot":"","sources":["Character.tsx"],"names":[],"mappings":";;AAAA,6BAA+B;AAC/B,+BAA4C;AAE5C,SAAwB,SAAS,CAAC,KAAU;IAClC,IAAA,yBAAwC,EAAvC,iBAAS,EAAE,oBAA4B,CAAC;IAE/C,OAAO,CACH,iCAAM,KAAK,CAAC,SAAS,CAAC,IAAI,CAAO,CACpC,CAAA;AACL,CAAC;AAND,4BAMC"}

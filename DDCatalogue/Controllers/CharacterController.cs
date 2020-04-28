@@ -27,7 +27,7 @@ namespace DDCatalogue.Controllers
         [HttpGet]
         public IEnumerable<Character> Get()
         {
-            using DDContext db = new DDContext();
+            using (DDContext db = new DDContext())
             {
                 return db.Characters.OrderBy(x => x.Name).ToList();
             }
@@ -40,5 +40,15 @@ namespace DDCatalogue.Controllers
             //})
             //.ToArray();
         }
+
+        public Character Details(int id)
+        {
+            using (DDContext db = new DDContext())
+            {
+                return db.Characters.First(x => x.CharacterId.Equals(id));
+            }
+        }
+
+
     }
 }
