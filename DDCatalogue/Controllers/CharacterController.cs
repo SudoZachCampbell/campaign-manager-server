@@ -1,11 +1,10 @@
-﻿using DDCatalogue.Models;
+﻿using DDCatalogue.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DDCatalogue.Model;
 
 namespace DDCatalogue.Controllers
 {
@@ -28,11 +27,10 @@ namespace DDCatalogue.Controllers
         [HttpGet]
         public IEnumerable<Character> Get()
         {
-            using(DDContext db = new DDContext())
+            using DDContext db = new DDContext();
             {
                 return db.Characters.OrderBy(x => x.Name).ToList();
             }
-            return new List<Character>();
             //var rng = new Random();
             //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             //{

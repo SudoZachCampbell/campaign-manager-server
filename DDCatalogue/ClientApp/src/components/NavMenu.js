@@ -6,8 +6,6 @@ import './NavMenu.css';
 export default function NavMenu(props) {
     const [collapsed, setCollapsed] = useState(true);
 
-    const displayName = NavMenu.name;
-
     const toggleNavbar = () => {
         setCollapsed(!collapsed);
     }
@@ -27,7 +25,7 @@ export default function NavMenu(props) {
                                 <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+                                <NavLink tag={Link} className="text-dark" to="/characters">Characters</NavLink>
                             </NavItem>
                         </ul>
                     </Collapse>

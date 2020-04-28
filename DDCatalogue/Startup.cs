@@ -46,6 +46,7 @@ namespace DDCatalogue
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseDefaultFiles();
             app.UseSpaStaticFiles();
 
             app.UseRouting();
