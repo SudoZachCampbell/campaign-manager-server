@@ -3,10 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as React from 'react';
 import Td from './Td';
 import Character from './Character';
+import { Accordion, Card, Button, Table } from 'react-bootstrap';
+import Tr from './TableAccordionToggle';
 
 export default function CharacterList(props: any) {
     const [characters, setCharacters] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [lastOpened, setLastOpened] = useState(0);
 
     const populateCharactersData = async () => {
         const response = await fetch('character');
@@ -15,41 +18,59 @@ export default function CharacterList(props: any) {
         setLoading(false);
     }
 
+    const customOnClick = (row: any) => {
+        console.log(`Callback fired: ${row}`);
+        const rowElement = document.getElementById(`hide-row-${row}`);
+        if (rowElement) {
+            if (lastOpened) {
+                console.log(`Last Opened: ${lastOpened}`)
+                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`); 
+                if (lastRowElement) lastRowElement.style.display = "none"
+            }
+            rowElement.style.display = rowElement.style.display === "none" ? "table-row" : "none";
+            setLastOpened(row);
+        }
+    }
+
     const renderCharactersTable = (characters: any[]) => {
         return (
             <Router>
                 <div>
-                    <table className='table .table-hover table-striped' aria-labelledby="tabelLabel">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Armour Class</th>
-                                <th>Hit Points</th>
-                                <th>Alignment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {characters.map((character: any) =>
-                                <>
-                                    <tr data-toggle="collapse" data-target={`#accordion${character.characterId}`} key={character.name} className="clickable">
-                                        <td>{character.characterId}</td>
-                                        <td>{character.name}</td>
-                                        <td>{character.ac}</td>
-                                        <td>{character.hp}</td>
-                                        <td>{character.alignment}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan={3}>
-                                            <div id={`accordion${character.characterId}`} className="collapse">
-                                                <Character character={character} />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </>
-                            )}
-                        </tbody>
-                    </table>
+                    <Accordion>
+                        <Table striped hover bordered>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Armour Class</th>
+                                    <th>Hit Points</th>
+                                    <th>Alignment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    characters.map((character: any) =>
+                                        <>
+                                            <Tr eventKey={`${character.characterId}`} key={character.name} customOnClick={customOnClick}>
+                                                <td>{character.characterId}</td>
+                                                <td>{character.name}</td>
+                                                <td>{character.ac}</td>
+                                                <td>{character.hp}</td>
+                                                <td>{character.alignment}</td>
+                                            </Tr>
+                                            <tr id={`hide-row-${character.characterId}`} style={{ display: "none" }}>
+                                                <td colSpan={5}>
+                                                    <Accordion.Collapse eventKey={`${character.characterId}`}>
+                                                        <Character character={character} />
+                                                    </Accordion.Collapse>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                }
+                            </tbody>
+                        </Table>
+                    </Accordion>
 
                     <Switch>
                         {characters.map((character: any) =>
