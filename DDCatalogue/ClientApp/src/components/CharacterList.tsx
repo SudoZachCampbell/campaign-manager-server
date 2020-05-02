@@ -31,13 +31,22 @@ export default function CharacterList(props: any) {
                         </thead>
                         <tbody>
                             {characters.map((character: any) =>
-                                <tr data-toggle="collapse" data-target={`#accordion${character.characterId}`} key={character.name}>
-                                    <td>{character.characterId}</td>
-                                    <td>{character.name}</td>
-                                    <td>{character.ac}</td>
-                                    <td>{character.hp}</td>
-                                    <td>{character.alignment}</td>
-                                </tr>
+                                <>
+                                    <tr data-toggle="collapse" data-target={`#accordion${character.characterId}`} key={character.name} className="clickable">
+                                        <td>{character.characterId}</td>
+                                        <td>{character.name}</td>
+                                        <td>{character.ac}</td>
+                                        <td>{character.hp}</td>
+                                        <td>{character.alignment}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={3}>
+                                            <div id={`accordion${character.characterId}`} className="collapse">
+                                                <Character character={character} />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </>
                             )}
                         </tbody>
                     </table>
