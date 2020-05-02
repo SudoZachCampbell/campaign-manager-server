@@ -6,15 +6,16 @@ export default function Character(props: any) {
     const [loading, setLoading] = useState(true);
 
     const populateCharacterData = async () => {
-        if (Object.keys(props.character).length === 0) {
-            const response = await fetch(`character/details/${props.id}`);
-            const data = await response.json();
-            setCharacter(data);
-            setLoading(false);
-        } else {
-            setCharacter(props.character)
-            setLoading(false);
-        }
+        //if (Object.keys(props.character).length === 0) {
+        //const response = await fetch(`character/details/${props.id}`);
+        //const data = await response.json();
+        //setCharacter(data);
+        //setLoading(false);
+        //} else {
+        console.log("", props.character);
+        setCharacter(props.character);
+        setLoading(false);
+        //}
     }
 
     const renderCharacter = () => {
