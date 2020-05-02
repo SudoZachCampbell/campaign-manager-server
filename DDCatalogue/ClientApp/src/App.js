@@ -6,6 +6,7 @@ import CharacterList from './components/CharacterList';
 import Counter from './components/Counter';
 
 import './custom.css'
+import CharacterDetails from './components/CharacterDetails';
 
 export default function App(props) {
     const displayName = App.name;
@@ -15,6 +16,7 @@ export default function App(props) {
             <Route exact path='/' component={Home} />
             <Route path='/counter' component={Counter} />
             <Route path='/characters' component={CharacterList} />
+            <Route path='/character-details/:id' children={<CharacterDetails />} />
         </Layout>
     );
 }
