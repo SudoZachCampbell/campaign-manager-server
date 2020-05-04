@@ -27,8 +27,10 @@ export default function CharacterList(props: any) {
                 const lastRowElement = document.getElementById(`hide-row-${lastOpened}`); 
                 if (lastRowElement) lastRowElement.style.display = "none"
             }
-            rowElement.style.display = rowElement.style.display === "none" ? "table-row" : "none";
-            setLastOpened(row);
+            if (row !== lastOpened) {
+                rowElement.style.display = rowElement.style.display === "none" ? "table-row" : "none";
+                setLastOpened(row);
+            }
         }
     }
 
@@ -37,7 +39,7 @@ export default function CharacterList(props: any) {
             <Router>
                 <div>
                     <Accordion>
-                        <Table striped hover bordered>
+                        <Table hover>
                             <thead>
                                 <tr>
                                     <th>ID</th>
