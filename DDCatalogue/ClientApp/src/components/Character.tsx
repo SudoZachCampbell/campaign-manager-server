@@ -1,43 +1,19 @@
 ﻿import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 export default function Character(props: any) {
-    const [character, setCharacter] = useState({});
-    const [loading, setLoading] = useState(true);
-    const { id } = useParams();
-
-    const populateCharacterData = async () => {
-        if (Object.keys(props.character).length === 0) {
-            const response = await fetch(`character/details/${props.id}`);
-            const data = await response.json();
-            console.log(data);
-            setCharacter(data);
-            setLoading(false);
-        } else {
-            console.log("", props.character);
-            setCharacter(props.character);
-            setLoading(false);
-        }
-    }
-
-    const renderCharacter = () => {
-        return (
-            <a href={`/character-details/${id}`}>character[name]</a>
-        )
-
-    }
-
-    const contents = loading
-        ? <p><em>Loading...</em></p>
-        : renderCharacter();
-
-    useEffect(() => {
-        populateCharacterData();
-    }, [])
-
 
     return (
-        <div>{contents}</div>
+        <div>
+            <div>Name: {props.character["name"]}</div>
+            <div>Str: {props.character["str"]}</div>
+            <div>Dex: {props.character["dex"]}</div>
+            <div>Con: {props.character["con"]}</div>
+            <div>Int: {props.character["int"]}</div>
+            <div>Wis: {props.character["wis"]}</div>
+            <div>Cha: {props.character["cha"]}</div>
+            <Button variant="outline-info">Details</Button>
+        </div>
     )
 }

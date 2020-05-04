@@ -101,7 +101,6 @@ namespace DDCatalogue.Model
     public class Character : CharacterBase
     {
         public Character(string name, int ac, int hp, Alignment alignment) : base(name, ac, hp, alignment) { }
-        public bool Player = false;
         public string PlayerName { get; set; }
         public int Level = 1;
         public string Background { get; set; }
@@ -109,6 +108,13 @@ namespace DDCatalogue.Model
         public string Race { get; set; }
         public int Xp = 0;
         public bool Inspiration = false;
+        public Player Player { get; set; }
+        public Npc Npc { get; set; }
+    }
+
+    public class Player
+    {
+        public int PlayerId { get; set; }
     }
 
     public enum Alignment

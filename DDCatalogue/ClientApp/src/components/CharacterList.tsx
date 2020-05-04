@@ -77,7 +77,7 @@ export default function CharacterList(props: any) {
                     <Switch>
                         {characters.map((character: any) =>
                             <Route exact path={`/character/${character.characterId}`}>
-                                <Character id={character.characterId} character={character} />
+                                <Character character={character} />
                             </Route>
                         )}
                     </Switch>
