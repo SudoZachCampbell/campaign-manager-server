@@ -1,10 +1,9 @@
 ﻿using DDCatalogue.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DDCatalogue.Model.Creatures;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DDCatalogue.Controllers
 {
@@ -25,7 +24,7 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CharacterModel> Get()
+        public IEnumerable<Character> Get()
         {
             using (DDContext db = new DDContext())
             {
@@ -41,11 +40,11 @@ namespace DDCatalogue.Controllers
             //.ToArray();
         }
 
-        public CharacterModel Details(int id)
+        public Character Details(int id)
         {
             using (DDContext db = new DDContext())
             {
-                return db.Characters.First(x => x.CharacterId.Equals(id));
+                return db.Characters.First(x => x.CreatureId.Equals(id));
             }
         }
 

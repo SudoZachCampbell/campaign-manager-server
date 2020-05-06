@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DDCatalogue.Model
+﻿namespace DDCatalogue.Model.Creatures
 {
     public class Npc
     {
@@ -14,6 +9,7 @@ namespace DDCatalogue.Model
         public int NpcId { get; set; }
         public string Name { get; set; }
         public Character Character { get; set; }
+        public int CreatureId { get; set; }
         public Monster Monster { get; set; }
     }
 }

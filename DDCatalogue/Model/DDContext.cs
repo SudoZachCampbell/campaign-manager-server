@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Routing.Constraints;
+﻿using DDCatalogue.Model.Creatures;
+using DDCatalogue.Model.Items;
+using DDCatalogue.Model.Locations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization.Internal;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
@@ -33,12 +28,12 @@ namespace DDCatalogue.Model
             modelBuilder.Entity<Npc>()
             .HasOne(a => a.Character)
             .WithOne(a => a.Npc)
-            .HasForeignKey<CharacterModel>(c => c.CharacterId);
+            .HasForeignKey<Character>(c => c.CreatureId);
 
             modelBuilder.Entity<Player>()
             .HasOne(a => a.Character)
             .WithOne(a => a.Player)
-            .HasForeignKey<CharacterModel>(c => c.CharacterId);
+            .HasForeignKey<Character>(c => c.CreatureId);
 
             modelBuilder.Seed();
         }
@@ -52,55 +47,47 @@ namespace DDCatalogue.Model
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            //Monster dwarf = new Monster("Drawf Warrior", 16, 39, Alignment.LG)
-            //{
-            //    CharacterId = 1,
-            //    Str = 14,
-            //    Dex = 11,
-            //    Con = 14,
-            //    Int = 10,
-            //    Wis = 11,
-            //    Cha = 10,
-            //    Speed = "25ft",
-            //    Challenge = 1,
-            //    Languages = "Common, Dwarvish",
-            //    Senses = "Darkvision 60ft",
-            //    Pp = 10,
-            //    DefeatXp = 200
-            //};
+            modelBuilder.Entity<Monster>().HasData(new Monster("Drawf Warrior", 16, 39, Alignment.LG)
+            {
+                CreatureId = 1,
+                Str = 14,
+                Dex = 11,
+                Con = 14,
+                Int = 10,
+                Wis = 11,
+                Cha = 10,
+                Speed = "25ft",
+                Challenge = 1,
+                Languages = "Common, Dwarvish",
+                Senses = "Darkvision 60ft",
+                Pp = 10,
+                DefeatXp = 200
+            });
 
-            modelBuilder.Entity<Npc>().OwnsOne(n => n.Monster).HasData(
+            modelBuilder.Entity<Npc>(e =>
+            {
+                e.HasOne(m => m.Monster)
+                .WithMany(n => n.Npcs)
+                .HasForeignKey(m => m.CreatureId);
+            });
+
+            modelBuilder.Entity<Npc>().HasData(
                 new Npc("Engrad Longbones")
                 {
                     NpcId = 1,
-                    Monster = new Monster("Drawf Warrior", 16, 39, Alignment.LG)
-                    {
-                        CharacterId = 1,
-                        Str = 14,
-                        Dex = 11,
-                        Con = 14,
-                        Int = 10,
-                        Wis = 11,
-                        Cha = 10,
-                        Speed = "25ft",
-                        Challenge = 1,
-                        Languages = "Common, Dwarvish",
-                        Senses = "Darkvision 60ft",
-                        Pp = 10,
-                        DefeatXp = 200
-                    }
+                    CreatureId = 1
                 });
         }
 
         public static void ArraySplitting(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CharacterBase>()
+            modelBuilder.Entity<Creature>()
             .Property(e => e.Traits)
             .HasConversion(
                 v => string.Join('/', v),
                 v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
 
-            modelBuilder.Entity<CharacterBase>()
+            modelBuilder.Entity<Creature>()
             .Property(e => e.Reactions)
             .HasConversion(
                 v => string.Join('/', v),
@@ -118,72 +105,5 @@ namespace DDCatalogue.Model
                 v => string.Join('/', v),
                 v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
         }
-    }
-
-
-    public class Item
-    {
-        public int ItemId { get; set; }
-    }
-
-    public class Weapon : Item
-    {
-
-    }
-
-    public class Armour : Item
-    {
-
-    }
-
-    public class Treasure : Item
-    {
-
-    }
-
-    public class Dungeon
-    {
-        public int DungeonId { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public byte[] Map { get; set; }
-        public Building Building { get; set; }
-        public Municipality Municipality { get; set; }
-    }
-
-    public class Building
-    {
-        public int BuildingId { get; set; }
-        public string Name { get; set; }
-        public Municipality Municipality { get; set; }
-        public List<CharacterModel> Characters { get; set; }
-        public byte[] Map { get; set; }
-    }
-
-    public class Municipality
-    {
-        public int MunicipalityId { get; set; }
-        public string Name { get; set; }
-        public Country Country { get; set; }
-        public List<Building> Buildings { get; set; }
-        public byte[] Map { get; set; }
-        public List<CharacterModel> Characters { get; set; }
-    }
-
-    public class Country
-    {
-        public int CountryId { get; set; }
-        public string Name { get; set; }
-        public List<Municipality> Municipalities { get; set; }
-        public Continent Continent { get; set; }
-        public byte[] Map { get; set; }
-    }
-
-    public class Continent
-    {
-        public int ContinentId { get; set; }
-        public string Name { get; set; }
-        public List<Country> Countries { get; set; }
-        public byte[] Map { get; set; }
     }
 }

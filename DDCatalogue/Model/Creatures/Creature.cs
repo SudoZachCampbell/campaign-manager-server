@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DDCatalogue.Model.Locations;
 
-namespace DDCatalogue.Model
+namespace DDCatalogue.Model.Creatures
 {
     public class Creature
     {
@@ -14,7 +11,7 @@ namespace DDCatalogue.Model
             Hp = hp;
             Alignment = alignment;
         }
-        public int CharacterId { get; set; }
+        public int CreatureId { get; set; }
         public string Name { get; set; }
         public int? Str { get; set; }
         public int? Dex { get; set; }

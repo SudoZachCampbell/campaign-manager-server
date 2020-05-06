@@ -19,32 +19,9 @@ namespace DDCatalogue.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DDCatalogue.Model.Building", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Creature", b =>
                 {
-                    b.Property<int>("BuildingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("Map")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<int?>("MunicipalityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BuildingId");
-
-                    b.HasIndex("MunicipalityId");
-
-                    b.ToTable("Buildings");
-                });
-
-            modelBuilder.Entity("DDCatalogue.Model.CharacterBase", b =>
-                {
-                    b.Property<int>("CharacterId")
+                    b.Property<int>("CreatureId")
                         .HasColumnType("int");
 
                     b.Property<int>("Ac")
@@ -123,6 +100,9 @@ namespace DDCatalogue.Migrations
                     b.Property<bool?>("Persuasion")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Reactions")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("Religion")
                         .HasColumnType("bit");
 
@@ -165,14 +145,98 @@ namespace DDCatalogue.Migrations
                     b.Property<int?>("Wis")
                         .HasColumnType("int");
 
-                    b.HasKey("CharacterId");
+                    b.HasKey("CreatureId");
 
-                    b.ToTable("CharacterBase");
+                    b.ToTable("Creature");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("CharacterBase");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Creature");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Continent", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Npc", b =>
+                {
+                    b.Property<int>("NpcId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NpcId");
+
+                    b.HasIndex("CreatureId");
+
+                    b.ToTable("Npcs");
+
+                    b.HasData(
+                        new
+                        {
+                            NpcId = 1,
+                            CreatureId = 1,
+                            Name = "Engrad Longbones"
+                        });
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
+                {
+                    b.Property<int>("PlayerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayerId");
+
+                    b.ToTable("Player");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Items.Item", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("Items");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Item");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
+                {
+                    b.Property<int>("BuildingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("Map")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int?>("MunicipalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BuildingId");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.ToTable("Buildings");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Continent", b =>
                 {
                     b.Property<int>("ContinentId")
                         .ValueGeneratedOnAdd()
@@ -190,7 +254,7 @@ namespace DDCatalogue.Migrations
                     b.ToTable("Continents");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Country", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Country", b =>
                 {
                     b.Property<int>("CountryId")
                         .ValueGeneratedOnAdd()
@@ -213,7 +277,7 @@ namespace DDCatalogue.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Dungeon", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Dungeon", b =>
                 {
                     b.Property<int>("DungeonId")
                         .ValueGeneratedOnAdd()
@@ -244,25 +308,7 @@ namespace DDCatalogue.Migrations
                     b.ToTable("Dungeons");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Item", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ItemId");
-
-                    b.ToTable("Items");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Item");
-                });
-
-            modelBuilder.Entity("DDCatalogue.Model.Municipality", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Municipality", b =>
                 {
                     b.Property<int>("MunicipalityId")
                         .ValueGeneratedOnAdd()
@@ -285,33 +331,9 @@ namespace DDCatalogue.Migrations
                     b.ToTable("Municipalities");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Npc", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Character", b =>
                 {
-                    b.Property<int>("NpcId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("NpcId");
-
-                    b.ToTable("Npcs");
-                });
-
-            modelBuilder.Entity("DDCatalogue.Model.Player", b =>
-                {
-                    b.Property<int>("PlayerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("PlayerId");
-
-                    b.ToTable("Player");
-                });
-
-            modelBuilder.Entity("DDCatalogue.Model.Character", b =>
-                {
-                    b.HasBaseType("DDCatalogue.Model.CharacterBase");
+                    b.HasBaseType("DDCatalogue.Model.Creatures.Creature");
 
                     b.Property<string>("Background")
                         .HasColumnType("nvarchar(max)");
@@ -338,9 +360,9 @@ namespace DDCatalogue.Migrations
                     b.HasDiscriminator().HasValue("Character");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Monster", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
                 {
-                    b.HasBaseType("DDCatalogue.Model.CharacterBase");
+                    b.HasBaseType("DDCatalogue.Model.Creatures.Creature");
 
                     b.Property<string>("Actions")
                         .HasColumnType("nvarchar(max)");
@@ -362,6 +384,9 @@ namespace DDCatalogue.Migrations
                         .HasColumnName("Monster_LocationMunicipalityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Pp")
+                        .HasColumnType("int");
+
                     b.Property<string>("Senses")
                         .HasColumnType("nvarchar(max)");
 
@@ -370,91 +395,122 @@ namespace DDCatalogue.Migrations
                     b.HasIndex("LocationMunicipalityId");
 
                     b.HasDiscriminator().HasValue("Monster");
+
+                    b.HasData(
+                        new
+                        {
+                            CreatureId = 1,
+                            Ac = 16,
+                            Alignment = 0,
+                            Cha = 10,
+                            Con = 14,
+                            Dex = 11,
+                            Hp = 39,
+                            Int = 10,
+                            Languages = "Common, Dwarvish",
+                            Name = "Drawf Warrior",
+                            Speed = "25ft",
+                            Str = 14,
+                            Wis = 11,
+                            Challenge = 1.0,
+                            DefeatXp = 200,
+                            Pp = 10,
+                            Senses = "Darkvision 60ft"
+                        });
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Armour", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Items.Armour", b =>
                 {
-                    b.HasBaseType("DDCatalogue.Model.Item");
+                    b.HasBaseType("DDCatalogue.Model.Items.Item");
 
                     b.HasDiscriminator().HasValue("Armour");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Treasure", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Items.Treasure", b =>
                 {
-                    b.HasBaseType("DDCatalogue.Model.Item");
+                    b.HasBaseType("DDCatalogue.Model.Items.Item");
 
                     b.HasDiscriminator().HasValue("Treasure");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Weapon", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Items.Weapon", b =>
                 {
-                    b.HasBaseType("DDCatalogue.Model.Item");
+                    b.HasBaseType("DDCatalogue.Model.Items.Item");
 
                     b.HasDiscriminator().HasValue("Weapon");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Building", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Npc", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Municipality", "Municipality")
+                    b.HasOne("DDCatalogue.Model.Creatures.Monster", "Monster")
+                        .WithMany("Npcs")
+                        .HasForeignKey("CreatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Locations.Municipality", "Municipality")
                         .WithMany("Buildings")
                         .HasForeignKey("MunicipalityId");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Country", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Country", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Continent", "Continent")
+                    b.HasOne("DDCatalogue.Model.Locations.Continent", "Continent")
                         .WithMany("Countries")
                         .HasForeignKey("ContinentId");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Dungeon", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Dungeon", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Building", "Building")
+                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
-                    b.HasOne("DDCatalogue.Model.Municipality", "Municipality")
+                    b.HasOne("DDCatalogue.Model.Locations.Municipality", "Municipality")
                         .WithMany()
                         .HasForeignKey("MunicipalityId");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Municipality", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Municipality", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Country", "Country")
+                    b.HasOne("DDCatalogue.Model.Locations.Country", "Country")
                         .WithMany("Municipalities")
                         .HasForeignKey("CountryId");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Character", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Character", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Building", "Building")
+                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
                         .WithMany("Characters")
                         .HasForeignKey("BuildingId");
 
-                    b.HasOne("DDCatalogue.Model.Npc", "Npc")
+                    b.HasOne("DDCatalogue.Model.Creatures.Npc", "Npc")
                         .WithOne("Character")
-                        .HasForeignKey("DDCatalogue.Model.Character", "CharacterId")
+                        .HasForeignKey("DDCatalogue.Model.Creatures.Character", "CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DDCatalogue.Model.Player", "Player")
+                    b.HasOne("DDCatalogue.Model.Creatures.Player", "Player")
                         .WithOne("Character")
-                        .HasForeignKey("DDCatalogue.Model.Character", "CharacterId")
+                        .HasForeignKey("DDCatalogue.Model.Creatures.Character", "CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DDCatalogue.Model.Municipality", "Location")
+                    b.HasOne("DDCatalogue.Model.Locations.Municipality", "Location")
                         .WithMany("Characters")
                         .HasForeignKey("LocationMunicipalityId");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Monster", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Building", "Building")
+                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
-                    b.HasOne("DDCatalogue.Model.Municipality", "Location")
+                    b.HasOne("DDCatalogue.Model.Locations.Municipality", "Location")
                         .WithMany()
                         .HasForeignKey("LocationMunicipalityId");
                 });
