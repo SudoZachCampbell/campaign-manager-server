@@ -25,7 +25,7 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Character> Get()
+        public IEnumerable<CharacterModel> Get()
         {
             using (DDContext db = new DDContext())
             {
@@ -41,7 +41,7 @@ namespace DDCatalogue.Controllers
             //.ToArray();
         }
 
-        public Character Details(int id)
+        public CharacterModel Details(int id)
         {
             using (DDContext db = new DDContext())
             {
