@@ -8,8 +8,7 @@
         }
         public int NpcId { get; set; }
         public string Name { get; set; }
-        public Character Character { get; set; }
-        public int CreatureId { get; set; }
+        public int? CreatureId { get; set; }
         public Monster Monster { get; set; }
     }
 }

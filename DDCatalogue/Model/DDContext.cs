@@ -25,15 +25,22 @@ namespace DDCatalogue.Model
         {
             modelBuilder.ArraySplitting();
 
-            modelBuilder.Entity<Npc>()
-            .HasOne(a => a.Character)
-            .WithOne(a => a.Npc)
-            .HasForeignKey<Character>(c => c.CreatureId);
+            //modelBuilder.Entity<Npc>()
+            //.HasOne(a => a.Character)
+            //.WithOne(a => a.Npc)
+            //.HasForeignKey<Character>(c => c.CreatureId);
 
-            modelBuilder.Entity<Player>()
-            .HasOne(a => a.Character)
-            .WithOne(a => a.Player)
-            .HasForeignKey<Character>(c => c.CreatureId);
+            modelBuilder.Entity<Npc>(e =>
+            {
+                e.HasOne(m => m.Monster)
+                .WithMany(n => n.Npcs)
+                .HasForeignKey(m => m.CreatureId);
+            });
+
+            //modelBuilder.Entity<Player>()
+            //.HasOne(a => a.Character)
+            //.WithOne(a => a.Player)
+            //.HasForeignKey<Character>(c => c.CreatureId);
 
             modelBuilder.Seed();
         }
@@ -62,13 +69,6 @@ namespace DDCatalogue.Model
                 Senses = "Darkvision 60ft",
                 Pp = 10,
                 DefeatXp = 200
-            });
-
-            modelBuilder.Entity<Npc>(e =>
-            {
-                e.HasOne(m => m.Monster)
-                .WithMany(n => n.Npcs)
-                .HasForeignKey(m => m.CreatureId);
             });
 
             modelBuilder.Entity<Npc>().HasData(

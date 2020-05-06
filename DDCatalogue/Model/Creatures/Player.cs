@@ -8,7 +8,6 @@ namespace DDCatalogue.Model.Creatures
     public class Player
     {
         public int PlayerId { get; set; }
-        public int CreatureId { get; set; }
-        public Character Character { get; set; }
+        public string Name { get; set; }
     }
 }
