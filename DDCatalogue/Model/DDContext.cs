@@ -45,6 +45,16 @@ namespace DDCatalogue.Model
             .HasConversion(
                 v => string.Join('/', v),
                 v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
+
+            modelBuilder.Entity<Npc>()
+            .HasOne(a => a.Character)
+            .WithOne(a => a.Npc)
+            .HasForeignKey<Character>(c => c.CharacterId);
+
+            modelBuilder.Entity<Player>()
+            .HasOne(a => a.Character)
+            .WithOne(a => a.Player)
+            .HasForeignKey<Character>(c => c.CharacterId);
         }
     }
 
@@ -96,6 +106,9 @@ namespace DDCatalogue.Model
         public string Languages { get; set; }
         public string[] Traits { get; set; }
         public Alignment Alignment { get; set; }
+        public Municipality Location { get; set; }
+        public Building Building { get; set; }
+
     }
 
     public class Character : CharacterBase
@@ -115,6 +128,7 @@ namespace DDCatalogue.Model
     public class Player
     {
         public int PlayerId { get; set; }
+        public Character Character { get; set; }
     }
 
     public enum Alignment
@@ -142,7 +156,8 @@ namespace DDCatalogue.Model
 
     public class Npc
     {
-        public string NpcId { get; set; }
+        public int NpcId { get; set; }
+        public Character Character { get; set; }
     }
 
 
@@ -166,6 +181,24 @@ namespace DDCatalogue.Model
 
     }
 
+    public class Dungeon
+    {
+        public int DungeonId { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public byte[] Map { get; set; }
+        public Building Building { get; set; }
+        public Municipality Municipality { get; set; }
+    }
+
+    public class Building
+    {
+        public int BuildingId { get; set; }
+        public string Name { get; set; }
+        public Municipality Municipality { get; set; }
+        public List<Character> Characters { get; set; }
+        public byte[] Map { get; set; }
+    }
 
     public class Municipality
     {
@@ -174,23 +207,13 @@ namespace DDCatalogue.Model
         public Country Country { get; set; }
         public List<Building> Buildings { get; set; }
         public byte[] Map { get; set; }
-    }
-
-    public class Building
-    {
-        public int BuildingId { get; set; }
-        public Municipality Municipality { get; set; }
-        public byte[] Map { get; set; }
-    }
-
-    public class Dungeon
-    {
-        public int DungeonId { get; set; }
+        public List<Character> Characters { get; set; }
     }
 
     public class Country
     {
         public int CountryId { get; set; }
+        public string Name { get; set; }
         public List<Municipality> Municipalities { get; set; }
         public Continent Continent { get; set; }
         public byte[] Map { get; set; }
@@ -199,6 +222,7 @@ namespace DDCatalogue.Model
     public class Continent
     {
         public int ContinentId { get; set; }
+        public string Name { get; set; }
         public List<Country> Countries { get; set; }
         public byte[] Map { get; set; }
     }

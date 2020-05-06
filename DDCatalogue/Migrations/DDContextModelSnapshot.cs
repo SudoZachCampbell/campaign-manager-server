@@ -32,6 +32,9 @@ namespace DDCatalogue.Migrations
                     b.Property<int?>("MunicipalityId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BuildingId");
 
                     b.HasIndex("MunicipalityId");
@@ -42,9 +45,7 @@ namespace DDCatalogue.Migrations
             modelBuilder.Entity("DDCatalogue.Model.CharacterBase", b =>
                 {
                     b.Property<int>("CharacterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("Ac")
                         .HasColumnType("int");
@@ -181,6 +182,9 @@ namespace DDCatalogue.Migrations
                     b.Property<byte[]>("Map")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ContinentId");
 
                     b.ToTable("Continents");
@@ -199,6 +203,9 @@ namespace DDCatalogue.Migrations
                     b.Property<byte[]>("Map")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CountryId");
 
                     b.HasIndex("ContinentId");
@@ -213,7 +220,26 @@ namespace DDCatalogue.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Map")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int?>("MunicipalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("DungeonId");
+
+                    b.HasIndex("BuildingId");
+
+                    b.HasIndex("MunicipalityId");
 
                     b.ToTable("Dungeons");
                 });
@@ -261,8 +287,10 @@ namespace DDCatalogue.Migrations
 
             modelBuilder.Entity("DDCatalogue.Model.Npc", b =>
                 {
-                    b.Property<string>("NpcId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("NpcId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.HasKey("NpcId");
 
@@ -288,13 +316,13 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Background")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("BuildingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Faction")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NpcId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("PlayerId")
+                    b.Property<int?>("LocationMunicipalityId")
                         .HasColumnType("int");
 
                     b.Property<string>("PlayerName")
@@ -303,9 +331,9 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Race")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("NpcId");
+                    b.HasIndex("BuildingId");
 
-                    b.HasIndex("PlayerId");
+                    b.HasIndex("LocationMunicipalityId");
 
                     b.HasDiscriminator().HasValue("Character");
                 });
@@ -317,6 +345,10 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Actions")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("BuildingId")
+                        .HasColumnName("Monster_BuildingId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Challenge")
                         .HasColumnType("float");
 
@@ -326,8 +358,16 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("LegendaryActions")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LocationMunicipalityId")
+                        .HasColumnName("Monster_LocationMunicipalityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Senses")
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("BuildingId");
+
+                    b.HasIndex("LocationMunicipalityId");
 
                     b.HasDiscriminator().HasValue("Monster");
                 });
@@ -367,6 +407,17 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("ContinentId");
                 });
 
+            modelBuilder.Entity("DDCatalogue.Model.Dungeon", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Building", "Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingId");
+
+                    b.HasOne("DDCatalogue.Model.Municipality", "Municipality")
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId");
+                });
+
             modelBuilder.Entity("DDCatalogue.Model.Municipality", b =>
                 {
                     b.HasOne("DDCatalogue.Model.Country", "Country")
@@ -376,13 +427,36 @@ namespace DDCatalogue.Migrations
 
             modelBuilder.Entity("DDCatalogue.Model.Character", b =>
                 {
+                    b.HasOne("DDCatalogue.Model.Building", "Building")
+                        .WithMany("Characters")
+                        .HasForeignKey("BuildingId");
+
                     b.HasOne("DDCatalogue.Model.Npc", "Npc")
-                        .WithMany()
-                        .HasForeignKey("NpcId");
+                        .WithOne("Character")
+                        .HasForeignKey("DDCatalogue.Model.Character", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DDCatalogue.Model.Player", "Player")
+                        .WithOne("Character")
+                        .HasForeignKey("DDCatalogue.Model.Character", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDCatalogue.Model.Municipality", "Location")
+                        .WithMany("Characters")
+                        .HasForeignKey("LocationMunicipalityId");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Monster", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Building", "Building")
                         .WithMany()
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("BuildingId");
+
+                    b.HasOne("DDCatalogue.Model.Municipality", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationMunicipalityId");
                 });
 #pragma warning restore 612, 618
         }
