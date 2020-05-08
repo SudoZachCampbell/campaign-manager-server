@@ -2,7 +2,12 @@
 using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Locations;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace DDCatalogue.Model
 {
@@ -54,22 +59,15 @@ namespace DDCatalogue.Model
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Monster>().HasData(new Monster("Drawf Warrior", 16, 39, Alignment.LG)
+            List<Monster> monsters = null;
+            using (StreamReader reader = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds\\Monsters.json"))
             {
-                CreatureId = 1,
-                Str = 14,
-                Dex = 11,
-                Con = 14,
-                Int = 10,
-                Wis = 11,
-                Cha = 10,
-                Speed = "25ft",
-                Challenge = 1,
-                Languages = "Common, Dwarvish",
-                Senses = "Darkvision 60ft",
-                Pp = 10,
-                DefeatXp = 200
-            });
+                monsters = JsonConvert.DeserializeObject<List<Monster>>(reader.ReadToEnd());
+            }
+            if (monsters != null)
+            {
+                modelBuilder.Entity<Monster>().HasData(monsters);
+            }
 
             modelBuilder.Entity<Npc>().HasData(
                 new Npc("Engrad Longbones")
