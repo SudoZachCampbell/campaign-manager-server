@@ -1,6 +1,6 @@
 ﻿namespace DDCatalogue.Model.Creatures
 {
-    public class Npc : ICreature, IModel
+    public class Npc : ICreature
     {
         public Npc(string name)
         {

@@ -63,42 +63,48 @@ namespace DDCatalogue.Model
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            if (System.Diagnostics.Debugger.IsAttached == false)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
             DirectoryInfo dInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds");
 
-            IList list = null;
+            Dictionary<Type, IList<IModel>> seeds = new Dictionary<Type, IList<IModel>>();
             foreach (var file in dInfo.GetFiles("*.json"))
             {
                 string[] splitName = file.Name.Split("_");
                 Tuple<string, string> fileDetails = new Tuple<string, string>(splitName[0], splitName[1].Split(".")[0]);
-                Type type = Type.GetType(fileDetails.Item2);
-                list = CreateTypeList(type);
-                list.Add(JsonConvert.DeserializeObject(file.OpenText().ReadToEnd()));
-            }
-
-            if (list != null)
-            {
-                List list = list.ToList();
-                foreach (var (monster, index) in list.WithIndex())
+                Type type = Type.GetType($"DDCatalogue.Model.{fileDetails.Item1}.{fileDetails.Item2}");
+                IList<IModel> genericList = CreateTypeList<IModel>(type);
+                JArray aOfObjects = JArray.Parse(file.OpenText().ReadToEnd());
+                foreach (JToken token in aOfObjects)
                 {
-                    monster.CreatureId = index + 1;
+                    genericList.Add((IModel)token.ToObject(type));
                 }
-                modelBuilder.Entity<Monster>().HasData(monsters);
+                seeds.Add(type, genericList);
             }
 
-            modelBuilder.Entity<Npc>().HasData(
-                new Npc("Engrad Longbones")
+            if (!seeds.Count.Equals(0))
+            {
+                foreach (var modelList in seeds)
                 {
-                    Id = 1,
-                    CreatureId = 1
-                });
+                    int i = 1;
+                    foreach (var model in modelList.Value)
+                    {
+                        model.Id = i;
+                        i++;
+                    }
+                    modelBuilder.Entity(modelList.Key).HasData(modelList.Value);
+                }
+            }
         }
 
-        private static IList CreateTypeList(Type type)
+        private static IList<T> CreateTypeList<T>(Type type)
         {
             var listType = typeof(List<>);
             var constructedListType = listType.MakeGenericType(type);
-            IList instance = (IList)Activator.CreateInstance(constructedListType);
-            return instance;
+            IEnumerable<T> instance = (IEnumerable<T>)Activator.CreateInstance(constructedListType);
+            return instance.ToList();
         }
 
         public static void ArraySplitting(this ModelBuilder modelBuilder)
@@ -127,14 +133,5 @@ namespace DDCatalogue.Model
                 v => string.Join('/', v),
                 v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
         }
-    }
-
-    public static class IEnumerableExtensions
-    {
-
-        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self)
-            => self?.Select((item, index) => (item, index)) ?? new List<(T, int)>();
-
-        public static
     }
 }

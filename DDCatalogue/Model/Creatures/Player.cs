@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Creatures
 {
-    public class Player : ICreature, IModel
+    public class Player : ICreature
     {
         public int Id { get; set; }
         public string Name { get; set; }

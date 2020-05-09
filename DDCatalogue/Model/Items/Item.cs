@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Items
 {
-    public class Item : IItem, IModel
+    public class Item : IItem
     {
         public int Id { get; set; }
         public string Name { get; set; }

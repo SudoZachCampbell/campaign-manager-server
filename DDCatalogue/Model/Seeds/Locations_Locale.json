@@ -1,38 +1,29 @@
 [
   {
-    "LocaleId": 1,
     "Name": "Neverwinter"
   },
   {
-    "LocaleId": 2,
     "Name": "Thundertree"
   },
   {
-    "LocaleId": 3,
     "Name": "Cragmaw Castle"
   },
   {
-    "LocaleId": 4,
     "Name": "Conyberry"
   },
   {
-    "LocaleId": 5,
     "Name": "Old Owl Well"
   },
   {
-    "LocaleId": 6,
     "Name": "Phandalin"
   },
   {
-    "LocaleId": 7,
     "Name": "Leilon"
   },
   {
-    "LocaleId": 8,
     "Name": "Neverwinter"
   },
   {
-    "LocaleId": 8,
     "Name": "Cragmaw Hideout"
   }
 ]
