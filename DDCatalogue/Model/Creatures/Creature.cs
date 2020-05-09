@@ -1,4 +1,5 @@
 ﻿using DDCatalogue.Model.Locations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDCatalogue.Model.Creatures
 {
@@ -50,7 +51,7 @@ namespace DDCatalogue.Model.Creatures
         public string Languages { get; set; }
         public string[] Traits { get; set; }
         public Alignment Alignment { get; set; }
-        public Municipality Location { get; set; }
+        public Locale Locale { get; set; }
         public Building Building { get; set; }
         public string[] Reactions { get; set; }
     }

@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace DDCatalogue.Model
@@ -20,9 +21,9 @@ namespace DDCatalogue.Model
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<Armour> Armours { get; set; }
         public DbSet<Treasure> Treasures { get; set; }
-        public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<Locale> Locales { get; set; }
         public DbSet<Building> Buildings { get; set; }
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<Region> Regions { get; set; }
         public DbSet<Continent> Continents { get; set; }
         public DbSet<Dungeon> Dungeons { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(@"Server=192.168.0.41;Database=DDCatalogue;User Id=sa;Password=Microsoft1!");
@@ -41,6 +42,8 @@ namespace DDCatalogue.Model
                 .WithMany(n => n.Npcs)
                 .HasForeignKey(m => m.CreatureId);
             });
+
+            modelBuilder.Entity<Monster>().Property(m => m.CreatureId).ValueGeneratedOnAdd();
 
             //modelBuilder.Entity<Player>()
             //.HasOne(a => a.Character)
@@ -66,6 +69,10 @@ namespace DDCatalogue.Model
             }
             if (monsters != null)
             {
+                foreach(var (monster, index) in monsters.WithIndex())
+                {
+                    monster.CreatureId = index + 1;
+                }
                 modelBuilder.Entity<Monster>().HasData(monsters);
             }
 
@@ -103,5 +110,11 @@ namespace DDCatalogue.Model
                 v => string.Join('/', v),
                 v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
         }
+    }
+    public static class IEnumerableExtensions
+    {
+
+        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self) 
+            => self?.Select((item, index) => (item, index)) ?? new List<(T, int)>();
     }
 }

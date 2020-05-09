@@ -7,6 +7,6 @@
         public string Type { get; set; }
         public byte[] Map { get; set; }
         public Building Building { get; set; }
-        public Municipality Municipality { get; set; }
+        public Locale Municipality { get; set; }
     }
 }

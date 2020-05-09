@@ -1,3 +1,52 @@
-{
-
-}
+[
+  {
+    "BuildingId": 1,
+    "Name": "Stonehill Inn",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 2,
+    "Name": "Barthen's Provisions",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 3,
+    "Name": "Edermath Orchard",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 4,
+    "Name": "Lionshield Coster",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 5,
+    "Name": "Phandalin Miner's Exchange",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 6,
+    "Name": "Alderleaf Farm",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 7,
+    "Name": "Shrine of Luck",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 8,
+    "Name": "The Sleeping Giant",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 9,
+    "Name": "Townmaster's Hall",
+    "LocaleId": 6
+  },
+  {
+    "BuildingId": 10,
+    "Name": "Tresendar Manor",
+    "LocaleId": 6
+  }
+]

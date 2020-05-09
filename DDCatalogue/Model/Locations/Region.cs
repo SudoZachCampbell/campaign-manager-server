@@ -2,11 +2,11 @@
 
 namespace DDCatalogue.Model.Locations
 {
-    public class Country
+    public class Region
     {
-        public int CountryId { get; set; }
+        public int RegionId { get; set; }
         public string Name { get; set; }
-        public List<Municipality> Municipalities { get; set; }
+        public List<Locale> Municipalities { get; set; }
         public Continent Continent { get; set; }
         public byte[] Map { get; set; }
     }
