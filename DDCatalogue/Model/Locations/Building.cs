@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Locations
 {
-    public class Building
+    public class Building : ILocation
     {
-        public int BuildingId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public Locale Locale { get; set; }
         public List<Character> Characters { get; set; }

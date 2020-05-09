@@ -1,10 +1,13 @@
 ﻿using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Locations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,8 +46,6 @@ namespace DDCatalogue.Model
                 .HasForeignKey(m => m.CreatureId);
             });
 
-            modelBuilder.Entity<Monster>().Property(m => m.CreatureId).ValueGeneratedOnAdd();
-
             //modelBuilder.Entity<Player>()
             //.HasOne(a => a.Character)
             //.WithOne(a => a.Player)
@@ -62,14 +63,22 @@ namespace DDCatalogue.Model
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            List<Monster> monsters = null;
-            using (StreamReader reader = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds\\Monsters.json"))
+            DirectoryInfo dInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds");
+
+            IList list = null;
+            foreach (var file in dInfo.GetFiles("*.json"))
             {
-                monsters = JsonConvert.DeserializeObject<List<Monster>>(reader.ReadToEnd());
+                string[] splitName = file.Name.Split("_");
+                Tuple<string, string> fileDetails = new Tuple<string, string>(splitName[0], splitName[1].Split(".")[0]);
+                Type type = Type.GetType(fileDetails.Item2);
+                list = CreateTypeList(type);
+                list.Add(JsonConvert.DeserializeObject(file.OpenText().ReadToEnd()));
             }
-            if (monsters != null)
+
+            if (list != null)
             {
-                foreach(var (monster, index) in monsters.WithIndex())
+                List list = list.ToList();
+                foreach (var (monster, index) in list.WithIndex())
                 {
                     monster.CreatureId = index + 1;
                 }
@@ -79,9 +88,17 @@ namespace DDCatalogue.Model
             modelBuilder.Entity<Npc>().HasData(
                 new Npc("Engrad Longbones")
                 {
-                    NpcId = 1,
+                    Id = 1,
                     CreatureId = 1
                 });
+        }
+
+        private static IList CreateTypeList(Type type)
+        {
+            var listType = typeof(List<>);
+            var constructedListType = listType.MakeGenericType(type);
+            IList instance = (IList)Activator.CreateInstance(constructedListType);
+            return instance;
         }
 
         public static void ArraySplitting(this ModelBuilder modelBuilder)
@@ -111,10 +128,13 @@ namespace DDCatalogue.Model
                 v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
         }
     }
+
     public static class IEnumerableExtensions
     {
 
-        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self) 
+        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self)
             => self?.Select((item, index) => (item, index)) ?? new List<(T, int)>();
+
+        public static
     }
 }

@@ -44,7 +44,7 @@ namespace DDCatalogue.Controllers
         {
             using (DDContext db = new DDContext())
             {
-                return db.Characters.First(x => x.CreatureId.Equals(id));
+                return db.Characters.First(x => x.Id.Equals(id));
             }
         }
 

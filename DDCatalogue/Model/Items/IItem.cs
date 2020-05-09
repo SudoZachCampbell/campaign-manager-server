@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Items
 {
-    public class Item : IItem, IModel
+    interface IItem : IModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+
     }
 }

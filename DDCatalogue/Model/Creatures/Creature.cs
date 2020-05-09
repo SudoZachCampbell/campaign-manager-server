@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DDCatalogue.Model.Creatures
 {
-    public class Creature
+    public class Creature : ICreature
     {
         public Creature(string name, int ac, int hp, Alignment alignment)
         {
@@ -12,7 +12,7 @@ namespace DDCatalogue.Model.Creatures
             Hp = hp;
             Alignment = alignment;
         }
-        public int CreatureId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int? Str { get; set; }
         public int? Dex { get; set; }

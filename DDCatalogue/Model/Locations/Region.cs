@@ -2,9 +2,9 @@
 
 namespace DDCatalogue.Model.Locations
 {
-    public class Region
+    public class Region : ILocation
     {
-        public int RegionId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<Locale> Municipalities { get; set; }
         public Continent Continent { get; set; }
