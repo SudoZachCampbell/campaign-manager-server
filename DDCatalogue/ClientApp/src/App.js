@@ -3,6 +3,7 @@ import { Route } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import CharacterList from './components/CharacterList';
+import NpcList from './components/NpcList';
 import Counter from './components/Counter';
 
 import './custom.css'
@@ -17,6 +18,7 @@ export default function App(props) {
             <Route path='/counter' component={Counter} />
             <Route path='/characters' component={CharacterList} />
             <Route path='/character-details/:id' children={<CharacterDetails />} />
+            <Route path='/npcs' component={NpcList} />
         </Layout>
     );
 }

@@ -9,7 +9,8 @@ namespace DDCatalogue.Model.Locations
         public string Name { get; set; }
         public Region Region { get; set; }
         public List<Building> Buildings { get; set; }
+        public List<Dungeon> Dungeons { get; set; }
         public byte[] Map { get; set; }
-        public List<Character> Characters { get; set; }
+        public List<Player> Characters { get; set; }
     }
 }

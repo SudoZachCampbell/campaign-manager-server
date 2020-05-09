@@ -27,6 +27,9 @@ export default function NavMenu(props) {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/characters">Characters</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} className="text-dark" to="/npcs">Npcs</NavLink>
+                            </NavItem>
                         </ul>
                     </Collapse>
                 </Container>

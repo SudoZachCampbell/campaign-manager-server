@@ -1,5 +1,4 @@
 ﻿using DDCatalogue.Model.Locations;
-using System.ComponentModel.DataAnnotations;
 
 namespace DDCatalogue.Model.Creatures
 {

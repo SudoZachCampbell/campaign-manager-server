@@ -1,23 +1,18 @@
 ﻿using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Locations;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace DDCatalogue.Model
 {
     public class DDContext : DbContext
     {
-        public DbSet<Character> Characters { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Npc> Npcs { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -34,22 +29,10 @@ namespace DDCatalogue.Model
         {
             modelBuilder.ArraySplitting();
 
-            //modelBuilder.Entity<Npc>()
-            //.HasOne(a => a.Character)
-            //.WithOne(a => a.Npc)
-            //.HasForeignKey<Character>(c => c.CreatureId);
-
-            modelBuilder.Entity<Npc>(e =>
-            {
-                e.HasOne(m => m.Monster)
-                .WithMany(n => n.Npcs)
-                .HasForeignKey(m => m.CreatureId);
-            });
-
-            //modelBuilder.Entity<Player>()
-            //.HasOne(a => a.Character)
-            //.WithOne(a => a.Player)
-            //.HasForeignKey<Character>(c => c.CreatureId);
+            modelBuilder.Entity<Npc>()
+            .HasOne(a => a.Monster)
+            .WithMany(a => a.Npcs)
+            .HasForeignKey("MonsterId");
 
             modelBuilder.Seed();
         }
@@ -63,10 +46,10 @@ namespace DDCatalogue.Model
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            if (System.Diagnostics.Debugger.IsAttached == false)
-            {
-                System.Diagnostics.Debugger.Launch();
-            }
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+            //{
+            //    System.Diagnostics.Debugger.Launch();
+            //}
             DirectoryInfo dInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds");
 
             Dictionary<Type, IList<IModel>> seeds = new Dictionary<Type, IList<IModel>>();

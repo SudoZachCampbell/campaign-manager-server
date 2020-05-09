@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as React from 'react';
-import Character from './Character';
+import Npc from './Npc';
 import { Accordion, Card, Button, Table } from 'react-bootstrap';
 import Tr from './TableAccordionToggle';
 
-export default function CharacterList(props: any) {
-    const [characters, setCharacters] = useState([]);
+export default function NpcList(props: any) {
+    const [npcs, setNpcs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [lastOpened, setLastOpened] = useState(0);
 
-    const populateCharactersData = async () => {
-        const response = await fetch('character');
+    const populateNpcsData = async () => {
+        const response = await fetch('npc');
         const data = await response.json();
-        setCharacters(data);
+        console.log(data);
+        setNpcs(data);
         setLoading(false);
     }
 
@@ -23,7 +24,7 @@ export default function CharacterList(props: any) {
         if (rowElement) {
             if (lastOpened) {
                 console.log(`Last Opened: ${lastOpened}`)
-                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`); 
+                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`);
                 if (lastRowElement) lastRowElement.style.display = "none"
             }
             if (row !== lastOpened) {
@@ -33,7 +34,7 @@ export default function CharacterList(props: any) {
         }
     }
 
-    const renderCharactersTable = (characters: any[]) => {
+    const renderNpcsTable = (npcs: any[]) => {
         return (
             <Router>
                 <div>
@@ -50,19 +51,19 @@ export default function CharacterList(props: any) {
                             </thead>
                             <tbody>
                                 {
-                                    characters.map((character: any) =>
+                                    npcs.map((npc: any) =>
                                         <>
-                                            <Tr eventKey={`${character.characterId}`} key={character.name} customOnClick={customOnClick}>
-                                                <td>{character.characterId}</td>
-                                                <td>{character.name}</td>
-                                                <td>{character.ac}</td>
-                                                <td>{character.hp}</td>
-                                                <td>{character.alignment}</td>
+                                            <Tr eventKey={`${npc.npcId}`} key={npc.name} customOnClick={customOnClick}>
+                                                <td>{npc.npcId}</td>
+                                                <td>{npc.name}</td>
+                                                <td>{npc.ac}</td>
+                                                <td>{npc.hp}</td>
+                                                <td>{npc.alignment}</td>
                                             </Tr>
-                                            <tr id={`hide-row-${character.characterId}`} style={{ display: "none" }}>
+                                            <tr id={`hide-row-${npc.npcId}`} style={{ display: "none" }}>
                                                 <td colSpan={5}>
-                                                    <Accordion.Collapse eventKey={`${character.characterId}`}>
-                                                        <Character character={character} />
+                                                    <Accordion.Collapse eventKey={`${npc.npcId}`}>
+                                                        <Npc npc={npc} />
                                                     </Accordion.Collapse>
                                                 </td>
                                             </tr>
@@ -74,9 +75,9 @@ export default function CharacterList(props: any) {
                     </Accordion>
 
                     <Switch>
-                        {characters.map((character: any) =>
-                            <Route exact path={`/character/${character.characterId}`}>
-                                <Character character={character} />
+                        {npcs.map((npc: any) =>
+                            <Route exact path={`/npc/${npc.npcId}`}>
+                                <Npc npc={npc} />
                             </Route>
                         )}
                     </Switch>
@@ -87,16 +88,16 @@ export default function CharacterList(props: any) {
 
     const contents = loading
         ? <p><em>Loading...</em></p>
-        : renderCharactersTable(characters);
+        : renderNpcsTable(npcs);
 
 
     useEffect(() => {
-        populateCharactersData();
+        populateNpcsData();
     }, [])
 
     return (
         <div>
-            <h1 id="tabelLabel" >Characters</h1>
+            <h1 id="tabelLabel" >Npcs</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
         </div>

@@ -8,7 +8,7 @@ namespace DDCatalogue.Model.Locations
         public int Id { get; set; }
         public string Name { get; set; }
         public Locale Locale { get; set; }
-        public List<Character> Characters { get; set; }
+        public List<Player> Characters { get; set; }
         public byte[] Map { get; set; }
     }
 }
