@@ -13,17 +13,14 @@ export default function NpcList(props: any) {
     const populateNpcsData = async () => {
         const response = await fetch('npc');
         const data = await response.json();
-        console.log("Npcs returned: ", data);
         setNpcs(data);
         setLoading(false);
     }
 
     const customOnClick = (row: any) => {
-        console.log(`Callback fired: ${row}`);
         const rowElement = document.getElementById(`hide-row-${row}`);
         if (rowElement) {
             if (lastOpened) {
-                console.log(`Last Opened: ${lastOpened}`)
                 const lastRowElement = document.getElementById(`hide-row-${lastOpened}`);
                 if (lastRowElement) lastRowElement.style.display = "none"
             }
