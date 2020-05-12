@@ -2,5 +2,13 @@
   {
     "Name": "Klarg Big-Crown",
     "MonsterId": 2
+  },
+  {
+    "Name": "Gundren Rockseeker",
+    "MonsterId": 1
+  },
+  {
+    "Name": "Sildar Hallwinter",
+    "MonsterId":  3
   }
 ]

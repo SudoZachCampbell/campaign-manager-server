@@ -34,5 +34,22 @@
     "Senses": "Darkvision 60ft",
     "Pp": 10,
     "DefeatXp": 200
+  },
+  {
+    "Name": "Knight",
+    "Ac": 18,
+    "Hp": 52,
+    "Alignment": 9,
+    "Str": 16,
+    "Dex": 11,
+    "Con": 14,
+    "Int": 11,
+    "Wis": 11,
+    "Cha": 15,
+    "Speed": "30ft",
+    "Challenge": 3,
+    "Languages": "Any one",
+    "Pp": 10,
+    "DefeatXp": 700
   }
 ]

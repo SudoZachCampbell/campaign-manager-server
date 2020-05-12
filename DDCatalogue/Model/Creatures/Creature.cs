@@ -65,6 +65,7 @@ namespace DDCatalogue.Model.Creatures
         NE,
         CG,
         CN,
-        CE
+        CE,
+        Any
     }
 }
