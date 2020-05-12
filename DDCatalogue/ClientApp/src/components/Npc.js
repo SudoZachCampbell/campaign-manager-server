@@ -6,7 +6,7 @@ function Npc(props) {
     return (React.createElement("div", null,
         React.createElement("div", null,
             React.createElement("div", null, props.npc.Name),
-            React.createElement("div", null, props.npc.Monster.Name)),
+            React.createElement("div", null, props.npc.Monster ? props.npc.Monster.Name : "None")),
         React.createElement(react_bootstrap_1.Button, { variant: "outline-info" }, "Details")));
 }
 exports.default = Npc;

@@ -8,7 +8,7 @@ export default function Npc(props: any) {
         <div>
             <div>
                 <div>{props.npc.Name}</div>
-                <div>{props.npc.Monster.Name}</div>
+                <div>{props.npc.Monster ? props.npc.Monster.Name : "None"}</div>
             </div>
             <Button variant="outline-info">Details</Button>
         </div>

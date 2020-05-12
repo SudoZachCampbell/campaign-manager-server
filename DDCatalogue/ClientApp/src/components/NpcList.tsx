@@ -13,6 +13,7 @@ export default function NpcList(props: any) {
     const populateNpcsData = async () => {
         const response = await fetch('npc');
         const data = await response.json();
+        console.log(data);
         setNpcs(data);
         setLoading(false);
     }
@@ -51,7 +52,7 @@ export default function NpcList(props: any) {
                                             <Tr eventKey={`${npc.Id}`} key={npc.Name} customOnClick={customOnClick}>
                                                 <td>{npc.Id}</td>
                                                 <td>{npc.Name}</td>
-                                                <td>{npc.Monster.Name}</td>
+                                                <td>{npc.Monster ? npc.Monster.Name : "None"}</td>
                                             </Tr>
                                             <tr id={`hide-row-${npc.Id}`} style={{ display: "none" }}>
                                                 <td colSpan={5}>
