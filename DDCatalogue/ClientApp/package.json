@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
     "@types/lodash": "^4.14.150",
     "@types/react-router-dom": "^5.1.5",
     "babel-eslint": "10.0.1",
