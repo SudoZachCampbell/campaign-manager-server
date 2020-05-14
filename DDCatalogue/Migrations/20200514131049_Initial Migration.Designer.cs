@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20200509205814_Initial Migration")]
+    [Migration("20200514131049_Initial Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,13 +163,23 @@ namespace DDCatalogue.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MonsterId")
+                    b.Property<int?>("BuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LocaleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MonsterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuildingId");
+
+                    b.HasIndex("LocaleId");
 
                     b.HasIndex("MonsterId");
 
@@ -179,8 +189,106 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
+                            LocaleId = 9,
                             MonsterId = 2,
                             Name = "Klarg Big-Crown"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            LocaleId = 3,
+                            MonsterId = 1,
+                            Name = "Gundren Rockseeker"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BuildingId = 9,
+                            MonsterId = 3,
+                            Name = "Sildar Hallwinter"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BuildingId = 2,
+                            MonsterId = 5,
+                            Name = "Elmar Barthen"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BuildingId = 4,
+                            MonsterId = 3,
+                            Name = "Linene Graywind"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            LocaleId = 9,
+                            MonsterId = 4,
+                            Name = "Yeemik Largebrain"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BuildingId = 10,
+                            Name = "Iarno Albrek"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            LocaleId = 6,
+                            MonsterId = 1,
+                            Name = "Tharden Rockseeker"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            LocaleId = 6,
+                            MonsterId = 1,
+                            Name = "Nundro Rockseeker"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            BuildingId = 1,
+                            MonsterId = 7,
+                            Name = "Toblen Stonehill"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            BuildingId = 3,
+                            MonsterId = 5,
+                            Name = "Daran Edermath"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            BuildingId = 5,
+                            MonsterId = 5,
+                            Name = "Halia Thornton"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            BuildingId = 6,
+                            MonsterId = 5,
+                            Name = "Qelline Alderleaf"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            BuildingId = 7,
+                            MonsterId = 5,
+                            Name = "Sister Garaele"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            BuildingId = 9,
+                            MonsterId = 5,
+                            Name = "Harbin Wester"
                         });
                 });
 
@@ -203,6 +311,36 @@ namespace DDCatalogue.Migrations
                     b.ToTable("Items");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Item");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterBuilding", b =>
+                {
+                    b.Property<int>("MonsterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MonsterId", "BuildingId");
+
+                    b.HasIndex("BuildingId");
+
+                    b.ToTable("MonsterBuilding");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterLocale", b =>
+                {
+                    b.Property<int>("MonsterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocaleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MonsterId", "LocaleId");
+
+                    b.HasIndex("LocaleId");
+
+                    b.ToTable("MonsterLocale");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
@@ -231,51 +369,61 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
+                            LocaleId = 6,
                             Name = "Stonehill Inn"
                         },
                         new
                         {
                             Id = 2,
+                            LocaleId = 6,
                             Name = "Barthen's Provisions"
                         },
                         new
                         {
                             Id = 3,
+                            LocaleId = 6,
                             Name = "Edermath Orchard"
                         },
                         new
                         {
                             Id = 4,
+                            LocaleId = 6,
                             Name = "Lionshield Coster"
                         },
                         new
                         {
                             Id = 5,
+                            LocaleId = 6,
                             Name = "Phandalin Miner's Exchange"
                         },
                         new
                         {
                             Id = 6,
+                            LocaleId = 6,
                             Name = "Alderleaf Farm"
                         },
                         new
                         {
                             Id = 7,
+                            LocaleId = 6,
                             Name = "Shrine of Luck"
                         },
                         new
                         {
                             Id = 8,
+                            LocaleId = 6,
                             Name = "The Sleeping Giant"
                         },
                         new
                         {
                             Id = 9,
+                            LocaleId = 6,
                             Name = "Townmaster's Hall"
                         },
                         new
                         {
                             Id = 10,
+                            LocaleId = 6,
                             Name = "Tresendar Manor"
                         });
                 });
@@ -436,9 +584,6 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Actions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BuildingId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Challenge")
                         .HasColumnType("float");
 
@@ -448,18 +593,11 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("LegendaryActions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocaleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Pp")
                         .HasColumnType("int");
 
                     b.Property<string>("Senses")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("BuildingId");
-
-                    b.HasIndex("LocaleId");
 
                     b.HasDiscriminator().HasValue("Monster");
 
@@ -503,6 +641,101 @@ namespace DDCatalogue.Migrations
                             DefeatXp = 200,
                             Pp = 10,
                             Senses = "Darkvision 60ft"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ac = 18,
+                            Alignment = 9,
+                            Cha = 15,
+                            Con = 14,
+                            Dex = 11,
+                            Hp = 52,
+                            Int = 11,
+                            Languages = "Any one",
+                            Name = "Knight",
+                            Speed = "30ft",
+                            Str = 16,
+                            Wis = 11,
+                            Challenge = 3.0,
+                            DefeatXp = 700,
+                            Pp = 10
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ac = 15,
+                            Alignment = 5,
+                            Cha = 8,
+                            Con = 10,
+                            Dex = 14,
+                            Hp = 7,
+                            Int = 10,
+                            Languages = "Common, Goblin",
+                            Name = "Goblin",
+                            Speed = "30ft",
+                            Str = 8,
+                            Wis = 8,
+                            Challenge = 0.25,
+                            DefeatXp = 50,
+                            Pp = 9
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Ac = 10,
+                            Alignment = 9,
+                            Cha = 10,
+                            Con = 10,
+                            Dex = 10,
+                            Hp = 4,
+                            Int = 10,
+                            Languages = "Any one",
+                            Name = "Commoner",
+                            Speed = "30ft",
+                            Str = 10,
+                            Wis = 10,
+                            Challenge = 0.0,
+                            DefeatXp = 10,
+                            Pp = 10
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Ac = 13,
+                            Alignment = 10,
+                            Cha = 6,
+                            Con = 12,
+                            Dex = 15,
+                            Hp = 11,
+                            Int = 3,
+                            Languages = "",
+                            Name = "Wolf",
+                            Speed = "40ft",
+                            Str = 12,
+                            Wis = 12,
+                            Challenge = 0.25,
+                            DefeatXp = 50,
+                            Pp = 13
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Ac = 14,
+                            Alignment = 0,
+                            Cha = 10,
+                            Con = 12,
+                            Dex = 10,
+                            Hp = 26,
+                            Int = 10,
+                            Languages = "Common, Dwarvish",
+                            Name = "Dwarf",
+                            Speed = "25ft",
+                            Str = 13,
+                            Wis = 12,
+                            Challenge = 0.5,
+                            DefeatXp = 100,
+                            Pp = 10
                         });
                 });
 
@@ -514,14 +747,12 @@ namespace DDCatalogue.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("BuildingId")
-                        .HasColumnName("Player_BuildingId")
                         .HasColumnType("int");
 
                     b.Property<string>("Faction")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LocaleId")
-                        .HasColumnName("Player_LocaleId")
                         .HasColumnType("int");
 
                     b.Property<string>("PlayerName")
@@ -560,8 +791,47 @@ namespace DDCatalogue.Migrations
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Npc", b =>
                 {
+                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
+                        .WithMany("Npcs")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
+                        .WithMany("Npcs")
+                        .HasForeignKey("LocaleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("DDCatalogue.Model.Creatures.Monster", "Monster")
                         .WithMany("Npcs")
+                        .HasForeignKey("MonsterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterBuilding", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
+                        .WithMany("Monsters")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDCatalogue.Model.Creatures.Monster", "Monster")
+                        .WithMany("Buildings")
+                        .HasForeignKey("MonsterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterLocale", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
+                        .WithMany("Monsters")
+                        .HasForeignKey("LocaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDCatalogue.Model.Creatures.Monster", "Monster")
+                        .WithMany("Locales")
                         .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -569,7 +839,7 @@ namespace DDCatalogue.Migrations
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
+                    b.HasOne("DDCatalogue.Model.Locations.Locale", null)
                         .WithMany("Buildings")
                         .HasForeignKey("LocaleId");
                 });
@@ -588,7 +858,7 @@ namespace DDCatalogue.Migrations
             modelBuilder.Entity("DDCatalogue.Model.Locations.Locale", b =>
                 {
                     b.HasOne("DDCatalogue.Model.Locations.Region", "Region")
-                        .WithMany("Municipalities")
+                        .WithMany("Locales")
                         .HasForeignKey("RegionId");
                 });
 
@@ -599,26 +869,17 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("ContinentId");
                 });
 
-            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
-                {
-                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
-                        .WithMany()
-                        .HasForeignKey("BuildingId");
-
-                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
-                        .WithMany()
-                        .HasForeignKey("LocaleId");
-                });
-
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
                 {
                     b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
-                        .WithMany("Characters")
-                        .HasForeignKey("BuildingId");
+                        .WithMany("Players")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
-                        .WithMany("Characters")
-                        .HasForeignKey("LocaleId");
+                        .WithMany("Players")
+                        .HasForeignKey("LocaleId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

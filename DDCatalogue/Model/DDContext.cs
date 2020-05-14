@@ -1,5 +1,6 @@
 ﻿using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Items;
+using DDCatalogue.Model.Joins;
 using DDCatalogue.Model.Locations;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
@@ -28,14 +29,12 @@ namespace DDCatalogue.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ArraySplitting();
-
-            modelBuilder.Entity<Npc>()
-            .HasOne(a => a.Monster)
-            .WithMany(a => a.Npcs)
-            .HasForeignKey("MonsterId");
-
+            modelBuilder.DefineKeys();
+            modelBuilder.BuildRelationships();
             modelBuilder.Seed();
         }
+
+
     }
 
     public static class ModelBuilderExtensions
@@ -80,6 +79,60 @@ namespace DDCatalogue.Model
                     modelBuilder.Entity(modelList.Key).HasData(modelList.Value);
                 }
             }
+        }
+
+        public static void BuildRelationships(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Npc>()
+                .HasOne(a => a.Monster)
+                .WithMany(a => a.Npcs)
+                .HasForeignKey(n => n.MonsterId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Npc>()
+                .HasOne(n => n.Locale)
+                .WithMany(l => l.Npcs)
+                .HasForeignKey(n => n.LocaleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Npc>()
+                .HasOne(n => n.Building)
+                .WithMany(b => b.Npcs)
+                .HasForeignKey(n => n.BuildingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(p => p.Building)
+                .WithMany(b => b.Players)
+                .HasForeignKey(p => p.BuildingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Player>()
+                .HasOne(p => p.Locale)
+                .WithMany(l => l.Players)
+                .HasForeignKey(p => p.LocaleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<MonsterLocale>()
+            //    .HasOne(ml => ml.Monster)
+            //    .WithMany(m => m.Locales)
+            //    .HasForeignKey(ml => ml.MonsterId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<MonsterLocale>()
+            //    .HasOne(ml => ml.Locale)
+            //    .WithMany(l => l.Monsters)
+            //    .HasForeignKey(ml => ml.LocaleId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        public static void DefineKeys(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MonsterBuilding>()
+                .HasKey(mb => new { mb.MonsterId, mb.BuildingId });
+
+            modelBuilder.Entity<MonsterLocale>()
+                .HasKey(ml => new { ml.MonsterId, ml.LocaleId });
         }
 
         private static IList<T> CreateTypeList<T>(Type type)

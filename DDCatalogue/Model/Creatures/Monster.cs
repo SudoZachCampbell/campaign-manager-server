@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DDCatalogue.Model.Joins;
+using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Creatures
 {
@@ -12,5 +13,7 @@ namespace DDCatalogue.Model.Creatures
         public string[] Actions { get; set; }
         public string[] LegendaryActions { get; set; }
         public List<Npc> Npcs { get; set; }
+        public List<MonsterLocale> Locales { get; set; }
+        public List<MonsterBuilding> Buildings { get; set; }
     }
 }

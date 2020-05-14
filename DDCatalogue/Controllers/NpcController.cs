@@ -1,13 +1,12 @@
-﻿using System;
+﻿using DDCatalogue.Model;
+using DDCatalogue.Model.Creatures;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DDCatalogue.Model;
-using DDCatalogue.Model.Creatures;
-using Microsoft.Extensions.Logging;
 
 namespace DDCatalogue.Controllers
 {
@@ -24,12 +23,19 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Npc> Get()
+        public ActionResult<string> Get()
         {
-            using(DDContext db = new DDContext())
-            {
-                return db.Npcs.ToList();
-            }
+            using DDContext db = new DDContext();
+            return JsonConvert.SerializeObject(db.Npcs
+                                                .Include(n => n.Monster)
+                                                .Include(n => n.Building)
+                                                .Include(n => n.Locale)
+                                                .ToList(),
+                Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
         }
     }
 }

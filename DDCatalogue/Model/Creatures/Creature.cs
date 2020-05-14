@@ -50,8 +50,6 @@ namespace DDCatalogue.Model.Creatures
         public string Languages { get; set; }
         public string[] Traits { get; set; }
         public Alignment Alignment { get; set; }
-        public Locale Locale { get; set; }
-        public Building Building { get; set; }
         public string[] Reactions { get; set; }
     }
 
@@ -66,6 +64,7 @@ namespace DDCatalogue.Model.Creatures
         CG,
         CN,
         CE,
-        Any
+        Any,
+        None
     }
 }

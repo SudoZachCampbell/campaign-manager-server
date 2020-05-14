@@ -43,6 +43,7 @@ export default function NpcList(props: any) {
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Monster</th>
+                                    <th>Location</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +54,7 @@ export default function NpcList(props: any) {
                                                 <td>{npc.Id}</td>
                                                 <td>{npc.Name}</td>
                                                 <td>{npc.Monster ? npc.Monster.Name : "None"}</td>
+                                                <td>{npc.BuildingId ? `${npc.Building.Name} in ${npc.Locale.Name}` : npc.Locale.Name}</td>
                                             </Tr>
                                             <tr id={`hide-row-${npc.Id}`} style={{ display: "none" }}>
                                                 <td colSpan={5}>

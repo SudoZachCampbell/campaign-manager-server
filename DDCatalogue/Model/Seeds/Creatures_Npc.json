@@ -1,14 +1,86 @@
 [
   {
     "Name": "Klarg Big-Crown",
-    "MonsterId": 2
+    "MonsterId": 2,
+    "LocaleId": 9 
   },
   {
     "Name": "Gundren Rockseeker",
-    "MonsterId": 1
+    "MonsterId": 1,
+    "LocaleId": 3
   },
   {
     "Name": "Sildar Hallwinter",
-    "MonsterId":  3
+    "MonsterId": 3,
+    "BuildingId":  9,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Elmar Barthen",
+    "MonsterId": 5,
+    "BuildingId":  2,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Linene Graywind",
+    "MonsterId": 3,
+    "BuildingId":  4,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Yeemik Largebrain",
+    "MonsterId": 4,
+    "LocaleId": 9
+  },
+  {
+    "Name": "Iarno Albrek",
+    "BuildingId": 10,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Tharden Rockseeker",
+    "MonsterId": 1,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Nundro Rockseeker",
+    "MonsterId": 1,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Toblen Stonehill",
+    "MonsterId": 7,
+    "BuildingId":  1,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Daran Edermath",
+    "MonsterId": 5,
+    "BuildingId":  3,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Halia Thornton",
+    "MonsterId": 5,
+    "BuildingId":  5,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Qelline Alderleaf",
+    "MonsterId": 5,
+    "BuildingId":  6,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Sister Garaele",
+    "MonsterId": 5,
+    "BuildingId":  7,
+    "LocaleId": 6
+  },
+  {
+    "Name": "Harbin Wester",
+    "MonsterId": 5,
+    "BuildingId":  9,
+    "LocaleId": 6
   }
 ]

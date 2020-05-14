@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DDCatalogue.Model.Locations;
+using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Creatures
 {
@@ -12,5 +13,10 @@ namespace DDCatalogue.Model.Creatures
         public string Race { get; set; }
         public int Xp = 0;
         public bool Inspiration = false;
+        public int? LocaleId { get; set; }
+        public Locale Locale { get; set; }
+        public int? BuildingId { get; set; }
+        public Building Building { get; set; }
+
     }
 }
