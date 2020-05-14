@@ -21,15 +21,14 @@ export default function CollapsibleTable(props: any) {
             <Table>
                 <TableHead>
                     <TableRow>
-                        {props.headers.map(header => {
-                            return <TableCell>{header}</TableCell>
-                        })
-                        }
+                        {props.dataSet.headers.map((header: string) => {
+                            return <TableCell key={header}>{header}</TableCell>
+                        })}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {
-                        props.data.map((instance: any) => <Row key={instance.Id} component={props.component} data={props.data} instance={instance} />)
+                        props.dataSet.data.map((instance: any) => <Row key={instance.Id} component={props.component} data={props.dataSet.data} instance={instance} />)
                     }
                 </TableBody>
             </Table>
@@ -49,7 +48,12 @@ function Row(props: any) {
                         {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                     </IconButton>
                 </TableCell>
-                {_.mapValues(props.instance, (instanceData: any) => <TableCell>{instanceData}</TableCell>)}
+                {
+                    _.mapValues(props.instance, (instanceData: any) => {
+                        console.log("Instance Data: ", instanceData);
+                        return typeof instanceData !== 'object' ? <TableCell>{ instanceData }</TableCell> : null
+                    })
+                }
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={Object.keys(props.instance).length}>

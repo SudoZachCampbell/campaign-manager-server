@@ -6,26 +6,27 @@ import CollapsibleTable from '../components/CollapsibleTable'
 import Npc from '../components/Npc'
 
 export default function NpcList(props: any) {
-    const [npcs, setNpcs] = useState([]);
+    const [npcs, setNpcs] = useState({});
     const [loading, setLoading] = useState(true);
 
     const populateNpcsData = async () => {
         const response = await fetch('Npc/Table');
+        console.log("Response: ", response);
         const data = await response.json();
-        console.log(data);
+        console.log("Data: ", data);
         setNpcs(data);
         setLoading(false);
     }
 
-    const renderNpcsTable = (npcs: any[]) => {
+    const renderNpcsTable = () => {
         return (
-            <CollapsibleTable data={npcs} component={<Npc />} />
+            <CollapsibleTable dataSet={npcs} component={"Npc"} />
         )
     }
 
     const contents = loading
         ? <p><em>Loading...</em></p>
-        : renderNpcsTable(npcs);
+        : renderNpcsTable();
 
 
     useEffect(() => {
