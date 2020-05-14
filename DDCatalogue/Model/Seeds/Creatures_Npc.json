@@ -51,7 +51,8 @@
     "Name": "Toblen Stonehill",
     "MonsterId": 7,
     "BuildingId":  1,
-    "LocaleId": 6
+    "LocaleId": 6,
+    "Picture": "Toblen_Stonehill.jpg"
   },
   {
     "Name": "Daran Edermath",

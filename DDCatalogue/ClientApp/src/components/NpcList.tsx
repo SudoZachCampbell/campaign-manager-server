@@ -22,12 +22,15 @@ export default function NpcList(props: any) {
         const rowElement = document.getElementById(`hide-row-${row}`);
         if (rowElement) {
             if (lastOpened) {
-                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`);
+                console.log(`Last Opened: ${lastOpened}`)
+                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`); 
                 if (lastRowElement) lastRowElement.style.display = "none"
             }
             if (row !== lastOpened) {
                 rowElement.style.display = rowElement.style.display === "none" ? "table-row" : "none";
                 setLastOpened(row);
+            } else {
+                setLastOpened(0);
             }
         }
     }

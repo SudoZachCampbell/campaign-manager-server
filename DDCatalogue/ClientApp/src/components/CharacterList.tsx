@@ -23,13 +23,12 @@ export default function CharacterList(props: any) {
         if (rowElement) {
             if (lastOpened) {
                 console.log(`Last Opened: ${lastOpened}`)
-                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`); 
+                const lastRowElement = document.getElementById(`hide-row-${lastOpened}`);
                 if (lastRowElement) lastRowElement.style.display = "none"
             }
-            if (row !== lastOpened) {
-                rowElement.style.display = rowElement.style.display === "none" ? "table-row" : "none";
-                setLastOpened(row);
-            }
+            rowElement.style.display = rowElement.style.display === "none" ? "table-row" : "none";
+            setLastOpened(row);
+            console.log("test")
         }
     }
 

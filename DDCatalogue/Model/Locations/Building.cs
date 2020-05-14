@@ -9,7 +9,7 @@ namespace DDCatalogue.Model.Locations
         public int Id { get; set; }
         public string Name { get; set; }
         public int? LocaleId { get; set; }
-        public byte[] Map { get; set; }
+        public string Map { get; set; }
         public List<Npc> Npcs { get; set; }
         public List<MonsterBuilding> Monsters { get; set; }
         public List<Player> Players { get; set; }

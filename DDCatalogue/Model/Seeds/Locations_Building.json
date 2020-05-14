@@ -37,6 +37,7 @@
   },
   {
     "Name": "Tresendar Manor",
-    "LocaleId": 6
+    "LocaleId": 6,
+    "Map": "Tresendar_Manor.png"
   }
 ]

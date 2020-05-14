@@ -15,7 +15,9 @@
     "Name": "Old Owl Well"
   },
   {
-    "Name": "Phandalin"
+    "Name": "Phandalin",
+    "RegionId": 1,
+    "Map": "Phandalin.png"
   },
   {
     "Name": "Leilon"

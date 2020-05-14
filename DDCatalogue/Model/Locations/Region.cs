@@ -9,6 +9,6 @@ namespace DDCatalogue.Model.Locations
         public List<Locale> Locales { get; set; }
         public int? ContinentId { get; set; }
         public Continent Continent { get; set; }
-        public byte[] Map { get; set; }
+        public string Map { get; set; }
     }
 }
