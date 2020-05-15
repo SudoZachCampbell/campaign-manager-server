@@ -39,6 +39,7 @@
     <None Remove="ClientApp\src\components\Character.tsx" />
     <None Remove="ClientApp\src\components\CharacterDetails.tsx" />
     <None Remove="ClientApp\src\components\CharacterList.tsx" />
+    <None Remove="ClientApp\src\components\CollapsibleTable.tsx" />
     <None Remove="ClientApp\src\components\Npc.tsx" />
     <None Remove="ClientApp\src\components\NpcList.tsx" />
     <None Remove="ClientApp\src\components\TableAccordionToggle.tsx" />
