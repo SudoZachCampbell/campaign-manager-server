@@ -33,11 +33,11 @@ function Row(props) {
                 React.createElement(IconButton_1.default, { size: "small", onClick: function () { return setOpen(!open); } }, open ? React.createElement(KeyboardArrowUp_1.default, null) : React.createElement(KeyboardArrowDown_1.default, null))),
             _.mapValues(props.instance, function (instanceData) {
                 console.log("Instance Data: ", instanceData);
-                return typeof instanceData !== 'object' ? React.createElement(TableCell_1.default, null, instanceData) : null;
+                return React.createElement(TableCell_1.default, null, instanceData);
             })),
         React.createElement(TableRow_1.default, null,
             React.createElement(TableCell_1.default, { style: { paddingBottom: 0, paddingTop: 0 }, colSpan: Object.keys(props.instance).length },
                 React.createElement(Collapse_1.default, { in: open, timeout: "auto", unmountOnExit: true },
-                    React.createElement(Box_1.default, null, React.createElement(props.component, { data: props.instance })))))));
+                    React.createElement(Box_1.default, null, React.createElement(props.component, { id: props.instance.Id })))))));
 }
 //# sourceMappingURL=CollapsibleTable.js.map

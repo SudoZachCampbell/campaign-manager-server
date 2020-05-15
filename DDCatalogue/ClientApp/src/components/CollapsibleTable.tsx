@@ -50,8 +50,7 @@ function Row(props: any) {
                 </TableCell>
                 {
                     _.mapValues(props.instance, (instanceData: any) => {
-                        console.log("Instance Data: ", instanceData);
-                        return typeof instanceData !== 'object' ? <TableCell>{ instanceData }</TableCell> : null
+                        return <TableCell>{instanceData}</TableCell>
                     })
                 }
             </TableRow>
@@ -59,7 +58,7 @@ function Row(props: any) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={Object.keys(props.instance).length}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box>
-                            {<props.component data={props.instance} />}
+                            {<props.component id={props.instance.Id} />}
                         </Box>
                     </Collapse>
                 </TableCell>

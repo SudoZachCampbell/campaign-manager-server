@@ -11,9 +11,9 @@ export default function NpcList(props: any) {
 
     const populateNpcsData = async () => {
         const response = await fetch('Npc/Table');
-        console.log("Response: ", response);
+        console.log("NPC List Response: ", response);
         const data = await response.json();
-        console.log("Data: ", data);
+        console.log("NPC List Data: ", data);
         setNpcs(data);
         setLoading(false);
     }
