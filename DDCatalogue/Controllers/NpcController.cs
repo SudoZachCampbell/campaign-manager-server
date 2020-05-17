@@ -39,7 +39,7 @@ namespace DDCatalogue.Controllers
                 });
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             using DDContext db = new DDContext();
@@ -63,7 +63,7 @@ namespace DDCatalogue.Controllers
             JArray data = JArray.FromObject(db.Npcs.Include(n => n.Monster)
                                      .Include(n => n.Building)
                                      .Include(n => n.Locale)
-                                     .Select(n => new { npcId = n.Id, npcName = n.Name, monsterName = n.Monster.Name, buildingName = n.Building.Name, localeName = n.Locale.Name })
+                                     .Select(n => new { id = n.Id, npcName = n.Name, monsterName = n.Monster.Name, location = n.Building.Name != null ? $"{n.Building.Name} in {n.Locale.Name}" : n.Locale.Name  })
                                      .ToList(),
                                      JsonSerializer.Create(new JsonSerializerSettings
                                      {
