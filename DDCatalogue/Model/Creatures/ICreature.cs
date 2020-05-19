@@ -7,6 +7,5 @@ namespace DDCatalogue.Model.Creatures
 {
     interface ICreature : IModel
     {
-
     }
 }

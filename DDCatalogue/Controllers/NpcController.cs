@@ -1,12 +1,9 @@
 ﻿using DDCatalogue.Model;
-using DDCatalogue.Model.Creatures;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DDCatalogue.Controllers
@@ -47,7 +44,7 @@ namespace DDCatalogue.Controllers
                                                 .Include(n => n.Monster)
                                                 .Include(n => n.Building)
                                                 .Include(n => n.Locale)
-                                                .ToList(),
+                                                .ToList()[0],
                 Formatting.Indented,
                 new JsonSerializerSettings
                 {
@@ -75,5 +72,12 @@ namespace DDCatalogue.Controllers
                 ["data"] = data
             }.ToString();
         }
+
+        //[HttpGet("[action]")]
+        //public ActionResult<List<Tuple<string, int>>> GetEnum(string property)
+        //{
+        //        Type type = Type.GetType($"DDCatalogue.Model.{fileDetails.Item1}.{fileDetails.Item2}");
+        //}
     }
 }
+ 

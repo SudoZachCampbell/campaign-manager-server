@@ -112,18 +112,6 @@ namespace DDCatalogue.Model
                 .WithMany(l => l.Players)
                 .HasForeignKey(p => p.LocaleId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<MonsterLocale>()
-            //    .HasOne(ml => ml.Monster)
-            //    .WithMany(m => m.Locales)
-            //    .HasForeignKey(ml => ml.MonsterId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<MonsterLocale>()
-            //    .HasOne(ml => ml.Locale)
-            //    .WithMany(l => l.Monsters)
-            //    .HasForeignKey(ml => ml.LocaleId)
-            //    .OnDelete(DeleteBehavior.Restrict);
         }
 
         public static void DefineKeys(this ModelBuilder modelBuilder)

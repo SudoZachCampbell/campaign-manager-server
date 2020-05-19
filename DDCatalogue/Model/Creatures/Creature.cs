@@ -67,4 +67,5 @@ namespace DDCatalogue.Model.Creatures
         Any,
         None
     }
+
 }
