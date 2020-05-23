@@ -51,6 +51,7 @@ namespace DDCatalogue.Model.Creatures
         public string[] Traits { get; set; }
         public Alignment Alignment { get; set; }
         public string[] Reactions { get; set; }
+        public string Picture { get; set; }
     }
 
     public enum Alignment

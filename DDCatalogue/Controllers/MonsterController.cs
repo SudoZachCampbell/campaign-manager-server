@@ -12,37 +12,34 @@ namespace DDCatalogue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MonstersController : ControllerBase
+    public class MonsterController : ControllerBase
     {
-        private readonly DDContext _context;
+        private readonly DDContext db;
 
-        public MonstersController(DDContext context)
+        public MonsterController(DDContext context)
         {
-            _context = context;
+            db = context;
         }
 
-        // GET: api/Monsters
+        // GET: api/Monster
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Monster>>> GetMonsters()
         {
-            return await _context.Monsters.ToListAsync();
+            return await db.Monsters.ToListAsync();
         }
 
-        // GET: api/Monsters/5
+        // GET: api/Monster/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Monster>> GetMonster(int id)
         {
-            var monster = await _context.Monsters.FindAsync(id);
+            Monster monster = await db.Monsters.FindAsync(id);
 
-            if (monster == null)
-            {
-                return NotFound();
-            }
+            if (monster == null) return NotFound();
 
             return monster;
         }
 
-        // PUT: api/Monsters/5
+        // PUT: api/Monster/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -53,11 +50,11 @@ namespace DDCatalogue.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(monster).State = EntityState.Modified;
+            db.Entry(monster).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,48 +71,45 @@ namespace DDCatalogue.Controllers
             return NoContent();
         }
 
-        // POST: api/Monsters
+        // POST: api/Monster
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Monster>> PostMonster(Monster monster)
         {
-            _context.Monsters.Add(monster);
-            await _context.SaveChangesAsync();
+            db.Monsters.Add(monster);
+            await db.SaveChangesAsync();
 
             return CreatedAtAction("GetMonster", new { id = monster.Id }, monster);
         }
 
-        // DELETE: api/Monsters/5
+        // DELETE: api/Monster/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Monster>> DeleteMonster(int id)
         {
-            var monster = await _context.Monsters.FindAsync(id);
+            var monster = await db.Monsters.FindAsync(id);
             if (monster == null)
             {
                 return NotFound();
             }
 
-            _context.Monsters.Remove(monster);
-            await _context.SaveChangesAsync();
+            db.Monsters.Remove(monster);
+            await db.SaveChangesAsync();
 
             return monster;
         }
 
         private bool MonsterExists(int id)
         {
-            return _context.Monsters.Any(e => e.Id == id);
+            return db.Monsters.Any(e => e.Id == id);
         }
 
         [HttpGet("[action]")]
         public ActionResult<string> Table()
         {
-            using DDContext db = new DDContext();
-            JArray headers = new JArray(new string[] { "ID", "Name", "Monster", "Location" });
-            JArray data = JArray.FromObject(db.Npcs.Include(n => n.Monster)
-                                     .Include(n => n.Building)
-                                     .Include(n => n.Locale)
-                                     .Select(n => new { id = n.Id, npcName = n.Name, monsterName = n.Monster.Name, location = n.Building.Name != null ? $"{n.Building.Name} in {n.Locale.Name}" : n.Locale.Name })
+            JArray headers = new JArray(new string[] { "ID", "Name", "Passive Perception", "Alignment" });
+            JArray data = JArray.FromObject(db.Monsters
+                                     .Select(m => new { id = m.Id, m.Name, m.Pp, m.Alignment })
                                      .ToList(),
                                      JsonSerializer.Create(new JsonSerializerSettings
                                      {
