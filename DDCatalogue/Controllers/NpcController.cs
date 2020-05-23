@@ -13,17 +13,16 @@ namespace DDCatalogue.Controllers
     public class NpcController : ControllerBase
     {
 
-        private readonly ILogger<NpcController> _logger;
+        private readonly DDContext db;
 
-        public NpcController(ILogger<NpcController> logger)
+        public NpcController(DDContext context)
         {
-            _logger = logger;
+            db = context;
         }
 
         [HttpGet]
         public ActionResult<string> Get()
         {
-            using DDContext db = new DDContext();
             return JsonConvert.SerializeObject(db.Npcs
                                                 .Include(n => n.Monster)
                                                 .Include(n => n.Building)
@@ -39,7 +38,6 @@ namespace DDCatalogue.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            using DDContext db = new DDContext();
             return JsonConvert.SerializeObject(db.Npcs.Where(n => n.Id.Equals(id))
                                                 .Include(n => n.Monster)
                                                 .Include(n => n.Building)
@@ -55,7 +53,6 @@ namespace DDCatalogue.Controllers
         [HttpGet("[action]")]
         public ActionResult<string> Table()
         {
-            using DDContext db = new DDContext();
             JArray headers = new JArray(new string[] { "ID", "Name", "Monster", "Location" });
             JArray data = JArray.FromObject(db.Npcs.Include(n => n.Monster)
                                      .Include(n => n.Building)
