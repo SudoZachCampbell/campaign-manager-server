@@ -1,4 +1,5 @@
 ﻿using DDCatalogue.Model;
+using DDCatalogue.Model.Creatures;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -36,18 +37,14 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Npc> Get(int id)
         {
-            return JsonConvert.SerializeObject(db.Npcs.Where(n => n.Id.Equals(id))
+            Npc npc = db.Npcs.Where(n => n.Id.Equals(id))
                                                 .Include(n => n.Monster)
                                                 .Include(n => n.Building)
                                                 .Include(n => n.Locale)
-                                                .ToList()[0],
-                Formatting.Indented,
-                new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
+                                                .SingleOrDefault();
+            return npc;
         }
 
         [HttpGet("[action]")]
