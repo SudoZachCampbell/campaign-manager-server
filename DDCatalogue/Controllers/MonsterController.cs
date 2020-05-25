@@ -14,25 +14,20 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class MonsterController : ControllerBase
     {
-        private readonly DDContext db;
-
-        public MonsterController(DDContext context)
-        {
-            db = context;
-        }
+        private readonly UnitOfWork UnitOfWork = new UnitOfWork();
 
         // GET: api/Monster
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Monster>>> GetMonsters()
+        public ActionResult<List<Monster>> GetMonsters()
         {
-            return await db.Monsters.ToListAsync();
+            return UnitOfWork.MonsterRepository.Get().ToList();
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Monster>> GetMonster(int id)
+        public ActionResult<Monster> GetMonster(int id)
         {
-            Monster monster = await db.Monsters.FindAsync(id);
+            Monster monster = UnitOfWork.MonsterRepository.GetById(id);
 
             if (monster == null) return NotFound();
 
@@ -43,30 +38,15 @@ namespace DDCatalogue.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMonster(int id, Monster monster)
+        public IActionResult PutMonster(int id, Monster monster)
         {
             if (id != monster.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(monster).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MonsterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            UnitOfWork.MonsterRepository.Update(monster);
+            UnitOfWork.Save();
 
             return NoContent();
         }
@@ -85,29 +65,24 @@ namespace DDCatalogue.Controllers
 
         // DELETE: api/Monster/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Monster>> DeleteMonster(int id)
+        public ActionResult<Monster> DeleteMonster(int id)
         {
-            var monster = await db.Monsters.FindAsync(id);
+            Monster monster = UnitOfWork.MonsterRepository.GetById(id);
             if (monster == null)
             {
                 return NotFound();
             }
 
-            db.Monsters.Remove(monster);
-            await db.SaveChangesAsync();
+            UnitOfWork.MonsterRepository.Delete(monster);
+            UnitOfWork.Save();
 
             return monster;
         }
 
-        private bool MonsterExists(int id)
-        {
-            return db.Monsters.Any(e => e.Id == id);
-        }
-
         [HttpGet("[action]")]
-        public async Task<ActionResult<List<Monster>>> Table()
+        public ActionResult<List<Monster>> Table()
         {
-            List<Monster> monsters = await db.Monsters
+            List<Monster> monsters = UnitOfWork.MonsterRepository.Get()
                 .Select(m => new
                 { 
                     m.Id, 
