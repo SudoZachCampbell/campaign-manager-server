@@ -4,10 +4,6 @@ namespace DDCatalogue.Model.Creatures
 {
     public class Npc : ICreature
     {
-        public Npc(string name)
-        {
-            Name = name;
-        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Picture { get; set; }

@@ -4,13 +4,6 @@ namespace DDCatalogue.Model.Creatures
 {
     public class Creature : ICreature
     {
-        public Creature(string name, int ac, int hp, Alignment alignment)
-        {
-            Name = name;
-            Ac = ac;
-            Hp = hp;
-            Alignment = alignment;
-        }
         public int Id { get; set; }
         public string Name { get; set; }
         public int? Str { get; set; }
@@ -43,8 +36,8 @@ namespace DDCatalogue.Model.Creatures
         public bool? SavInt { get; set; }
         public bool? SavWis { get; set; }
         public bool? SavCha { get; set; }
-        public int Ac { get; set; }
-        public int Hp { get; set; }
+        public int ArmorClass { get; set; }
+        public int HitPoints { get; set; }
         public string HitDice { get; set; }
         public string Speed { get; set; }
         public string Languages { get; set; }

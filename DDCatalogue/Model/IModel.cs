@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
-    interface IModel
+    public interface IModel
     {
         int Id { get; set; }
         string Name { get; set; }

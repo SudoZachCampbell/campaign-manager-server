@@ -105,21 +105,18 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult<string> Table()
+        public async Task<ActionResult<List<Monster>>> Table()
         {
-            JArray headers = new JArray(new string[] { "ID", "Name", "Passive Perception", "Alignment" });
-            JArray data = JArray.FromObject(db.Monsters
-                                     .Select(m => new { id = m.Id, m.Name, m.Pp, m.Alignment })
-                                     .ToList(),
-                                     JsonSerializer.Create(new JsonSerializerSettings
-                                     {
-                                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                                     }));
-            return new JObject()
-            {
-                ["headers"] = headers,
-                ["data"] = data
-            }.ToString();
+            List<Monster> monsters = await db.Monsters
+                .Select(m => new
+                { 
+                    m.Id, 
+                    m.Name, 
+                    m.PassivePerception, 
+                    m.Alignment 
+                })
+                .ToListAsync();
+            return monsters;
         }
     }
 }
