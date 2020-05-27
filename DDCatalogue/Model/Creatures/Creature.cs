@@ -17,7 +17,7 @@ namespace DDCatalogue.Model.Creatures
         public int ArmorClass { get; set; }
         public int HitPoints { get; set; }
         public string HitDice { get; set; }
-        public string Speed { get; set; }
+        public List<Speed> Speed { get; set; }
         public string Languages { get; set; }
         public List<Trait> Traits { get; set; }
         public Alignment Alignment { get; set; }
@@ -40,6 +40,13 @@ namespace DDCatalogue.Model.Creatures
     {
         public string Name { get; set; }
         public string Desc { get; set; }
+    }
+
+    public class Speed
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public string Measurement { get; set; }
     }
 
 
