@@ -1,43 +1,43 @@
 [
   {
-    "Name": "Stonehill Inn",
-    "LocaleId": 6
+    "name": "Stonehill Inn",
+    "locale_id": 6
   },
   {
-    "Name": "Barthen's Provisions",
-    "LocaleId": 6
+    "name": "Barthen's Provisions",
+    "locale_id": 6
   },
   {
-    "Name": "Edermath Orchard",
-    "LocaleId": 6
+    "name": "Edermath Orchard",
+    "locale_id": 6
   },
   {
-    "Name": "Lionshield Coster",
-    "LocaleId": 6
+    "name": "Lionshield Coster",
+    "locale_id": 6
   },
   {
-    "Name": "Phandalin Miner's Exchange",
-    "LocaleId": 6
+    "name": "Phandalin Miner's Exchange",
+    "locale_id": 6
   },
   {
-    "Name": "Alderleaf Farm",
-    "LocaleId": 6
+    "name": "Alderleaf Farm",
+    "locale_id": 6
   },
   {
-    "Name": "Shrine of Luck",
-    "LocaleId": 6
+    "name": "Shrine of Luck",
+    "locale_id": 6
   },
   {
-    "Name": "The Sleeping Giant",
-    "LocaleId": 6
+    "name": "The Sleeping Giant",
+    "locale_id": 6
   },
   {
-    "Name": "Townmaster's Hall",
-    "LocaleId": 6
+    "name": "Townmaster's Hall",
+    "locale_id": 6
   },
   {
-    "Name": "Tresendar Manor",
-    "LocaleId": 6,
-    "Map": "Tresendar_Manor.png"
+    "name": "Tresendar Manor",
+    "locale_id": 6,
+    "map": "Tresendar_Manor.png"
   }
 ]

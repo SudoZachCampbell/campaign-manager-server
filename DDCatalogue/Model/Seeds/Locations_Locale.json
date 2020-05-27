@@ -1,31 +1,31 @@
 [
   {
-    "Name": "Neverwinter"
+    "name": "Neverwinter"
   },
   {
-    "Name": "Thundertree"
+    "name": "Thundertree"
   },
   {
-    "Name": "Cragmaw Castle"
+    "name": "Cragmaw Castle"
   },
   {
-    "Name": "Conyberry"
+    "name": "Conyberry"
   },
   {
-    "Name": "Old Owl Well"
+    "name": "Old Owl Well"
   },
   {
-    "Name": "Phandalin",
-    "RegionId": 1,
-    "Map": "Phandalin.png"
+    "name": "Phandalin",
+    "region_id": 1,
+    "map": "Phandalin.png"
   },
   {
-    "Name": "Leilon"
+    "name": "Leilon"
   },
   {
-    "Name": "Neverwinter"
+    "name": "Neverwinter"
   },
   {
-    "Name": "Cragmaw Hideout"
+    "name": "Cragmaw Hideout"
   }
 ]

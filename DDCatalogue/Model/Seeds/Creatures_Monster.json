@@ -1,183 +1,129 @@
 [
   {
-    "Name": "Drawf Warrior",
-    "ArmorClass": 16,
-    "HitPoints": 39,
-    "Alignment": 0,
-    "Strength": 14,
-    "Dexterity": 11,
-    "Constitution": 14,
-    "Intelligence": 10,
-    "Wisdom": 11,
-    "Charisma": 10,
-    "Size":  "Medium",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 25,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 1,
-    "Languages": "Common, Dwarvish",
-    "Senses": [
-      {
-        "Name": "Darkvision",
-        "Desc": "60ft"
-      }
-    ],
-    "PassivePerception": 10,
-    "DefeatXp": 200
+    "name": "Drawf Warrior",
+    "armor_class": 16,
+    "hit_points": 39,
+    "alignment": 0,
+    "strength": 14,
+    "dexterity": 11,
+    "constitution": 14,
+    "intelligence": 10,
+    "wisdom": 11,
+    "charisma": 10,
+    "size": "Medium",
+    "speed": "[{\"Name\": \"walk\",\"Value\": 25,\"Measurement\": \"ft\"}]",
+    "challenge_rating": 1,
+    "languages": "Common, Dwarvish",
+    "senses": "[{\"Name\": \"Darkvision\",\"Desc\": \"60ft\"}]",
+    "passive_perception": 10
   },
   {
-    "Name": "Bugbear",
-    "ArmorClass": 16,
-    "HitPoints": 27,
-    "Alignment": 8,
-    "Strength": 15,
-    "Dexterity": 14,
-    "Constitution": 13,
-    "Intelligence": 8,
-    "Wisdom": 11,
-    "Charisma": 9,
-    "Size":  "Medium",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 1,
-    "Languages": "Common, Goblin",
-    "Senses": [
-      {
-        "Name": "Darkvision",
-        "Desc": "60ft"
-      }
-    ],
-    "Pp": 10,
-    "DefeatXp": 200
+    "name": "Bugbear",
+    "size": "Medium",
+    "type": "humanoid",
+    "subtype": "goblinoid",
+    "alignment": 8,
+    "armor_class": 16,
+    "hit_points": 27,
+    "hit_dice": "5d8",
+    "speed": "{\"walk\": \"30 ft.\"}",
+    "strength": 15,
+    "dexterity": 14,
+    "constitution": 13,
+    "intelligence": 8,
+    "wisdom": 11,
+    "charisma": 9,
+    "proficiencies": "[{\"name\": \"Skill: Stealth\",\"value\": 6},{\"name\": \"Skill: Survival\",\"value\": 2}]",
+    "senses": "{\"darkvision\": \"60 ft.\"}",
+    "passive_perception": 10,
+    "languages": "Common, Goblin",
+    "challenge_rating": 1,
+    "special_abilities": "[{\"name\": \"Brute\",\"desc\": \"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\": \"Surprise Attack\",\"desc\": \"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]",
+    "actions": "[{\"name\": \"Morningstar\",\"desc\": \"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d8\",\"damage_bonus\": 2}]},{\"name\": \"Javelin\",\"desc\": \"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d6\",\"damage_bonus\": 2}]}]"
   },
   {
-    "Name": "Knight",
-    "ArmorClass": 18,
-    "HitPoints": 52,
-    "Alignment": 9,
-    "Strength": 16,
-    "Dexterity": 11,
-    "Constitution": 14,
-    "Intelligence": 11,
-    "Wisdom": 11,
-    "Charisma": 15,
-    "Size":  "Medium",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 3,
-    "Languages": "Any one",
-    "Pp": 10,
-    "DefeatXp": 700
+    "name": "Knight",
+    "armor_class": 18,
+    "hit_points": 52,
+    "alignment": 9,
+    "strength": 16,
+    "dexterity": 11,
+    "constitution": 14,
+    "intelligence": 11,
+    "wisdom": 11,
+    "charisma": 15,
+    "size": "Medium",
+    "speed": "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
+    "challenge_rating": 3,
+    "languages": "Any one",
+    "passive_perception": 10
   },
   {
-    "Name": "Goblin",
-    "ArmorClass": 15,
-    "HitPoints": 7,
-    "Alignment": 5,
-    "Strength": 8,
-    "Dexterity": 14,
-    "Constitution": 10,
-    "Intelligence": 10,
-    "Wisdom": 8,
-    "Charisma": 8,
-    "Size":  "Small",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 0.25,
-    "Languages": "Common, Goblin",
-    "Pp": 9,
-    "DefeatXp": 50
+    "name": "Goblin",
+    "armor_class": 15,
+    "hit_points": 7,
+    "alignment": 5,
+    "strength": 8,
+    "dexterity": 14,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 8,
+    "charisma": 8,
+    "size": "Small",
+    "speed": "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
+    "challenge_rating": 0.25,
+    "languages": "Common, Goblin",
+    "passive_perception": 9
   },
   {
-    "Name": "Commoner",
-    "ArmorClass": 10,
-    "HitPoints": 4,
-    "Alignment": 9,
-    "Strength": 10,
-    "Dexterity": 10,
-    "Constitution": 10,
-    "Intelligence": 10,
-    "Wisdom": 10,
-    "Charisma": 10,
-    "Size":  "Medium",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 0,
-    "Languages": "Any one",
-    "Pp": 10,
-    "DefeatXp": 10
+    "name": "Commoner",
+    "armor_class": 10,
+    "hit_points": 4,
+    "alignment": 9,
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10,
+    "size": "Medium",
+    "speed": "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
+    "challenge_rating": 0,
+    "languages": "Any one",
+    "passive_perception": 10
   },
   {
     "Name": "Wolf",
-    "ArmorClass": 13,
-    "HitPoints": 11,
-    "Alignment": 10,
-    "Strength": 12,
-    "Dexterity": 15,
-    "Constitution": 12,
-    "Intelligence": 3,
-    "Wisdom": 12,
-    "Charisma": 6,
-    "Size":  "Medium",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 40,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 0.25,
-    "Languages": "",
-    "Pp": 13,
-    "DefeatXp": 50
+    "armor_class": 13,
+    "hit_points": 11,
+    "alignment": 10,
+    "strength": 12,
+    "dexterity": 15,
+    "constitution": 12,
+    "intelligence": 3,
+    "wisdom": 12,
+    "charisma": 6,
+    "size": "Medium",
+    "speed": "[{\"Name\": \"walk\",\"Value\": 40,\"Measurement\": \"ft\"}]",
+    "challenge_rating": 0.25,
+    "languages": "",
+    "passive_perception": 13
   },
   {
     "Name": "Dwarf",
-    "ArmorClass": 14,
-    "HitPoints": 26,
-    "Alignment": 0,
-    "Strength": 13,
-    "Dexterity": 10,
-    "Constitution": 12,
-    "Intelligence": 10,
-    "Wisdom": 12,
-    "Charisma": 10,
-    "Size":  "Medium",
-    "Speed": [
-      {
-        "Name": "walk",
-        "Value": 25,
-        "Measurement": "ft"
-      }
-    ],
-    "Challenge": 0.5,
-    "Languages": "Common, Dwarvish",
-    "Pp": 10,
-    "DefeatXp": 100
+    "armor_class": 14,
+    "hit_points": 26,
+    "alignment": 0,
+    "strength": 13,
+    "dexterity": 10,
+    "constitution": 12,
+    "intelligence": 10,
+    "wisdom": 12,
+    "charisma": 10,
+    "size": "Medium",
+    "speed": "[{\"Name\": \"walk\",\"Value\": 25,\"Measurement\": \"ft\"}]",
+    "challenge_rating": 0.5,
+    "languages": "Common, Dwarvish",
+    "passive_perception": 10
   }
-
 ]

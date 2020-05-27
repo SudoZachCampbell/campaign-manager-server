@@ -3,7 +3,9 @@ using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Joins;
 using DDCatalogue.Model.Locations;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,9 +60,18 @@ namespace DDCatalogue.Model
                 Type type = Type.GetType($"DDCatalogue.Model.{fileDetails.Item1}.{fileDetails.Item2}");
                 IList<IModel> genericList = CreateTypeList<IModel>(type);
                 JArray aOfObjects = JArray.Parse(file.OpenText().ReadToEnd());
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new SnakeCaseNamingStrategy { ProcessDictionaryKeys = true }
+                    },
+                    Formatting = Formatting.Indented
+                };
                 foreach (JToken token in aOfObjects)
                 {
-                    genericList.Add((IModel)token.ToObject(type));
+                    var obj = JsonConvert.DeserializeObject(token.ToString(), type, settings);
+                    genericList.Add((IModel)obj);
                 }
                 seeds.Add(type, genericList);
             }
