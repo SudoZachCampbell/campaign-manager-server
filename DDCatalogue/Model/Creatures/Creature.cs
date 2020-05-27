@@ -17,6 +17,7 @@ namespace DDCatalogue.Model.Creatures
         public int ArmorClass { get; set; }
         public int HitPoints { get; set; }
         public string HitDice { get; set; }
+        public string Size { get; set; }
         public List<Speed> Speed { get; set; }
         public string Languages { get; set; }
         public List<Trait> Traits { get; set; }
@@ -31,7 +32,8 @@ namespace DDCatalogue.Model.Creatures
         public int Value { get; set; }
     }
 
-    public class Reaction { 
+    public class Reaction
+    {
         public string Name { get; set; }
         public string Desc { get; set; }
     }

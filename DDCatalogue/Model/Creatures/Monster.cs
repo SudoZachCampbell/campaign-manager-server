@@ -5,7 +5,7 @@ namespace DDCatalogue.Model.Creatures
 {
     public class Monster : Creature
     {
-        public double Challenge { get; set; }
+        public double ChallengeRating { get; set; }
         public int DefeatXp { get; set; }
         public int PassivePerception { get; set; }
         public List<Action> Actions { get; set; }
