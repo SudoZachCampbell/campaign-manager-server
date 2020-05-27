@@ -6,12 +6,12 @@ namespace DDCatalogue.Model.Creatures
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? Str { get; set; }
-        public int? Dex { get; set; }
-        public int? Con { get; set; }
-        public int? Int { get; set; }
-        public int? Wis { get; set; }
-        public int? Cha { get; set; }
+        public int? Strength { get; set; }
+        public int? Dexterity { get; set; }
+        public int? Constitution { get; set; }
+        public int? Intelligence { get; set; }
+        public int? Wisdom { get; set; }
+        public int? Charisma { get; set; }
         public bool? Acrobatics { get; set; }
         public bool? AnimalHandling { get; set; }
         public bool? Arcana { get; set; }

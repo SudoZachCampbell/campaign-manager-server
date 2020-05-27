@@ -42,7 +42,7 @@ namespace DDCatalogue.Model
             return dbSet.Find(id);
         }
 
-        public virtual void Inset(TEntity entity)
+        public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
         }

@@ -55,10 +55,10 @@ namespace DDCatalogue.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Monster>> PostMonster(Monster monster)
+        public ActionResult<Monster> PostMonster(Monster monster)
         {
-            db.Monsters.Add(monster);
-            await db.SaveChangesAsync();
+            UnitOfWork.MonsterRepository.Insert(monster);
+            UnitOfWork.Save();
 
             return CreatedAtAction("GetMonster", new { id = monster.Id }, monster);
         }
@@ -80,17 +80,16 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult<List<Monster>> Table()
+        public ActionResult<dynamic> Table()
         {
-            List<Monster> monsters = UnitOfWork.MonsterRepository.Get()
+            dynamic monsters = UnitOfWork.MonsterRepository.Get()
                 .Select(m => new
-                { 
-                    m.Id, 
-                    m.Name, 
-                    m.PassivePerception, 
-                    m.Alignment 
-                })
-                .ToListAsync();
+                {
+                    id = m.Id,
+                    name = m.Name,
+                    passivePerception = m.PassivePerception,
+                    alignment = m.Alignment
+                }).ToList();
             return monsters;
         }
     }
