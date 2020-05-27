@@ -18,39 +18,16 @@ namespace DDCatalogue.Model.Creatures
         public int HitPoints { get; set; }
         public string HitDice { get; set; }
         public string Size { get; set; }
-        public List<Speed> Speed { get; set; }
+        /// <summary>
+        /// Convert from JSON
+        /// </summary>
+        public string Speed { get; set; }
         public string Languages { get; set; }
         public List<Trait> Traits { get; set; }
         public Alignment Alignment { get; set; }
         public List<Reaction> Reactions { get; set; }
         public string Picture { get; set; }
     }
-
-    public class Proficiency
-    {
-        public string Name { get; set; }
-        public int Value { get; set; }
-    }
-
-    public class Reaction
-    {
-        public string Name { get; set; }
-        public string Desc { get; set; }
-    }
-
-    public class Trait
-    {
-        public string Name { get; set; }
-        public string Desc { get; set; }
-    }
-
-    public class Speed
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public string Measurement { get; set; }
-    }
-
 
     public enum Alignment
     {

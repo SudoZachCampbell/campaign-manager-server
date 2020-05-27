@@ -28,7 +28,6 @@ namespace DDCatalogue.Model
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(@"Server=192.168.0.41;Database=DDCatalogue;User Id=sa;Password=Microsoft1!");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ArraySplitting();
             modelBuilder.DefineKeys();
             modelBuilder.BuildRelationships();
             modelBuilder.Seed();
@@ -129,33 +128,6 @@ namespace DDCatalogue.Model
             var constructedListType = listType.MakeGenericType(type);
             IEnumerable<T> instance = (IEnumerable<T>)Activator.CreateInstance(constructedListType);
             return instance.ToList();
-        }
-
-        public static void ArraySplitting(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Creature>()
-            .Property(e => e.Traits)
-            .HasConversion(
-                v => string.Join('/', v),
-                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
-
-            modelBuilder.Entity<Creature>()
-            .Property(e => e.Reactions)
-            .HasConversion(
-                v => string.Join('/', v),
-                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
-
-            modelBuilder.Entity<Monster>()
-            .Property(e => e.Actions)
-            .HasConversion(
-                v => string.Join('/', v),
-                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
-
-            modelBuilder.Entity<Monster>()
-            .Property(e => e.LegendaryActions)
-            .HasConversion(
-                v => string.Join('/', v),
-                v => v.Split('/', StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }

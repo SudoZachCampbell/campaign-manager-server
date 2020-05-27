@@ -10,27 +10,16 @@ namespace DDCatalogue.Model.Creatures
         public int PassivePerception { get; set; }
         public List<Action> Actions { get; set; }
         public List<LegendaryAction> LegendaryActions { get; set; }
-        public List<Sense> Senses { get; set; }
+        /// <summary>
+        /// Convert from JSON
+        /// </summary>
+        public string Senses { get; set; }
         public List<Npc> Npcs { get; set; }
         public List<MonsterLocale> Locales { get; set; }
         public List<MonsterBuilding> Buildings { get; set; }
     }
 
-    public class Action
-    {
-        public string Name { get; set; }
-        public string Desc { get; set; }
-    }
 
-    public class LegendaryAction
-    {
-        public string Name { get; set; }
-        public string Desc { get; set; }
-    }
 
-    public class Sense
-    {
-        public string Name { get; set; }
-        public string Desc { get; set; }
-    }
+
 }
