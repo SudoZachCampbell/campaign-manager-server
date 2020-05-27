@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Attributes
 {
-    public class Trait
+    public class Trait : IAttribute
     {
         public int Id { get; set; }
         public string Name { get; set; }
