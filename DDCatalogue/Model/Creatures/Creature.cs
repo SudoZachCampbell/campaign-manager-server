@@ -19,9 +19,9 @@ namespace DDCatalogue.Model.Creatures
         public string HitDice { get; set; }
         public string Speed { get; set; }
         public string Languages { get; set; }
-        public string[] Traits { get; set; }
+        public List<Trait> Traits { get; set; }
         public Alignment Alignment { get; set; }
-        public string[] Reactions { get; set; }
+        public List<Reaction> Reactions { get; set; }
         public string Picture { get; set; }
     }
 
@@ -30,6 +30,18 @@ namespace DDCatalogue.Model.Creatures
         public string Name { get; set; }
         public int Value { get; set; }
     }
+
+    public class Reaction { 
+        public string Name { get; set; }
+        public string Desc { get; set; }
+    }
+
+    public class Trait
+    {
+        public string Name { get; set; }
+        public string Desc { get; set; }
+    }
+
 
     public enum Alignment
     {
