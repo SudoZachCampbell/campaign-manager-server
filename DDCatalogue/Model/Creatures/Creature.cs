@@ -1,5 +1,8 @@
 ﻿using DDCatalogue.Model.Joins;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DDCatalogue.Model.Creatures
 {
@@ -23,10 +26,7 @@ namespace DDCatalogue.Model.Creatures
         public int HitPoints { get; set; }
         public string HitDice { get; set; }
         public string Size { get; set; }
-        /// <summary>
-        /// Convert from JSON
-        /// </summary>
-        public string Speed { get; set; }
+        public JArray Speed { get; set; }
         public string Languages { get; set; }
         public Alignment Alignment { get; set; }
         /// <summary>

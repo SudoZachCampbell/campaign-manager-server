@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20200527183120_Initial Migration")]
+    [Migration("20200527190909_Initial Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,24 +21,18 @@ namespace DDCatalogue.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Creature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Actions")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Alignment")
                         .HasColumnType("int");
 
                     b.Property<int>("ArmorClass")
                         .HasColumnType("int");
-
-                    b.Property<double>("ChallengeRating")
-                        .HasColumnType("float");
 
                     b.Property<int?>("Charisma")
                         .HasColumnType("int");
@@ -48,6 +42,10 @@ namespace DDCatalogue.Migrations
 
                     b.Property<int?>("Dexterity")
                         .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HitDice")
                         .HasColumnType("nvarchar(max)");
@@ -61,14 +59,8 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Languages")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LegendaryActions")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PassivePerception")
-                        .HasColumnType("int");
 
                     b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");
@@ -79,13 +71,7 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Reactions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Senses")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpecialAbilities")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Speed")
@@ -105,150 +91,9 @@ namespace DDCatalogue.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Monsters");
+                    b.ToTable("Creature");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Alignment = 0,
-                            ArmorClass = 16,
-                            ChallengeRating = 1.0,
-                            Charisma = 10,
-                            Constitution = 14,
-                            Dexterity = 11,
-                            HitPoints = 39,
-                            Intelligence = 10,
-                            Languages = "Common, Dwarvish",
-                            Name = "Drawf Warrior",
-                            PassivePerception = 10,
-                            Senses = "[{\"Name\": \"Darkvision\",\"Desc\": \"60ft\"}]",
-                            Size = "Medium",
-                            Speed = "[{\"Name\": \"walk\",\"Value\": 25,\"Measurement\": \"ft\"}]",
-                            Strength = 14,
-                            Wisdom = 11
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Actions = "[{\"name\": \"Morningstar\",\"desc\": \"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d8\",\"damage_bonus\": 2}]},{\"name\": \"Javelin\",\"desc\": \"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d6\",\"damage_bonus\": 2}]}]",
-                            Alignment = 8,
-                            ArmorClass = 16,
-                            ChallengeRating = 1.0,
-                            Charisma = 9,
-                            Constitution = 13,
-                            Dexterity = 14,
-                            HitDice = "5d8",
-                            HitPoints = 27,
-                            Intelligence = 8,
-                            Languages = "Common, Goblin",
-                            Name = "Bugbear",
-                            PassivePerception = 10,
-                            Proficiencies = "[{\"name\": \"Skill: Stealth\",\"value\": 6},{\"name\": \"Skill: Survival\",\"value\": 2}]",
-                            Senses = "{\"darkvision\": \"60 ft.\"}",
-                            Size = "Medium",
-                            SpecialAbilities = "[{\"name\": \"Brute\",\"desc\": \"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\": \"Surprise Attack\",\"desc\": \"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]",
-                            Speed = "{\"walk\": \"30 ft.\"}",
-                            Strength = 15,
-                            Subtype = "goblinoid",
-                            Type = "humanoid",
-                            Wisdom = 11
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Alignment = 9,
-                            ArmorClass = 18,
-                            ChallengeRating = 3.0,
-                            Charisma = 15,
-                            Constitution = 14,
-                            Dexterity = 11,
-                            HitPoints = 52,
-                            Intelligence = 11,
-                            Languages = "Any one",
-                            Name = "Knight",
-                            PassivePerception = 10,
-                            Size = "Medium",
-                            Speed = "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
-                            Strength = 16,
-                            Wisdom = 11
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Alignment = 5,
-                            ArmorClass = 15,
-                            ChallengeRating = 0.25,
-                            Charisma = 8,
-                            Constitution = 10,
-                            Dexterity = 14,
-                            HitPoints = 7,
-                            Intelligence = 10,
-                            Languages = "Common, Goblin",
-                            Name = "Goblin",
-                            PassivePerception = 9,
-                            Size = "Small",
-                            Speed = "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
-                            Strength = 8,
-                            Wisdom = 8
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Alignment = 9,
-                            ArmorClass = 10,
-                            ChallengeRating = 0.0,
-                            Charisma = 10,
-                            Constitution = 10,
-                            Dexterity = 10,
-                            HitPoints = 4,
-                            Intelligence = 10,
-                            Languages = "Any one",
-                            Name = "Commoner",
-                            PassivePerception = 10,
-                            Size = "Medium",
-                            Speed = "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
-                            Strength = 10,
-                            Wisdom = 10
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Alignment = 10,
-                            ArmorClass = 13,
-                            ChallengeRating = 0.25,
-                            Charisma = 6,
-                            Constitution = 12,
-                            Dexterity = 15,
-                            HitPoints = 11,
-                            Intelligence = 3,
-                            Languages = "",
-                            Name = "Wolf",
-                            PassivePerception = 13,
-                            Size = "Medium",
-                            Speed = "[{\"Name\": \"walk\",\"Value\": 40,\"Measurement\": \"ft\"}]",
-                            Strength = 12,
-                            Wisdom = 12
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Alignment = 0,
-                            ArmorClass = 14,
-                            ChallengeRating = 0.5,
-                            Charisma = 10,
-                            Constitution = 12,
-                            Dexterity = 10,
-                            HitPoints = 26,
-                            Intelligence = 10,
-                            Languages = "Common, Dwarvish",
-                            Name = "Dwarf",
-                            PassivePerception = 10,
-                            Size = "Medium",
-                            Speed = "[{\"Name\": \"walk\",\"Value\": 25,\"Measurement\": \"ft\"}]",
-                            Strength = 13,
-                            Wisdom = 12
-                        });
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Creature");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Npc", b =>
@@ -389,97 +234,6 @@ namespace DDCatalogue.Migrations
                             MonsterId = 5,
                             Name = "Harbin Wester"
                         });
-                });
-
-            modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Alignment")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArmorClass")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Background")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BuildingId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Charisma")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Constitution")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Dexterity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Faction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HitDice")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Intelligence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Languages")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LocaleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlayerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Proficiencies")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Race")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reactions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Speed")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Strength")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Subtype")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Wisdom")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuildingId");
-
-                    b.HasIndex("LocaleId");
-
-                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Items.Item", b =>
@@ -778,6 +532,203 @@ namespace DDCatalogue.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
+                {
+                    b.HasBaseType("DDCatalogue.Model.Creatures.Creature");
+
+                    b.Property<string>("Actions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ChallengeRating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("LegendaryActions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PassivePerception")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Senses")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecialAbilities")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Monster");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Alignment = 0,
+                            ArmorClass = 16,
+                            Charisma = 10,
+                            Constitution = 14,
+                            Dexterity = 11,
+                            HitPoints = 39,
+                            Intelligence = 10,
+                            Languages = "Common, Dwarvish",
+                            Name = "Drawf Warrior",
+                            Size = "Medium",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]",
+                            Strength = 14,
+                            Wisdom = 11,
+                            ChallengeRating = 1.0,
+                            PassivePerception = 10,
+                            Senses = "[{\"Name\": \"Darkvision\",\"Desc\": \"60ft\"}]"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Alignment = 8,
+                            ArmorClass = 16,
+                            Charisma = 9,
+                            Constitution = 13,
+                            Dexterity = 14,
+                            HitDice = "5d8",
+                            HitPoints = 27,
+                            Intelligence = 8,
+                            Languages = "Common, Goblin",
+                            Name = "Bugbear",
+                            Proficiencies = "[{\"name\": \"Skill: Stealth\",\"value\": 6},{\"name\": \"Skill: Survival\",\"value\": 2}]",
+                            Size = "Medium",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
+                            Strength = 15,
+                            Subtype = "goblinoid",
+                            Type = "humanoid",
+                            Wisdom = 11,
+                            Actions = "[{\"name\": \"Morningstar\",\"desc\": \"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d8\",\"damage_bonus\": 2}]},{\"name\": \"Javelin\",\"desc\": \"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d6\",\"damage_bonus\": 2}]}]",
+                            ChallengeRating = 1.0,
+                            PassivePerception = 10,
+                            Senses = "{\"darkvision\": \"60 ft.\"}",
+                            SpecialAbilities = "[{\"name\": \"Brute\",\"desc\": \"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\": \"Surprise Attack\",\"desc\": \"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Alignment = 9,
+                            ArmorClass = 18,
+                            Charisma = 15,
+                            Constitution = 14,
+                            Dexterity = 11,
+                            HitPoints = 52,
+                            Intelligence = 11,
+                            Languages = "Any one",
+                            Name = "Knight",
+                            Size = "Medium",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
+                            Strength = 16,
+                            Wisdom = 11,
+                            ChallengeRating = 3.0,
+                            PassivePerception = 10
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Alignment = 5,
+                            ArmorClass = 15,
+                            Charisma = 8,
+                            Constitution = 10,
+                            Dexterity = 14,
+                            HitPoints = 7,
+                            Intelligence = 10,
+                            Languages = "Common, Goblin",
+                            Name = "Goblin",
+                            Size = "Small",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
+                            Strength = 8,
+                            Wisdom = 8,
+                            ChallengeRating = 0.25,
+                            PassivePerception = 9
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Alignment = 9,
+                            ArmorClass = 10,
+                            Charisma = 10,
+                            Constitution = 10,
+                            Dexterity = 10,
+                            HitPoints = 4,
+                            Intelligence = 10,
+                            Languages = "Any one",
+                            Name = "Commoner",
+                            Size = "Medium",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
+                            Strength = 10,
+                            Wisdom = 10,
+                            ChallengeRating = 0.0,
+                            PassivePerception = 10
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Alignment = 10,
+                            ArmorClass = 13,
+                            Charisma = 6,
+                            Constitution = 12,
+                            Dexterity = 15,
+                            HitPoints = 11,
+                            Intelligence = 3,
+                            Languages = "",
+                            Name = "Wolf",
+                            Size = "Medium",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]",
+                            Strength = 12,
+                            Wisdom = 12,
+                            ChallengeRating = 0.25,
+                            PassivePerception = 13
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Alignment = 0,
+                            ArmorClass = 14,
+                            Charisma = 10,
+                            Constitution = 12,
+                            Dexterity = 10,
+                            HitPoints = 26,
+                            Intelligence = 10,
+                            Languages = "Common, Dwarvish",
+                            Name = "Dwarf",
+                            Size = "Medium",
+                            Speed = "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]",
+                            Strength = 13,
+                            Wisdom = 12,
+                            ChallengeRating = 0.5,
+                            PassivePerception = 10
+                        });
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
+                {
+                    b.HasBaseType("DDCatalogue.Model.Creatures.Creature");
+
+                    b.Property<string>("Background")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Faction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LocaleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlayerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Race")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("BuildingId");
+
+                    b.HasIndex("LocaleId");
+
+                    b.HasDiscriminator().HasValue("Player");
+                });
+
             modelBuilder.Entity("DDCatalogue.Model.Items.Armour", b =>
                 {
                     b.HasBaseType("DDCatalogue.Model.Items.Item");
@@ -814,19 +765,6 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Creatures.Monster", "Monster")
                         .WithMany("Npcs")
                         .HasForeignKey("MonsterId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
-                {
-                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
-                        .WithMany("Players")
-                        .HasForeignKey("BuildingId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
-                        .WithMany("Players")
-                        .HasForeignKey("LocaleId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -890,6 +828,19 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Locations.Continent", "Continent")
                         .WithMany("Regions")
                         .HasForeignKey("ContinentId");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
+                        .WithMany("Players")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
+                        .WithMany("Players")
+                        .HasForeignKey("LocaleId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

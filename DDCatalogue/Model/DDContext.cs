@@ -30,6 +30,7 @@ namespace DDCatalogue.Model
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(@"Server=192.168.0.41;Database=DDCatalogue;User Id=sa;Password=Microsoft1!");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.AddConversions();
             modelBuilder.DefineKeys();
             modelBuilder.BuildRelationships();
             modelBuilder.Seed();
@@ -139,6 +140,13 @@ namespace DDCatalogue.Model
             var constructedListType = listType.MakeGenericType(type);
             IEnumerable<T> instance = (IEnumerable<T>)Activator.CreateInstance(constructedListType);
             return instance.ToList();
+        }
+
+        public static void AddConversions(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Creature>().Property(c => c.Speed).HasConversion(
+                v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
     }
 }

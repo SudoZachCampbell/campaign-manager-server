@@ -11,7 +11,13 @@
     "wisdom": 11,
     "charisma": 10,
     "size": "Medium",
-    "speed": "[{\"Name\": \"walk\",\"Value\": 25,\"Measurement\": \"ft\"}]",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 25,
+        "Measurement": "ft"
+      }
+    ],
     "challenge_rating": 1,
     "languages": "Common, Dwarvish",
     "senses": "[{\"Name\": \"Darkvision\",\"Desc\": \"60ft\"}]",
@@ -26,7 +32,13 @@
     "armor_class": 16,
     "hit_points": 27,
     "hit_dice": "5d8",
-    "speed": "{\"walk\": \"30 ft.\"}",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 30,
+        "Measurement": "ft"
+      }
+    ],
     "strength": 15,
     "dexterity": 14,
     "constitution": 13,
@@ -53,7 +65,13 @@
     "wisdom": 11,
     "charisma": 15,
     "size": "Medium",
-    "speed": "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 30,
+        "Measurement": "ft"
+      }
+    ],
     "challenge_rating": 3,
     "languages": "Any one",
     "passive_perception": 10
@@ -70,7 +88,13 @@
     "wisdom": 8,
     "charisma": 8,
     "size": "Small",
-    "speed": "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 30,
+        "Measurement": "ft"
+      }
+    ],
     "challenge_rating": 0.25,
     "languages": "Common, Goblin",
     "passive_perception": 9
@@ -87,7 +111,13 @@
     "wisdom": 10,
     "charisma": 10,
     "size": "Medium",
-    "speed": "[{\"Name\": \"walk\",\"Value\": 30,\"Measurement\": \"ft\"}]",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 30,
+        "Measurement": "ft"
+      }
+    ],
     "challenge_rating": 0,
     "languages": "Any one",
     "passive_perception": 10
@@ -104,7 +134,13 @@
     "wisdom": 12,
     "charisma": 6,
     "size": "Medium",
-    "speed": "[{\"Name\": \"walk\",\"Value\": 40,\"Measurement\": \"ft\"}]",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 40,
+        "Measurement": "ft"
+      }
+    ],
     "challenge_rating": 0.25,
     "languages": "",
     "passive_perception": 13
@@ -121,7 +157,13 @@
     "wisdom": 12,
     "charisma": 10,
     "size": "Medium",
-    "speed": "[{\"Name\": \"walk\",\"Value\": 25,\"Measurement\": \"ft\"}]",
+    "speed": [
+      {
+        "Name": "walk",
+        "Value": 25,
+        "Measurement": "ft"
+      }
+    ],
     "challenge_rating": 0.5,
     "languages": "Common, Dwarvish",
     "passive_perception": 10
