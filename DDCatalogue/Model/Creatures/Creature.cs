@@ -1,4 +1,4 @@
-﻿using DDCatalogue.Model.Locations;
+﻿using DDCatalogue.Model.Joins;
 using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Creatures
@@ -13,7 +13,7 @@ namespace DDCatalogue.Model.Creatures
         public int? Intelligence { get; set; }
         public int? Wisdom { get; set; }
         public int? Charisma { get; set; }
-        public List<Proficiency> Proficiencies { get; set; }
+        public List<CreatureProficiency> Proficiencies { get; set; }
         public int ArmorClass { get; set; }
         public int HitPoints { get; set; }
         public string HitDice { get; set; }
@@ -23,9 +23,9 @@ namespace DDCatalogue.Model.Creatures
         /// </summary>
         public string Speed { get; set; }
         public string Languages { get; set; }
-        public List<Trait> Traits { get; set; }
+        public List<CreatureTrait> Traits { get; set; }
         public Alignment Alignment { get; set; }
-        public List<Reaction> Reactions { get; set; }
+        public List<CreatureReaction> Reactions { get; set; }
         public string Picture { get; set; }
     }
 

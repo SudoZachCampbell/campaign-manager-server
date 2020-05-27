@@ -8,8 +8,8 @@ namespace DDCatalogue.Model.Creatures
         public double ChallengeRating { get; set; }
         public int DefeatXp { get; set; }
         public int PassivePerception { get; set; }
-        public List<Action> Actions { get; set; }
-        public List<LegendaryAction> LegendaryActions { get; set; }
+        public List<MonsterAction> Actions { get; set; }
+        public List<MonsterLegendaryAction> LegendaryActions { get; set; }
         /// <summary>
         /// Convert from JSON
         /// </summary>
@@ -18,8 +18,4 @@ namespace DDCatalogue.Model.Creatures
         public List<MonsterLocale> Locales { get; set; }
         public List<MonsterBuilding> Buildings { get; set; }
     }
-
-
-
-
 }
