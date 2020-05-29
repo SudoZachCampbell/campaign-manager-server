@@ -573,7 +573,7 @@ namespace DDCatalogue.Migrations
                             Wisdom = 11,
                             ChallengeRating = 1.0,
                             PassivePerception = 10,
-                            Senses = "[{\"Name\": \"Darkvision\",\"Desc\": \"60ft\"}]"
+                            Senses = "{\"darkvision\":\"60 ft.\"}"
                         },
                         new
                         {
@@ -588,18 +588,18 @@ namespace DDCatalogue.Migrations
                             Intelligence = 8,
                             Languages = "Common, Goblin",
                             Name = "Bugbear",
-                            Proficiencies = "[{\"name\": \"Skill: Stealth\",\"value\": 6},{\"name\": \"Skill: Survival\",\"value\": 2}]",
+                            Proficiencies = "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 15,
                             Subtype = "goblinoid",
                             Type = "humanoid",
                             Wisdom = 11,
-                            Actions = "[{\"name\": \"Morningstar\",\"desc\": \"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d8\",\"damage_bonus\": 2}]},{\"name\": \"Javelin\",\"desc\": \"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\": 4,\"damage\": [{\"damage_type\": {\"name\": \"Piercing\"},\"damage_dice\": \"2d6\",\"damage_bonus\": 2}]}]",
+                            Actions = "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]",
                             ChallengeRating = 1.0,
                             PassivePerception = 10,
-                            Senses = "{\"darkvision\": \"60 ft.\"}",
-                            SpecialAbilities = "[{\"name\": \"Brute\",\"desc\": \"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\": \"Surprise Attack\",\"desc\": \"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]"
+                            Senses = "{\"darkvision\":\"60 ft.\"}",
+                            SpecialAbilities = "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]"
                         },
                         new
                         {

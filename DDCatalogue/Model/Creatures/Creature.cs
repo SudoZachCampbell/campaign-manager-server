@@ -18,10 +18,7 @@ namespace DDCatalogue.Model.Creatures
         public int? Intelligence { get; set; }
         public int? Wisdom { get; set; }
         public int? Charisma { get; set; }
-        /// <summary>
-        /// Convert from JSON
-        /// </summary>
-        public string Proficiencies { get; set; }
+        public JArray Proficiencies { get; set; }
         public int ArmorClass { get; set; }
         public int HitPoints { get; set; }
         public string HitDice { get; set; }
@@ -29,10 +26,7 @@ namespace DDCatalogue.Model.Creatures
         public JArray Speed { get; set; }
         public string Languages { get; set; }
         public Alignment Alignment { get; set; }
-        /// <summary>
-        /// Convert from JSON
-        /// </summary>
-        public string Reactions { get; set; }
+        public JArray Reactions { get; set; }
         public string Picture { get; set; }
     }
 
