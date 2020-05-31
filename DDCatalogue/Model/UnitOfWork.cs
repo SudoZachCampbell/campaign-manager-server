@@ -10,6 +10,7 @@ namespace DDCatalogue.Model
     {
         private DDContext Context = new DDContext();
         private GenericRepository<Monster> MonsterRepo;
+        private GenericRepository<Npc> NpcRepo;
 
         public GenericRepository<Monster> MonsterRepository
         {
@@ -18,6 +19,14 @@ namespace DDCatalogue.Model
                 return MonsterRepo ?? new GenericRepository<Monster>(Context);
             }
         }
+
+        public GenericRepository<Npc> NpcRepository { 
+            get
+            {
+                return NpcRepo ?? new GenericRepository<Npc>(Context);
+            }
+        }
+
 
         public void Save()
         {

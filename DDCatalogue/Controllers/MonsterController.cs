@@ -35,8 +35,6 @@ namespace DDCatalogue.Controllers
         }
 
         // PUT: api/Monster/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public IActionResult PutMonster(int id, Monster monster)
         {
@@ -52,8 +50,6 @@ namespace DDCatalogue.Controllers
         }
 
         // POST: api/Monster
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public ActionResult<Monster> PostMonster(Monster monster)
         {
