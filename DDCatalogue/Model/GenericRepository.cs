@@ -18,9 +18,9 @@ namespace DDCatalogue.Model
         }
 
         public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null, 
+            Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+            string[] includeProperties = null)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -29,7 +29,7 @@ namespace DDCatalogue.Model
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split(new char[] {  ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
             }
@@ -55,7 +55,7 @@ namespace DDCatalogue.Model
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if(_context.Entry(entityToDelete).State == EntityState.Detached)
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
             }

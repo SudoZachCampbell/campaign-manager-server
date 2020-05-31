@@ -14,20 +14,20 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class MonsterController : ControllerBase
     {
-        private readonly UnitOfWork UnitOfWork = new UnitOfWork();
+        private readonly UnitOfWork<Monster> UnitOfWork = new UnitOfWork<Monster>();
 
         // GET: api/Monster
         [HttpGet]
         public ActionResult<List<Monster>> GetMonsters()
         {
-            return UnitOfWork.MonsterRepository.Get().ToList();
+            return UnitOfWork.Repository.Get().ToList();
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
         public ActionResult<Monster> GetMonster(int id)
         {
-            Monster monster = UnitOfWork.MonsterRepository.GetById(id);
+            Monster monster = UnitOfWork.Repository.GetById(id);
 
             if (monster == null) return NotFound();
 
@@ -43,7 +43,7 @@ namespace DDCatalogue.Controllers
                 return BadRequest();
             }
 
-            UnitOfWork.MonsterRepository.Update(monster);
+            UnitOfWork.Repository.Update(monster);
             UnitOfWork.Save();
 
             return NoContent();
@@ -53,7 +53,7 @@ namespace DDCatalogue.Controllers
         [HttpPost]
         public ActionResult<Monster> PostMonster(Monster monster)
         {
-            UnitOfWork.MonsterRepository.Insert(monster);
+            UnitOfWork.Repository.Insert(monster);
             UnitOfWork.Save();
 
             return CreatedAtAction("GetMonster", new { id = monster.Id }, monster);
@@ -63,13 +63,13 @@ namespace DDCatalogue.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Monster> DeleteMonster(int id)
         {
-            Monster monster = UnitOfWork.MonsterRepository.GetById(id);
+            Monster monster = UnitOfWork.Repository.GetById(id);
             if (monster == null)
             {
                 return NotFound();
             }
 
-            UnitOfWork.MonsterRepository.Delete(monster);
+            UnitOfWork.Repository.Delete(monster);
             UnitOfWork.Save();
 
             return monster;
@@ -78,7 +78,7 @@ namespace DDCatalogue.Controllers
         [HttpGet("[action]")]
         public ActionResult<dynamic> Table()
         {
-            dynamic monsters = UnitOfWork.MonsterRepository.Get()
+            dynamic monsters = UnitOfWork.Repository.Get()
                 .Select(m => new
                 {
                     id = m.Id,

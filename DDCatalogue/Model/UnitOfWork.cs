@@ -6,24 +6,17 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
-    public class UnitOfWork: IDisposable
+    public class UnitOfWork<T>: IDisposable where T : class, IModel
     {
         private DDContext Context = new DDContext();
-        private GenericRepository<Monster> MonsterRepo;
-        private GenericRepository<Npc> NpcRepo;
+        private GenericRepository<T> Repo;
 
-        public GenericRepository<Monster> MonsterRepository
+
+        public GenericRepository<T> Repository
         {
             get
             {
-                return MonsterRepo ?? new GenericRepository<Monster>(Context);
-            }
-        }
-
-        public GenericRepository<Npc> NpcRepository { 
-            get
-            {
-                return NpcRepo ?? new GenericRepository<Npc>(Context);
+                return Repo ?? new GenericRepository<T>(Context);
             }
         }
 
