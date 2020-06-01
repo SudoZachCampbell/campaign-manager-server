@@ -12,19 +12,19 @@
   {
     "name": "Sildar Hallwinter",
     "monster_id": 3,
-    "BuildingId":  9,
+    "building_id":  9,
     "locale_id": 6
   },
   {
     "name": "Elmar Barthen",
     "monster_id": 5,
-    "BuildingId":  2,
+    "building_id":  2,
     "locale_id": 6
   },
   {
     "name": "Linene Graywind",
     "monster_id": 3,
-    "BuildingId":  4,
+    "building_id":  4,
     "locale_id": 6
   },
   {
@@ -34,7 +34,7 @@
   },
   {
     "name": "Iarno Albrek",
-    "BuildingId": 10,
+    "building_id": 10,
     "locale_id": 6
   },
   {
@@ -50,38 +50,38 @@
   {
     "name": "Toblen Stonehill",
     "monster_id": 7,
-    "BuildingId":  1,
+    "building_id":  1,
     "locale_id": 6,
-    "Picture": "Toblen_Stonehill.jpg"
+    "picture": "Toblen_Stonehill.jpg"
   },
   {
     "name": "Daran Edermath",
     "monster_id": 5,
-    "BuildingId":  3,
+    "building_id":  3,
     "locale_id": 6
   },
   {
     "name": "Halia Thornton",
     "monster_id": 5,
-    "BuildingId":  5,
+    "building_id":  5,
     "locale_id": 6
   },
   {
     "name": "Qelline Alderleaf",
     "monster_id": 5,
-    "BuildingId":  6,
+    "building_id":  6,
     "locale_id": 6
   },
   {
     "name": "Sister Garaele",
     "monster_id": 5,
-    "BuildingId":  7,
+    "building_id":  7,
     "locale_id": 6
   },
   {
     "name": "Harbin Wester",
     "monster_id": 5,
-    "BuildingId":  9,
+    "building_id":  9,
     "locale_id": 6
   }
 ]

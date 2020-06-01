@@ -29,9 +29,12 @@ namespace DDCatalogue.Model
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties)
+            if (includeProperties != null)
             {
-                query = query.Include(includeProperty);
+                foreach (var includeProperty in includeProperties)
+                {
+                    query = query.Include(includeProperty);
+                }
             }
 
             return orderBy != null ? orderBy(query).ToList() : query.ToList();
