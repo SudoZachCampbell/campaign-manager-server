@@ -26,9 +26,9 @@ namespace DDCatalogue.Controllers
 
 
         [HttpGet("{id}")]
-        public ActionResult<Npc> Get(int id)
+        public ActionResult<Npc> Get(int id, [FromQuery] string include)
         {
-            Npc npc = UnitOfWork.Repository.GetById(id);
+            Npc npc = UnitOfWork.Repository.GetById(id, includeProperties: include.Split(','));
 
             if (npc == null) return NotFound();
 

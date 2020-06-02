@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> where TEntity : class, IModel
     {
         internal DDContext _context;
         internal DbSet<TEntity> dbSet;
@@ -29,20 +30,24 @@ namespace DDCatalogue.Model
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
-            {
-                foreach (var includeProperty in includeProperties)
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
+            query = Includes(query, includeProperties);
 
             return orderBy != null ? orderBy(query).ToList() : query.ToList();
         }
 
-        public virtual TEntity GetById(object id)
+        public virtual TEntity GetById(int id, string[] includeProperties = null)
         {
-            return dbSet.Find(id);
+            IQueryable<TEntity> query = dbSet;
+
+            if (includeProperties == null)
+            {
+                return dbSet.Find(id);
+            }
+            else
+            {
+                query = Includes(query, includeProperties);
+                return query.SingleOrDefault(x => x.Id == id);
+            }
         }
 
         public virtual void Insert(TEntity entity)
@@ -69,6 +74,18 @@ namespace DDCatalogue.Model
         {
             dbSet.Attach(entityToUpdate);
             _context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        private IQueryable<TEntity> Includes(IQueryable<TEntity> query, string[] includeProperties = null)
+        {
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties)
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+            return query;
         }
     }
 }
