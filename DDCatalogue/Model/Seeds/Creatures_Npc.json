@@ -1,8 +1,15 @@
 [
   {
-    "name": "Klarg Big-Crown",
+    "name": "Klarg BigCrown",
     "monster_id": 2,
-    "locale_id": 9 
+    "locale_id": 9,
+    "picture": "Klarg_BigCrown.jpg",
+    "background": "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.",
+    "noteable_events": [
+      "Made a deal with the party for Yeemik's head",
+      "Killed by the party"
+    ]
+
   },
   {
     "name": "Gundren Rockseeker",

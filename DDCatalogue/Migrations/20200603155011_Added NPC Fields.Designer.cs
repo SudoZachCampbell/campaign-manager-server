@@ -4,14 +4,16 @@ using DDCatalogue.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    partial class DDContextModelSnapshot : ModelSnapshot
+    [Migration("20200603155011_Added NPC Fields")]
+    partial class AddedNPCFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,12 +147,9 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
-                            Background = "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.",
                             LocaleId = 9,
                             MonsterId = 2,
-                            Name = "Klarg BigCrown",
-                            NoteableEvents = "[\"Made a deal with the party for Yeemik's head\",\"Killed by the party\"]",
-                            Picture = "Klarg_BigCrown.jpg"
+                            Name = "Klarg Big-Crown"
                         },
                         new
                         {
