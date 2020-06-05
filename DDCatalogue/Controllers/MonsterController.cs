@@ -20,14 +20,14 @@ namespace DDCatalogue.Controllers
         [HttpGet]
         public ActionResult<List<Monster>> Get([FromQuery] string include)
         {
-            return UnitOfWork.Repository.Get(includeProperties: include.Split(',')).ToList();
+            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
         public ActionResult<Monster> Get(int id, [FromQuery] string include)
         {
-            Monster monster = UnitOfWork.Repository.GetById(id, include.Split(','));
+            Monster monster = UnitOfWork.Repository.GetById(id, include?.Split(','));
 
             if (monster == null) return NotFound();
 

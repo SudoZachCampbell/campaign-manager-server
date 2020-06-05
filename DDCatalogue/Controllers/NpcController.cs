@@ -23,7 +23,7 @@ namespace DDCatalogue.Controllers
         [HttpGet]
         public ActionResult<List<Npc>> Get([FromQuery] string include)
         {
-            return UnitOfWork.Repository.Get(includeProperties: include.Split(',')).ToList();
+            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
 
