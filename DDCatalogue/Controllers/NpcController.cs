@@ -26,7 +26,7 @@ namespace DDCatalogue.Controllers
             return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
-
+         
         [HttpGet("{id}")]
         public ActionResult<Npc> Get(int id, [FromQuery] string include)
         {

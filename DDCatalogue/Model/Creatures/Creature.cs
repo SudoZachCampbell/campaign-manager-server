@@ -10,8 +10,6 @@ namespace DDCatalogue.Model.Creatures
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
-        public string Subtype { get; set; }
         public int? Strength { get; set; }
         public int? Dexterity { get; set; }
         public int? Constitution { get; set; }

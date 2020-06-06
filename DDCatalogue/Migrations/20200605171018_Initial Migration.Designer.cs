@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20200603172800_Made NPC Fields JArrays")]
-    partial class MadeNPCFieldsJArrays
+    [Migration("20200605171018_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,12 +79,6 @@ namespace DDCatalogue.Migrations
 
                     b.Property<int?>("Strength")
                         .HasColumnType("int");
-
-                    b.Property<string>("Subtype")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Wisdom")
                         .HasColumnType("int");
@@ -582,6 +576,9 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("SpecialAbilities")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasDiscriminator().HasValue("Monster");
 
                     b.HasData(
@@ -603,7 +600,8 @@ namespace DDCatalogue.Migrations
                             Wisdom = 11,
                             ChallengeRating = 1.0,
                             PassivePerception = 10,
-                            Senses = "{\"darkvision\":\"60 ft.\"}"
+                            Senses = "{\"darkvision\":\"60 ft.\"}",
+                            Type = 0
                         },
                         new
                         {
@@ -618,18 +616,18 @@ namespace DDCatalogue.Migrations
                             Intelligence = 8,
                             Languages = "Common, Goblin",
                             Name = "Bugbear",
+                            Picture = "bugbear.jpeg",
                             Proficiencies = "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 15,
-                            Subtype = "goblinoid",
-                            Type = "humanoid",
                             Wisdom = 11,
                             Actions = "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]",
                             ChallengeRating = 1.0,
                             PassivePerception = 10,
                             Senses = "{\"darkvision\":\"60 ft.\"}",
-                            SpecialAbilities = "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]"
+                            SpecialAbilities = "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]",
+                            Type = 9
                         },
                         new
                         {
@@ -648,7 +646,8 @@ namespace DDCatalogue.Migrations
                             Strength = 16,
                             Wisdom = 11,
                             ChallengeRating = 3.0,
-                            PassivePerception = 10
+                            PassivePerception = 10,
+                            Type = 0
                         },
                         new
                         {
@@ -667,7 +666,8 @@ namespace DDCatalogue.Migrations
                             Strength = 8,
                             Wisdom = 8,
                             ChallengeRating = 0.25,
-                            PassivePerception = 9
+                            PassivePerception = 9,
+                            Type = 0
                         },
                         new
                         {
@@ -686,7 +686,8 @@ namespace DDCatalogue.Migrations
                             Strength = 10,
                             Wisdom = 10,
                             ChallengeRating = 0.0,
-                            PassivePerception = 10
+                            PassivePerception = 10,
+                            Type = 0
                         },
                         new
                         {
@@ -705,7 +706,8 @@ namespace DDCatalogue.Migrations
                             Strength = 12,
                             Wisdom = 12,
                             ChallengeRating = 0.25,
-                            PassivePerception = 13
+                            PassivePerception = 13,
+                            Type = 0
                         },
                         new
                         {
@@ -724,7 +726,8 @@ namespace DDCatalogue.Migrations
                             Strength = 13,
                             Wisdom = 12,
                             ChallengeRating = 0.5,
-                            PassivePerception = 10
+                            PassivePerception = 10,
+                            Type = 0
                         });
                 });
 

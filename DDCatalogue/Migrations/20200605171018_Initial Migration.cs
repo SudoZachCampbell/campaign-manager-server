@@ -105,8 +105,6 @@ namespace DDCatalogue.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
-                    Subtype = table.Column<string>(nullable: true),
                     Strength = table.Column<int>(nullable: true),
                     Dexterity = table.Column<int>(nullable: true),
                     Constitution = table.Column<int>(nullable: true),
@@ -126,6 +124,7 @@ namespace DDCatalogue.Migrations
                     Discriminator = table.Column<string>(nullable: false),
                     ChallengeRating = table.Column<double>(nullable: true),
                     PassivePerception = table.Column<int>(nullable: true),
+                    Type = table.Column<int>(nullable: true),
                     Actions = table.Column<string>(nullable: true),
                     LegendaryActions = table.Column<string>(nullable: true),
                     SpecialAbilities = table.Column<string>(nullable: true),
@@ -239,6 +238,11 @@ namespace DDCatalogue.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Picture = table.Column<string>(nullable: true),
+                    Background = table.Column<string>(nullable: true),
+                    NoteableEvents = table.Column<string>(nullable: true),
+                    Beliefs = table.Column<string>(nullable: true),
+                    Passions = table.Column<string>(nullable: true),
+                    Flaws = table.Column<string>(nullable: true),
                     MonsterId = table.Column<int>(nullable: true),
                     LocaleId = table.Column<int>(nullable: true),
                     BuildingId = table.Column<int>(nullable: true)
@@ -268,16 +272,16 @@ namespace DDCatalogue.Migrations
 
             migrationBuilder.InsertData(
                 table: "Creature",
-                columns: new[] { "Id", "Alignment", "ArmorClass", "Charisma", "Constitution", "Dexterity", "Discriminator", "HitDice", "HitPoints", "Intelligence", "Languages", "Name", "Picture", "Proficiencies", "Reactions", "Size", "Speed", "Strength", "Subtype", "Type", "Wisdom", "Actions", "ChallengeRating", "LegendaryActions", "PassivePerception", "Senses", "SpecialAbilities" },
+                columns: new[] { "Id", "Alignment", "ArmorClass", "Charisma", "Constitution", "Dexterity", "Discriminator", "HitDice", "HitPoints", "Intelligence", "Languages", "Name", "Picture", "Proficiencies", "Reactions", "Size", "Speed", "Strength", "Wisdom", "Actions", "ChallengeRating", "LegendaryActions", "PassivePerception", "Senses", "SpecialAbilities", "Type" },
                 values: new object[,]
                 {
-                    { 1, 0, 16, 10, 14, 11, "Monster", null, 39, 10, "Common, Dwarvish", "Drawf Warrior", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 14, null, null, 11, null, 1.0, null, 10, "{\"darkvision\":\"60 ft.\"}", null },
-                    { 2, 8, 16, 9, 13, 14, "Monster", "5d8", 27, 8, "Common, Goblin", "Bugbear", null, "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]", null, "Medium", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 15, "goblinoid", "humanoid", 11, "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]", 1.0, null, 10, "{\"darkvision\":\"60 ft.\"}", "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]" },
-                    { 3, 9, 18, 15, 14, 11, "Monster", null, 52, 11, "Any one", "Knight", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 16, null, null, 11, null, 3.0, null, 10, null, null },
-                    { 4, 5, 15, 8, 10, 14, "Monster", null, 7, 10, "Common, Goblin", "Goblin", null, null, null, "Small", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 8, null, null, 8, null, 0.25, null, 9, null, null },
-                    { 5, 9, 10, 10, 10, 10, "Monster", null, 4, 10, "Any one", "Commoner", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 10, null, null, 10, null, 0.0, null, 10, null, null },
-                    { 6, 10, 13, 6, 12, 15, "Monster", null, 11, 3, "", "Wolf", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]", 12, null, null, 12, null, 0.25, null, 13, null, null },
-                    { 7, 0, 14, 10, 12, 10, "Monster", null, 26, 10, "Common, Dwarvish", "Dwarf", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 13, null, null, 12, null, 0.5, null, 10, null, null }
+                    { 1, 0, 16, 10, 14, 11, "Monster", null, 39, 10, "Common, Dwarvish", "Drawf Warrior", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 14, 11, null, 1.0, null, 10, "{\"darkvision\":\"60 ft.\"}", null, 0 },
+                    { 2, 8, 16, 9, 13, 14, "Monster", "5d8", 27, 8, "Common, Goblin", "Bugbear", "bugbear.jpeg", "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]", null, "Medium", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 15, 11, "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]", 1.0, null, 10, "{\"darkvision\":\"60 ft.\"}", "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]", 9 },
+                    { 3, 9, 18, 15, 14, 11, "Monster", null, 52, 11, "Any one", "Knight", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 16, 11, null, 3.0, null, 10, null, null, 0 },
+                    { 4, 5, 15, 8, 10, 14, "Monster", null, 7, 10, "Common, Goblin", "Goblin", null, null, null, "Small", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 8, 8, null, 0.25, null, 9, null, null, 0 },
+                    { 5, 9, 10, 10, 10, 10, "Monster", null, 4, 10, "Any one", "Commoner", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 10, 10, null, 0.0, null, 10, null, null, 0 },
+                    { 6, 10, 13, 6, 12, 15, "Monster", null, 11, 3, "", "Wolf", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]", 12, 12, null, 0.25, null, 13, null, null, 0 },
+                    { 7, 0, 14, 10, 12, 10, "Monster", null, 26, 10, "Common, Dwarvish", "Dwarf", null, null, null, "Medium", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 13, 12, null, 0.5, null, 10, null, null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -312,12 +316,12 @@ namespace DDCatalogue.Migrations
 
             migrationBuilder.InsertData(
                 table: "Npcs",
-                columns: new[] { "Id", "BuildingId", "LocaleId", "MonsterId", "Name", "Picture" },
+                columns: new[] { "Id", "Background", "Beliefs", "BuildingId", "Flaws", "LocaleId", "MonsterId", "Name", "NoteableEvents", "Passions", "Picture" },
                 values: new object[,]
                 {
-                    { 2, null, 3, 1, "Gundren Rockseeker", null },
-                    { 1, null, 9, 2, "Klarg Big-Crown", null },
-                    { 6, null, 9, 4, "Yeemik Largebrain", null }
+                    { 2, null, null, null, null, 3, 1, "Gundren Rockseeker", null, null, null },
+                    { 1, "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.", null, null, null, 9, 2, "Klarg BigCrown", "[\"Made a deal with the party for Yeemik's head\",\"Killed by the party\"]", null, "Klarg_BigCrown.jpg" },
+                    { 6, null, null, null, null, 9, 4, "Yeemik Largebrain", null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -325,35 +329,42 @@ namespace DDCatalogue.Migrations
                 columns: new[] { "Id", "LocaleId", "Map", "Name" },
                 values: new object[,]
                 {
-                    { 10, 6, "Tresendar_Manor.png", "Tresendar Manor" },
-                    { 8, 6, null, "The Sleeping Giant" },
-                    { 7, 6, null, "Shrine of Luck" },
-                    { 6, 6, null, "Alderleaf Farm" },
-                    { 5, 6, null, "Phandalin Miner's Exchange" },
-                    { 4, 6, null, "Lionshield Coster" },
-                    { 3, 6, null, "Edermath Orchard" },
-                    { 2, 6, null, "Barthen's Provisions" },
                     { 1, 6, null, "Stonehill Inn" },
-                    { 9, 6, null, "Townmaster's Hall" }
+                    { 2, 6, null, "Barthen's Provisions" },
+                    { 3, 6, null, "Edermath Orchard" },
+                    { 4, 6, null, "Lionshield Coster" },
+                    { 5, 6, null, "Phandalin Miner's Exchange" },
+                    { 6, 6, null, "Alderleaf Farm" },
+                    { 7, 6, null, "Shrine of Luck" },
+                    { 8, 6, null, "The Sleeping Giant" },
+                    { 9, 6, null, "Townmaster's Hall" },
+                    { 10, 6, "Tresendar_Manor.png", "Tresendar Manor" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Npcs",
-                columns: new[] { "Id", "BuildingId", "LocaleId", "MonsterId", "Name", "Picture" },
+                columns: new[] { "Id", "Background", "Beliefs", "BuildingId", "Flaws", "LocaleId", "MonsterId", "Name", "NoteableEvents", "Passions", "Picture" },
                 values: new object[,]
                 {
-                    { 15, null, 6, 5, "Harbin Wester", null },
-                    { 14, null, 6, 5, "Sister Garaele", null },
-                    { 12, null, 6, 5, "Halia Thornton", null },
-                    { 11, null, 6, 5, "Daran Edermath", null },
-                    { 10, null, 6, 7, "Toblen Stonehill", "Toblen_Stonehill.jpg" },
-                    { 9, null, 6, 1, "Nundro Rockseeker", null },
-                    { 8, null, 6, 1, "Tharden Rockseeker", null },
-                    { 7, null, 6, null, "Iarno Albrek", null },
-                    { 5, null, 6, 3, "Linene Graywind", null },
-                    { 4, null, 6, 5, "Elmar Barthen", null },
-                    { 13, null, 6, 5, "Qelline Alderleaf", null },
-                    { 3, null, 6, 3, "Sildar Hallwinter", null }
+                    { 8, null, null, null, null, 6, 1, "Tharden Rockseeker", null, null, null },
+                    { 9, null, null, null, null, 6, 1, "Nundro Rockseeker", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Npcs",
+                columns: new[] { "Id", "Background", "Beliefs", "BuildingId", "Flaws", "LocaleId", "MonsterId", "Name", "NoteableEvents", "Passions", "Picture" },
+                values: new object[,]
+                {
+                    { 10, null, null, 1, null, 6, 7, "Toblen Stonehill", null, null, "Toblen_Stonehill.jpg" },
+                    { 4, null, null, 2, null, 6, 5, "Elmar Barthen", null, null, null },
+                    { 11, null, null, 3, null, 6, 5, "Daran Edermath", null, null, null },
+                    { 5, null, null, 4, null, 6, 3, "Linene Graywind", null, null, null },
+                    { 12, null, null, 5, null, 6, 5, "Halia Thornton", null, null, null },
+                    { 13, null, null, 6, null, 6, 5, "Qelline Alderleaf", null, null, null },
+                    { 14, null, null, 7, null, 6, 5, "Sister Garaele", null, null, null },
+                    { 3, null, null, 9, null, 6, 3, "Sildar Hallwinter", null, null, null },
+                    { 15, null, null, 9, null, 6, 5, "Harbin Wester", null, null, null },
+                    { 7, null, null, 10, null, 6, null, "Iarno Albrek", null, null, null }
                 });
 
             migrationBuilder.CreateIndex(

@@ -28,8 +28,7 @@
   {
     "name": "Bugbear",
     "size": "Medium",
-    "type": "humanoid",
-    "subtype": "goblinoid",
+    "type": 9,
     "alignment": 8,
     "armor_class": 16,
     "hit_points": 27,
