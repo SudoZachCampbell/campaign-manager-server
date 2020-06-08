@@ -1,12 +1,10 @@
 ﻿using DDCatalogue.Model;
 using DDCatalogue.Model.Creatures;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace DDCatalogue.Controllers
 {
@@ -27,11 +25,38 @@ namespace DDCatalogue.Controllers
         [HttpGet("{id}")]
         public ActionResult<Monster> Get(int id, [FromQuery] string include)
         {
-            Monster monster = UnitOfWork.Repository.GetById(id, include?.Split(','));
+            Monster monster = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
 
             if (monster == null) return NotFound();
 
             return monster;
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult<Monster> Patch(int id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
+        {
+            if (patchDoc != null)
+            {
+                Monster monster = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
+
+                if (monster != null)
+                {
+                    patchDoc.ApplyTo(monster, ModelState);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+
+                UnitOfWork.Repository.Update(monster);
+                UnitOfWork.Save();
+
+                return monster;
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         // PUT: api/Monster/5

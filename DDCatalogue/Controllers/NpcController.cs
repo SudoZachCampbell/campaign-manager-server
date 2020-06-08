@@ -1,15 +1,9 @@
-﻿using Amazon.Runtime;
-using DDCatalogue.Model;
+﻿using DDCatalogue.Model;
 using DDCatalogue.Model.Creatures;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DDCatalogue.Controllers
 {
