@@ -38,11 +38,11 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Npc> Patch(int id, [FromBody] JsonPatchDocument<Npc> patchDoc)
+        public ActionResult<Npc> Patch(int id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] string include)
         {
             if (patchDoc != null)
             {
-                Npc npc = UnitOfWork.Repository.GetById(id);
+                Npc npc = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
 
                 if (npc != null)
                 {
