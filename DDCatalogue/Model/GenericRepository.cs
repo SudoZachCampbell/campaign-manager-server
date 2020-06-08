@@ -75,6 +75,10 @@ namespace DDCatalogue.Model
             dbSet.Attach(entityToUpdate);
             _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
+        public IEnumerable<string> GetEnum(string name)
+        {
+            return Enum.GetNames(Type.GetType($"{typeof(TEntity).Namespace}.{name}")).ToList();
+        }
 
         private IQueryable<TEntity> Includes(IQueryable<TEntity> query, string[] includeProperties = null)
         {
@@ -87,5 +91,6 @@ namespace DDCatalogue.Model
             }
             return query;
         }
+
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 
 namespace DDCatalogue.Controllers
@@ -112,6 +113,24 @@ namespace DDCatalogue.Controllers
                     alignment = m.Alignment
                 }).ToList();
             return monsters;
+        }
+
+        [HttpGet("[action]/{name}")]
+        public ActionResult<List<string>> Enum(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                return UnitOfWork.Repository.GetEnum(name).ToList();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
