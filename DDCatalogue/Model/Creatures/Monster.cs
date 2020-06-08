@@ -6,13 +6,13 @@ namespace DDCatalogue.Model.Creatures
 {
     public class Monster : Creature
     {
-        public double ChallengeRating { get; set; }
-        public int PassivePerception { get; set; }
-        public MonsterType Type { get; set; }
-        public JArray Actions { get; set; }
-        public JArray LegendaryActions { get; set; }
-        public JArray SpecialAbilities { get; set; }
-        public JObject Senses { get; set; }
+        public double ChallengeRating { get; set; } = 0;
+        public int PassivePerception { get; set; } = 0;
+        public MonsterType Type { get; set; } = MonsterType.None;
+        public JArray Actions { get; set; } = new JArray();
+        public JArray LegendaryActions { get; set; } = new JArray();
+        public JArray SpecialAbilities { get; set; } = new JArray();
+        public JObject Senses { get; set; } = new JObject();
         public List<Npc> Npcs { get; set; }
         public List<MonsterLocale> Locales { get; set; }
         public List<MonsterBuilding> Buildings { get; set; }
@@ -33,6 +33,7 @@ namespace DDCatalogue.Model.Creatures
         Monstrosity,
         Ooze,
         Plant,
-        Undead
+        Undead,
+        None
     }
 }

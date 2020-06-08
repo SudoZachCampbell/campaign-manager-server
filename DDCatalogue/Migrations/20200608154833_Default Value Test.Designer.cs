@@ -4,14 +4,16 @@ using DDCatalogue.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    partial class DDContextModelSnapshot : ModelSnapshot
+    [Migration("20200608154833_Default Value Test")]
+    partial class DefaultValueTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,205 +142,147 @@ namespace DDCatalogue.Migrations
                         {
                             Id = 1,
                             Background = "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.",
-                            Beliefs = "[]",
-                            Flaws = "[]",
                             LocaleId = 9,
                             MonsterId = 2,
                             Name = "Klarg BigCrown",
                             NoteableEvents = "[\"Made a deal with the party for Yeemik's head\",\"Killed by the party\"]",
-                            Passions = "[]",
                             Picture = "Klarg_BigCrown.jpg"
                         },
                         new
                         {
                             Id = 2,
                             Background = "",
-                            Beliefs = "[]",
-                            Flaws = "[]",
                             LocaleId = 3,
                             MonsterId = 1,
                             Name = "Gundren Rockseeker",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 3,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 9,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 3,
                             Name = "Sildar Hallwinter",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 4,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 2,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
                             Name = "Elmar Barthen",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 5,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 4,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 3,
                             Name = "Linene Graywind",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 6,
                             Background = "",
-                            Beliefs = "[]",
-                            Flaws = "[]",
                             LocaleId = 9,
                             MonsterId = 4,
                             Name = "Yeemik Largebrain",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 7,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 10,
-                            Flaws = "[]",
                             LocaleId = 6,
                             Name = "Iarno Albrek",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 8,
                             Background = "",
-                            Beliefs = "[]",
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 1,
                             Name = "Tharden Rockseeker",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 9,
                             Background = "",
-                            Beliefs = "[]",
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 1,
                             Name = "Nundro Rockseeker",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 10,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 1,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 7,
                             Name = "Toblen Stonehill",
                             NoteableEvents = "[]",
-                            Passions = "[]",
                             Picture = "Toblen_Stonehill.jpg"
                         },
                         new
                         {
                             Id = 11,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 3,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
                             Name = "Daran Edermath",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 12,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 5,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
                             Name = "Halia Thornton",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 13,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 6,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
                             Name = "Qelline Alderleaf",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 14,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 7,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
                             Name = "Sister Garaele",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         },
                         new
                         {
                             Id = 15,
                             Background = "",
-                            Beliefs = "[]",
                             BuildingId = 9,
-                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
                             Name = "Harbin Wester",
-                            NoteableEvents = "[]",
-                            Passions = "[]",
-                            Picture = ""
+                            NoteableEvents = "[]"
                         });
                 });
 
@@ -682,13 +626,10 @@ namespace DDCatalogue.Migrations
                             Speed = "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]",
                             Strength = 14,
                             Wisdom = 11,
-                            Actions = "[]",
                             ChallengeRating = 1.0,
-                            LegendaryActions = "[]",
                             PassivePerception = 10,
                             Senses = "{\"darkvision\":\"60 ft.\"}",
-                            SpecialAbilities = "[]",
-                            Type = 14
+                            Type = 0
                         },
                         new
                         {
@@ -711,7 +652,6 @@ namespace DDCatalogue.Migrations
                             Wisdom = 11,
                             Actions = "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]",
                             ChallengeRating = 1.0,
-                            LegendaryActions = "[]",
                             PassivePerception = 10,
                             Senses = "{\"darkvision\":\"60 ft.\"}",
                             SpecialAbilities = "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]",
@@ -733,13 +673,9 @@ namespace DDCatalogue.Migrations
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 16,
                             Wisdom = 11,
-                            Actions = "[]",
                             ChallengeRating = 3.0,
-                            LegendaryActions = "[]",
                             PassivePerception = 10,
-                            Senses = "{}",
-                            SpecialAbilities = "[]",
-                            Type = 14
+                            Type = 0
                         },
                         new
                         {
@@ -757,13 +693,9 @@ namespace DDCatalogue.Migrations
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 8,
                             Wisdom = 8,
-                            Actions = "[]",
                             ChallengeRating = 0.25,
-                            LegendaryActions = "[]",
                             PassivePerception = 9,
-                            Senses = "{}",
-                            SpecialAbilities = "[]",
-                            Type = 14
+                            Type = 0
                         },
                         new
                         {
@@ -781,13 +713,9 @@ namespace DDCatalogue.Migrations
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 10,
                             Wisdom = 10,
-                            Actions = "[]",
                             ChallengeRating = 0.0,
-                            LegendaryActions = "[]",
                             PassivePerception = 10,
-                            Senses = "{}",
-                            SpecialAbilities = "[]",
-                            Type = 14
+                            Type = 0
                         },
                         new
                         {
@@ -805,13 +733,9 @@ namespace DDCatalogue.Migrations
                             Speed = "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]",
                             Strength = 12,
                             Wisdom = 12,
-                            Actions = "[]",
                             ChallengeRating = 0.25,
-                            LegendaryActions = "[]",
                             PassivePerception = 13,
-                            Senses = "{}",
-                            SpecialAbilities = "[]",
-                            Type = 14
+                            Type = 0
                         },
                         new
                         {
@@ -829,13 +753,9 @@ namespace DDCatalogue.Migrations
                             Speed = "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]",
                             Strength = 13,
                             Wisdom = 12,
-                            Actions = "[]",
                             ChallengeRating = 0.5,
-                            LegendaryActions = "[]",
                             PassivePerception = 10,
-                            Senses = "{}",
-                            SpecialAbilities = "[]",
-                            Type = 14
+                            Type = 0
                         });
                 });
 
