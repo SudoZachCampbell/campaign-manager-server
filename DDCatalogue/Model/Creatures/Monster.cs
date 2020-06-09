@@ -8,7 +8,7 @@ namespace DDCatalogue.Model.Creatures
     {
         public double ChallengeRating { get; set; } = 0;
         public int PassivePerception { get; set; } = 0;
-        public MonsterType Type { get; set; } = MonsterType.None;
+        public MonsterType MonsterType { get; set; } = MonsterType.None;
         public JArray Actions { get; set; } = new JArray();
         public JArray LegendaryActions { get; set; } = new JArray();
         public JArray SpecialAbilities { get; set; } = new JArray();
