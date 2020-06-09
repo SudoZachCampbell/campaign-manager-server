@@ -62,6 +62,7 @@
     "passive_perception": 10,
     "languages": "Common, Goblin",
     "challenge_rating": 1,
+    "xp":  200,
     "special_abilities": [
       {
         "name": "Brute",
