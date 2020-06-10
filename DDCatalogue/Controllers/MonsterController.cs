@@ -11,98 +11,52 @@ namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MonsterController : ControllerBase
+    public class MonsterController : GenericController<Monster>
     {
-        private readonly UnitOfWork<Monster> UnitOfWork = new UnitOfWork<Monster>();
 
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Monster>> Get([FromQuery] string include)
+        public ActionResult<List<Monster>> GetMonsters([FromQuery] string include)
         {
             return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
-        public ActionResult<Monster> Get(int id, [FromQuery] string include)
+        public ActionResult<Monster> GetMonsterById(int id, [FromQuery] string include)
         {
-            Monster monster = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
-
-            if (monster == null) return NotFound();
-
-            return monster;
+            return GetGen(id, include);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Monster> Patch(int id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
+        public ActionResult<Monster> PatchMonster(int id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
         {
-            if (patchDoc != null)
-            {
-                Monster monster = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
-
-                if (monster != null)
-                {
-                    patchDoc.ApplyTo(monster, ModelState);
-                }
-                else
-                {
-                    return BadRequest(ModelState);
-                }
-
-                UnitOfWork.Repository.Update(monster);
-                UnitOfWork.Save();
-
-                return monster;
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+            return PatchGen(id, patchDoc, include);
         }
 
         // PUT: api/Monster/5
         [HttpPut("{id}")]
         public IActionResult PutMonster(int id, Monster monster)
         {
-            if (id != monster.Id)
-            {
-                return BadRequest();
-            }
-
-            UnitOfWork.Repository.Update(monster);
-            UnitOfWork.Save();
-
-            return NoContent();
+            return PutGen(id, monster);
         }
 
         // POST: api/Monster
         [HttpPost]
         public ActionResult<Monster> PostMonster(Monster monster)
         {
-            UnitOfWork.Repository.Insert(monster);
-            UnitOfWork.Save();
-
-            return CreatedAtAction("GetMonster", new { id = monster.Id }, monster);
+            return PostGen(monster);
         }
 
         // DELETE: api/Monster/5
         [HttpDelete("{id}")]
         public ActionResult<Monster> DeleteMonster(int id)
         {
-            Monster monster = UnitOfWork.Repository.GetById(id);
-            if (monster == null)
-            {
-                return NotFound();
-            }
-
-            UnitOfWork.Repository.Delete(monster);
-            UnitOfWork.Save();
-
-            return monster;
+            return DeleteGen(id);
         }
 
         [HttpGet("[action]")]
-        public ActionResult<dynamic> Table()
+        public ActionResult<dynamic> GetTable()
         {
             dynamic monsters = UnitOfWork.Repository.Get()
                 .Select(m => new
@@ -116,21 +70,9 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpGet("[action]/{name}")]
-        public ActionResult<List<string>> Enum(string name)
+        public ActionResult<List<string>> GetEnum(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                return UnitOfWork.Repository.GetEnum(name).ToList();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return GetEnumGen(name);
         }
     }
 }

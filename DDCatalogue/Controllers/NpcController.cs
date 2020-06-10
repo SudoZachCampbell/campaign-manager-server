@@ -9,53 +9,26 @@ namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class NpcController : ControllerBase
+    public class NpcController : GenericController<Npc>
     {
-
-        private UnitOfWork<Npc> UnitOfWork = new UnitOfWork<Npc>();
 
         [HttpGet]
         public ActionResult<List<Npc>> Get([FromQuery] string include)
         {
-            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
+            return GetGen(include);
         }
 
          
         [HttpGet("{id}")]
         public ActionResult<Npc> Get(int id, [FromQuery] string include)
         {
-            Npc npc = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
-
-            if (npc == null) return NotFound();
-
-            return npc;
+            return GetGen(id, include);
         }
 
         [HttpPatch("{id}")]
         public ActionResult<Npc> Patch(int id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] string include)
         {
-            if (patchDoc != null)
-            {
-                Npc npc = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
-
-                if (npc != null)
-                {
-                    patchDoc.ApplyTo(npc, ModelState);
-                }
-                else
-                {
-                    return BadRequest(ModelState);
-                }
-
-                UnitOfWork.Repository.Update(npc);
-                UnitOfWork.Save();
-
-                return npc;
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+            return PatchGen(id, patchDoc, include);
         }
 
         [HttpGet("[action]")]
