@@ -13,7 +13,6 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class MonsterController : GenericController<Monster>
     {
-
         // GET: api/Monster
         [HttpGet]
         public ActionResult<List<Monster>> GetMonsters([FromQuery] string include)

@@ -136,8 +136,8 @@ namespace DDCatalogue.Model
 
         private static IList<T> CreateTypeList<T>(Type type)
         {
-            var listType = typeof(List<>);
-            var constructedListType = listType.MakeGenericType(type);
+            Type listType = typeof(List<>);
+            Type constructedListType = listType.MakeGenericType(type);
             IEnumerable<T> instance = (IEnumerable<T>)Activator.CreateInstance(constructedListType);
             return instance.ToList();
         }
