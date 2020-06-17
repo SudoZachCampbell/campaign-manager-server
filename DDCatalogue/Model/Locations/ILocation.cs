@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Locations
 {
-    interface ILocation : IModel
+    public interface ILocation : IModel
     {
 
     }
