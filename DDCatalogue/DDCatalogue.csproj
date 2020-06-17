@@ -37,6 +37,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200617154136_Initial Migration.cs" />
+    <Compile Remove="Migrations\20200617154136_Initial Migration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\components\Character.tsx" />
     <None Remove="ClientApp\src\components\CharacterDetails.tsx" />
     <None Remove="ClientApp\src\components\CharacterList.tsx" />

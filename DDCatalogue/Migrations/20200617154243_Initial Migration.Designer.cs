@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20200605171018_Initial Migration")]
+    [Migration("20200617154243_Initial Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,13 +34,13 @@ namespace DDCatalogue.Migrations
                     b.Property<int>("ArmorClass")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Charisma")
+                    b.Property<int>("Charisma")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Constitution")
+                    b.Property<int>("Constitution")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Dexterity")
+                    b.Property<int>("Dexterity")
                         .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
@@ -53,7 +53,7 @@ namespace DDCatalogue.Migrations
                     b.Property<int>("HitPoints")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Intelligence")
+                    b.Property<int>("Intelligence")
                         .HasColumnType("int");
 
                     b.Property<string>("Languages")
@@ -77,10 +77,10 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Speed")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Strength")
+                    b.Property<int>("Strength")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Wisdom")
+                    b.Property<int>("Wisdom")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -142,119 +142,205 @@ namespace DDCatalogue.Migrations
                         {
                             Id = 1,
                             Background = "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.",
+                            Beliefs = "[]",
+                            Flaws = "[]",
                             LocaleId = 9,
                             MonsterId = 2,
                             Name = "Klarg BigCrown",
                             NoteableEvents = "[\"Made a deal with the party for Yeemik's head\",\"Killed by the party\"]",
+                            Passions = "[]",
                             Picture = "Klarg_BigCrown.jpg"
                         },
                         new
                         {
                             Id = 2,
+                            Background = "",
+                            Beliefs = "[]",
+                            Flaws = "[]",
                             LocaleId = 3,
                             MonsterId = 1,
-                            Name = "Gundren Rockseeker"
+                            Name = "Gundren Rockseeker",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 3,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 9,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 3,
-                            Name = "Sildar Hallwinter"
+                            Name = "Sildar Hallwinter",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 4,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 2,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
-                            Name = "Elmar Barthen"
+                            Name = "Elmar Barthen",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 5,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 4,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 3,
-                            Name = "Linene Graywind"
+                            Name = "Linene Graywind",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 6,
+                            Background = "",
+                            Beliefs = "[]",
+                            Flaws = "[]",
                             LocaleId = 9,
                             MonsterId = 4,
-                            Name = "Yeemik Largebrain"
+                            Name = "Yeemik Largebrain",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 7,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 10,
+                            Flaws = "[]",
                             LocaleId = 6,
-                            Name = "Iarno Albrek"
+                            Name = "Iarno Albrek",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 8,
+                            Background = "",
+                            Beliefs = "[]",
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 1,
-                            Name = "Tharden Rockseeker"
+                            Name = "Tharden Rockseeker",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 9,
+                            Background = "",
+                            Beliefs = "[]",
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 1,
-                            Name = "Nundro Rockseeker"
+                            Name = "Nundro Rockseeker",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 10,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 1,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 7,
                             Name = "Toblen Stonehill",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
                             Picture = "Toblen_Stonehill.jpg"
                         },
                         new
                         {
                             Id = 11,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 3,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
-                            Name = "Daran Edermath"
+                            Name = "Daran Edermath",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 12,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 5,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
-                            Name = "Halia Thornton"
+                            Name = "Halia Thornton",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 13,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 6,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
-                            Name = "Qelline Alderleaf"
+                            Name = "Qelline Alderleaf",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 14,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 7,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
-                            Name = "Sister Garaele"
+                            Name = "Sister Garaele",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         },
                         new
                         {
                             Id = 15,
+                            Background = "",
+                            Beliefs = "[]",
                             BuildingId = 9,
+                            Flaws = "[]",
                             LocaleId = 6,
                             MonsterId = 5,
-                            Name = "Harbin Wester"
+                            Name = "Harbin Wester",
+                            NoteableEvents = "[]",
+                            Passions = "[]",
+                            Picture = ""
                         });
                 });
 
@@ -523,6 +609,41 @@ namespace DDCatalogue.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Map", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Center")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LocaleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocaleId");
+
+                    b.ToTable("Map");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImageUrl = "PhanDay.jpg",
+                            LocaleId = 5,
+                            Name = "Phandalin_Day"
+                        });
+                });
+
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>
                 {
                     b.Property<int>("Id")
@@ -567,6 +688,9 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("LegendaryActions")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MonsterType")
+                        .HasColumnType("int");
+
                     b.Property<int>("PassivePerception")
                         .HasColumnType("int");
 
@@ -576,7 +700,7 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("SpecialAbilities")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("Xp")
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Monster");
@@ -590,18 +714,26 @@ namespace DDCatalogue.Migrations
                             Charisma = 10,
                             Constitution = 14,
                             Dexterity = 11,
+                            HitDice = "",
                             HitPoints = 39,
                             Intelligence = 10,
                             Languages = "Common, Dwarvish",
                             Name = "Drawf Warrior",
+                            Picture = "",
+                            Proficiencies = "[]",
+                            Reactions = "[]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]",
                             Strength = 14,
                             Wisdom = 11,
+                            Actions = "[]",
                             ChallengeRating = 1.0,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 10,
                             Senses = "{\"darkvision\":\"60 ft.\"}",
-                            Type = 0
+                            SpecialAbilities = "[]",
+                            Xp = 0
                         },
                         new
                         {
@@ -618,16 +750,19 @@ namespace DDCatalogue.Migrations
                             Name = "Bugbear",
                             Picture = "bugbear.jpeg",
                             Proficiencies = "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]",
+                            Reactions = "[]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 15,
                             Wisdom = 11,
                             Actions = "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]",
                             ChallengeRating = 1.0,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 10,
                             Senses = "{\"darkvision\":\"60 ft.\"}",
                             SpecialAbilities = "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]",
-                            Type = 9
+                            Xp = 200
                         },
                         new
                         {
@@ -637,17 +772,26 @@ namespace DDCatalogue.Migrations
                             Charisma = 15,
                             Constitution = 14,
                             Dexterity = 11,
+                            HitDice = "",
                             HitPoints = 52,
                             Intelligence = 11,
                             Languages = "Any one",
                             Name = "Knight",
+                            Picture = "",
+                            Proficiencies = "[]",
+                            Reactions = "[]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 16,
                             Wisdom = 11,
+                            Actions = "[]",
                             ChallengeRating = 3.0,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 10,
-                            Type = 0
+                            Senses = "{}",
+                            SpecialAbilities = "[]",
+                            Xp = 0
                         },
                         new
                         {
@@ -657,17 +801,26 @@ namespace DDCatalogue.Migrations
                             Charisma = 8,
                             Constitution = 10,
                             Dexterity = 14,
+                            HitDice = "",
                             HitPoints = 7,
                             Intelligence = 10,
                             Languages = "Common, Goblin",
                             Name = "Goblin",
+                            Picture = "",
+                            Proficiencies = "[]",
+                            Reactions = "[]",
                             Size = "Small",
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 8,
                             Wisdom = 8,
+                            Actions = "[]",
                             ChallengeRating = 0.25,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 9,
-                            Type = 0
+                            Senses = "{}",
+                            SpecialAbilities = "[]",
+                            Xp = 0
                         },
                         new
                         {
@@ -677,17 +830,26 @@ namespace DDCatalogue.Migrations
                             Charisma = 10,
                             Constitution = 10,
                             Dexterity = 10,
+                            HitDice = "",
                             HitPoints = 4,
                             Intelligence = 10,
                             Languages = "Any one",
                             Name = "Commoner",
+                            Picture = "",
+                            Proficiencies = "[]",
+                            Reactions = "[]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]",
                             Strength = 10,
                             Wisdom = 10,
+                            Actions = "[]",
                             ChallengeRating = 0.0,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 10,
-                            Type = 0
+                            Senses = "{}",
+                            SpecialAbilities = "[]",
+                            Xp = 0
                         },
                         new
                         {
@@ -697,17 +859,26 @@ namespace DDCatalogue.Migrations
                             Charisma = 6,
                             Constitution = 12,
                             Dexterity = 15,
+                            HitDice = "",
                             HitPoints = 11,
                             Intelligence = 3,
                             Languages = "",
                             Name = "Wolf",
+                            Picture = "",
+                            Proficiencies = "[]",
+                            Reactions = "[]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]",
                             Strength = 12,
                             Wisdom = 12,
+                            Actions = "[]",
                             ChallengeRating = 0.25,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 13,
-                            Type = 0
+                            Senses = "{}",
+                            SpecialAbilities = "[]",
+                            Xp = 0
                         },
                         new
                         {
@@ -717,17 +888,26 @@ namespace DDCatalogue.Migrations
                             Charisma = 10,
                             Constitution = 12,
                             Dexterity = 10,
+                            HitDice = "",
                             HitPoints = 26,
                             Intelligence = 10,
                             Languages = "Common, Dwarvish",
                             Name = "Dwarf",
+                            Picture = "",
+                            Proficiencies = "[]",
+                            Reactions = "[]",
                             Size = "Medium",
                             Speed = "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]",
                             Strength = 13,
                             Wisdom = 12,
+                            Actions = "[]",
                             ChallengeRating = 0.5,
+                            LegendaryActions = "[]",
+                            MonsterType = 14,
                             PassivePerception = 10,
-                            Type = 0
+                            Senses = "{}",
+                            SpecialAbilities = "[]",
+                            Xp = 0
                         });
                 });
 
@@ -852,6 +1032,15 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Locations.Region", "Region")
                         .WithMany("Locales")
                         .HasForeignKey("RegionId");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Map", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
+                        .WithMany("Maps")
+                        .HasForeignKey("LocaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>

@@ -620,7 +620,7 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("LocaleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -628,9 +628,18 @@ namespace DDCatalogue.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("LocaleId");
 
                     b.ToTable("Map");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImageUrl = "PhanDay.jpg",
+                            LocaleId = 5,
+                            Name = "Phandalin_Day"
+                        });
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>
@@ -1025,9 +1034,11 @@ namespace DDCatalogue.Migrations
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Map", b =>
                 {
-                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Location")
+                    b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
                         .WithMany("Maps")
-                        .HasForeignKey("LocationId");
+                        .HasForeignKey("LocaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>

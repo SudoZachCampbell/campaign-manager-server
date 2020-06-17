@@ -12,7 +12,8 @@ namespace DDCatalogue.Model.Locations
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public JArray Center { get; set; }
-        public Locale Location { get; set; }
+        public int LocaleId { get; set; }
+        public Locale Locale { get; set; }
 
     }
 }

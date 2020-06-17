@@ -2,6 +2,6 @@
   {
     "name": "Phandalin_Day",
     "image_url": "PhanDay.jpg",
-    "location":  5
+    "locale_id":  5
   }
 ]
