@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DDCatalogue.Model.Joins;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace DDCatalogue.Model.Locations
         public JArray Center { get; set; }
         public int LocaleId { get; set; }
         public Locale Locale { get; set; }
-
+        public List<BuildingMap> Buildings { get; set; }
     }
 }

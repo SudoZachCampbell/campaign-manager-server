@@ -3,7 +3,7 @@ using DDCatalogue.Model.Locations;
 
 namespace DDCatalogue.Model.Joins
 {
-    public class MonsterLocale
+    public class MonsterLocale : IJoin
     {
         public int MonsterId { get; set; }
         public Monster Monster { get; set; }

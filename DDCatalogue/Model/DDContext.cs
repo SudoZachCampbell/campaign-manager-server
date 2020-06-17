@@ -51,10 +51,10 @@ namespace DDCatalogue.Model
             //{
             //    System.Diagnostics.Debugger.Launch();
             //}
-            DirectoryInfo dInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds");
+            DirectoryInfo dObjectInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds\\Objects");
 
-            Dictionary<Type, IList<IModel>> seeds = new Dictionary<Type, IList<IModel>>();
-            foreach (var file in dInfo.GetFiles("*.json"))
+            Dictionary<Type, IList<IModel>> objectSeeds = new Dictionary<Type, IList<IModel>>();
+            foreach (var file in dObjectInfo.GetFiles("*.json"))
             {
                 string[] splitName = file.Name.Split("_");
                 Tuple<string, string> fileDetails = new Tuple<string, string>(splitName[0], splitName[1].Split(".")[0]);
@@ -74,12 +74,12 @@ namespace DDCatalogue.Model
                     var obj = JsonConvert.DeserializeObject(token.ToString(), type, settings);
                     genericList.Add((IModel)obj);
                 }
-                seeds.Add(type, genericList);
+                objectSeeds.Add(type, genericList);
             }
 
-            if (!seeds.Count.Equals(0))
+            if (!objectSeeds.Count.Equals(0))
             {
-                foreach (var modelList in seeds)
+                foreach (var modelList in objectSeeds)
                 {
                     int i = 1;
                     foreach (var model in modelList.Value)
@@ -87,6 +87,40 @@ namespace DDCatalogue.Model
                         model.Id = i;
                         i++;
                     }
+                    modelBuilder.Entity(modelList.Key).HasData(modelList.Value);
+                }
+            }
+
+            DirectoryInfo dJoinsInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds\\Joins");
+
+            Dictionary<Type, IList<IJoin>> joinSeeds = new Dictionary<Type, IList<IJoin>>();
+            foreach (var file in dJoinsInfo.GetFiles("*.json"))
+            {
+                string[] splitName = file.Name.Split("_");
+                Tuple<string, string> fileDetails = new Tuple<string, string>(splitName[0], splitName[1].Split(".")[0]);
+                Type type = Type.GetType($"DDCatalogue.Model.{fileDetails.Item1}.{fileDetails.Item2}");
+                IList<IJoin> genericList = CreateTypeList<IJoin>(type);
+                JArray aOfObjects = JArray.Parse(file.OpenText().ReadToEnd());
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new SnakeCaseNamingStrategy { ProcessDictionaryKeys = true }
+                    },
+                    Formatting = Formatting.Indented
+                };
+                foreach (JToken token in aOfObjects)
+                {
+                    var obj = JsonConvert.DeserializeObject(token.ToString(), type, settings);
+                    genericList.Add((IJoin)obj);
+                }
+                joinSeeds.Add(type, genericList);
+            }
+
+            if (!joinSeeds.Count.Equals(0))
+            {
+                foreach (var modelList in joinSeeds)
+                {
                     modelBuilder.Entity(modelList.Key).HasData(modelList.Value);
                 }
             }
@@ -127,6 +161,9 @@ namespace DDCatalogue.Model
 
         public static void DefineKeys(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BuildingMap>()
+                .HasKey(bm => new { bm.BuildingId, bm.MapId });     
+
             modelBuilder.Entity<MonsterBuilding>()
                 .HasKey(mb => new { mb.MonsterId, mb.BuildingId });
 
@@ -196,6 +233,11 @@ namespace DDCatalogue.Model
             modelBuilder.Entity<Map>().Property(c => c.Center).HasConversion(
               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+
+            // Building Map
+            modelBuilder.Entity<BuildingMap>().Property(c => c.Coords).HasConversion(
+             v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+             v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
     }
 }

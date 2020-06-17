@@ -15,5 +15,6 @@ namespace DDCatalogue.Model.Locations
         public List<Npc> Npcs { get; set; }
         public List<MonsterBuilding> Monsters { get; set; }
         public List<Player> Players { get; set; }
+        public List<BuildingMap> Maps { get; set; }
     }
 }
