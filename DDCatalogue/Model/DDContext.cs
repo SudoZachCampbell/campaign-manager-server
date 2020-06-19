@@ -51,7 +51,9 @@ namespace DDCatalogue.Model
             //{
             //    System.Diagnostics.Debugger.Launch();
             //}
-            DirectoryInfo dObjectInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds\\Objects");
+            string baseSeedPath = $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Model{Path.DirectorySeparatorChar}Seeds";
+
+            DirectoryInfo dObjectInfo = new DirectoryInfo($"{baseSeedPath}{Path.DirectorySeparatorChar}Objects");
 
             Dictionary<Type, IList<IModel>> objectSeeds = new Dictionary<Type, IList<IModel>>();
             foreach (var file in dObjectInfo.GetFiles("*.json"))
@@ -91,7 +93,7 @@ namespace DDCatalogue.Model
                 }
             }
 
-            DirectoryInfo dJoinsInfo = new DirectoryInfo($"{AppDomain.CurrentDomain.BaseDirectory}\\Model\\Seeds\\Joins");
+            DirectoryInfo dJoinsInfo = new DirectoryInfo($"{baseSeedPath}{Path.DirectorySeparatorChar}Joins");
 
             Dictionary<Type, IList<IJoin>> joinSeeds = new Dictionary<Type, IList<IJoin>>();
             foreach (var file in dJoinsInfo.GetFiles("*.json"))
