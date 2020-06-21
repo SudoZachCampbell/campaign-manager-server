@@ -51,6 +51,7 @@ namespace DDCatalogue.Model
             //{
             //    System.Diagnostics.Debugger.Launch();
             //}
+
             string baseSeedPath = $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Model{Path.DirectorySeparatorChar}Seeds";
 
             DirectoryInfo dObjectInfo = new DirectoryInfo($"{baseSeedPath}{Path.DirectorySeparatorChar}Objects");
