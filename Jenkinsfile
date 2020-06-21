@@ -5,14 +5,14 @@ pipeline {
       steps {
         sh 'docker container ls -a'
         // sh 'docker ps -aqf "ancestor=ddcatalogue" | xargs docker stop | xargs docker rm'
-        sh 'docker container rename ddcatalogue ddcatalogue_old'
+        sh 'docker container rename ddcatalogue ddcatalogue_old || true'
         sh 'docker container stop ddcatalogue_old'
         sh 'docker container ls -a'
       }
       post {
         failure {
             echo 'This build has failed. See logs for details.'
-            sh 'docker container rename ddcatalogue_old ddcatalogue'
+            sh 'docker container rename ddcatalogue_old ddcatalogue || true'
         }
       }   
     }
