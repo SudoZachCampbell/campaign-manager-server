@@ -13,6 +13,12 @@ namespace DDCatalogue.Controllers
     {
         protected readonly UnitOfWork<T> UnitOfWork = new UnitOfWork<T>();
 
+        [HttpGet]
+        public ActionResult<string> Status()
+        {
+            return "Running";
+        }
+
         public ActionResult<List<T>> GetGen([FromQuery] string include)
         {
             return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
