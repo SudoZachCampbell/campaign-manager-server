@@ -6,7 +6,7 @@ pipeline {
         sh 'docker container ls -a'
         // sh 'docker ps -aqf "ancestor=ddcatalogue" | xargs docker stop | xargs docker rm'
         sh 'docker container rename ddcatalogue ddcatalogue_old || true'
-        sh 'docker container stop ddcatalogue_old'
+        sh 'docker container stop ddcatalogue_old || true'
         sh 'docker container ls -a'
       }
       post {
@@ -26,7 +26,7 @@ pipeline {
       steps {
         sh 'docker run -d -p 5000:80 --name ddcatalogue ddcatalogue'
         sh 'docker container ls -a'
-        sh 'docker container rm ddcatalogue_old'
+        sh 'docker container rm ddcatalogue_old || true'
       }
       post {
         failure {
