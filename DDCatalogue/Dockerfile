@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["./DDCatalogue.csproj", "DDCatalogue/"]
+COPY ["./", "DDCatalogue/"]
 RUN dotnet restore "DDCatalogue/DDCatalogue.csproj"
 COPY . .
 WORKDIR "/src/DDCatalogue"
