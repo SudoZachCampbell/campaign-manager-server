@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build ddcatalogue:latest ./DDCatalogue'
+        sh 'docker build -t ddcatalogue:latest ./DDCatalogue'
         sh 'docker image ls'
       }
     }
