@@ -1,5 +1,10 @@
 ﻿pipeline {
-    agent { dockerfile true }
+    agent {     
+        dockerfile {
+            filename 'Dockerfile'
+            dir 'DDCatalogue'
+        } 
+    }
     stages {
         stage('Test') {
             steps {
