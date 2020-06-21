@@ -4,13 +4,13 @@ pipeline {
     stage('Build') {
       steps {
         sh 'docker build ./DDCatalogue'
-        sh 'echo docker image ls'
+        sh 'docker image ls'
       }
     }
     stage('Deploy') {
       steps {
-        sh 'echo docker container ls'
         sh 'docker run -p 5001:80 ddcatalogue'
+        sh 'docker container ls'
       }
     }
   }
