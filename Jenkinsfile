@@ -1,17 +1,30 @@
 pipeline {
-  agent {
-    dockerfile {
-      filename 'Dockerfile'
-      dir 'DDCatalogue'
-    }
+    agent any
+    stages {
+        stage('Build Image') {
+            steps {
+                sh 'docker container rename dndclient dndoldclient || true'
+                sh 'docker-compose build'
+            }
 
-  }
-  stages {
-    stage('Run') {
-      steps {
-        sh 'docker container ls'
-        sh 'docker run -p 5001:80 ddcatalogue'
-      }
+            post {
+                failure {
+                    echo 'This build has failed. See logs for details.'
+                    sh 'docker container rename dndoldclient dndclient || true'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker rm --force dndoldclient || true'
+                sh 'docker-compose up -d'
+            }
+
+            post {
+                failure {
+                    echo 'This build has failed. See logs for details.'
+                }
+            }
+        }
     }
-  }
 }
