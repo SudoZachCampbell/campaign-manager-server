@@ -4,11 +4,8 @@ pipeline {
     stage('Clean') {
       steps {
         sh 'docker container ls -a'
-        sh 'docker image ls -a'
-        sh 'docker ps -aqf "ancestor=ddcatalogue" | xargs docker stop'
-        sh 'docker system prune -fa'
+        sh 'docker ps -aqf "ancestor=ddcatalogue" | xargs docker stop | xargs docker rm'
         sh 'docker container ls -a'
-        sh 'docker image ls -a'
       }
     }
     stage('Build') {
