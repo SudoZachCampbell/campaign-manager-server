@@ -13,7 +13,7 @@ namespace DDCatalogue.Controllers
     {
         protected readonly UnitOfWork<T> UnitOfWork = new UnitOfWork<T>();
 
-        [HttpGet]
+        [HttpGet("[action]")]
         public ActionResult<string> Status()
         {
             return "Running";
