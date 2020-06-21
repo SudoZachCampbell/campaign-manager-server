@@ -7,11 +7,10 @@ pipeline {
 
   }
   stages {
-    stage('Test') {
+    stage('Run') {
       steps {
-        sh 'docker container ls'
+        sh 'docker run -d -p 5001:80 ddcatalogue'
       }
     }
-
   }
 }
