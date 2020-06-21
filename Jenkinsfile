@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh 'docker container ls'
         sh 'docker image ls'
-        sh 'docker ps "ancestor=ddcatalogue"'
+        sh 'docker ps -af "ancestor=ddcatalogue"'
         // sh 'docker ps -aqf "ancestor=ddcatalogue" | xargs docker stop | xargs docker rm'
         sh 'docker system prune -f'
         sh 'docker container ls'
