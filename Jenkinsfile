@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh 'docker container ls -a'
         sh 'docker container rename ddcatalogueapi ddcatalogueapi_old || true'
-        sh 'docker container stop ddcatalogue_old || true'
+        sh 'docker container stop ddcatalogueapi_old || true'
         sh 'docker container ls -a'
       }
       post {
