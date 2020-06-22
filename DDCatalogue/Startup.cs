@@ -55,7 +55,7 @@ namespace DDCatalogue
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins(new string[] { "http://localhost:3000", "http://zcampbell.duckdns.org:3000" })
+                        builder.WithOrigins(new string[] { "http://localhost:3000", "http://zcampbell.duckdns.org:3000", "http://dndhub.net:3000" })
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                     });
