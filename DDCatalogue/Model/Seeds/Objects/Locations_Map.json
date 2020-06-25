@@ -1,7 +1,20 @@
 [
   {
+    "name": "Phandalin_Dawn",
+    "variation": "Dawn",
+    "image_url": "PhanDawn.jpg",
+    "locale_id": 6
+  },
+  {
     "name": "Phandalin_Day",
+    "variation": "Day",
     "image_url": "PhanDay.jpg",
-    "locale_id":  6
+    "locale_id": 6
+  },
+  {
+    "name": "Phandalin_Night",
+    "variation": "Night",
+    "image_url": "PhanNight.jpg",
+    "locale_id": 6
   }
 ]

@@ -4,14 +4,16 @@ using DDCatalogue.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    partial class DDContextModelSnapshot : ModelSnapshot
+    [Migration("20200625132722_Added Buildings to Map")]
+    partial class AddedBuildingstoMap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -779,14 +781,6 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "PhanDawn.jpg",
-                            LocaleId = 6,
-                            Name = "Phandalin_Dawn",
-                            Variation = "Dawn"
-                        },
-                        new
-                        {
-                            Id = 2,
                             ImageUrl = "PhanDay.jpg",
                             LocaleId = 6,
                             Name = "Phandalin_Day",
@@ -794,7 +788,7 @@ namespace DDCatalogue.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             ImageUrl = "PhanNight.jpg",
                             LocaleId = 6,
                             Name = "Phandalin_Night",

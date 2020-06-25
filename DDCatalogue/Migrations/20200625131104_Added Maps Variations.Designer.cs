@@ -4,14 +4,16 @@ using DDCatalogue.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    partial class DDContextModelSnapshot : ModelSnapshot
+    [Migration("20200625131104_Added Maps Variations")]
+    partial class AddedMapsVariations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -440,66 +442,6 @@ namespace DDCatalogue.Migrations
                             BuildingId = 10,
                             MapId = 1,
                             Coords = "[1351,6418]"
-                        },
-                        new
-                        {
-                            BuildingId = 1,
-                            MapId = 2,
-                            Coords = "[1830,3083]"
-                        },
-                        new
-                        {
-                            BuildingId = 2,
-                            MapId = 2,
-                            Coords = "[1107,3735]"
-                        },
-                        new
-                        {
-                            BuildingId = 3,
-                            MapId = 2,
-                            Coords = "[1041,876]"
-                        },
-                        new
-                        {
-                            BuildingId = 4,
-                            MapId = 2,
-                            Coords = "[2280,2300]"
-                        },
-                        new
-                        {
-                            BuildingId = 5,
-                            MapId = 2,
-                            Coords = "[3101,2115]"
-                        },
-                        new
-                        {
-                            BuildingId = 6,
-                            MapId = 2,
-                            Coords = "[2971,4447]"
-                        },
-                        new
-                        {
-                            BuildingId = 7,
-                            MapId = 2,
-                            Coords = "[1656,2445]"
-                        },
-                        new
-                        {
-                            BuildingId = 8,
-                            MapId = 2,
-                            Coords = "[1913,4396]"
-                        },
-                        new
-                        {
-                            BuildingId = 9,
-                            MapId = 2,
-                            Coords = "[2382,2836]"
-                        },
-                        new
-                        {
-                            BuildingId = 10,
-                            MapId = 2,
-                            Coords = "[1351,6418]"
                         });
                 });
 
@@ -779,14 +721,6 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "PhanDawn.jpg",
-                            LocaleId = 6,
-                            Name = "Phandalin_Dawn",
-                            Variation = "Dawn"
-                        },
-                        new
-                        {
-                            Id = 2,
                             ImageUrl = "PhanDay.jpg",
                             LocaleId = 6,
                             Name = "Phandalin_Day",
@@ -794,7 +728,7 @@ namespace DDCatalogue.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             ImageUrl = "PhanNight.jpg",
                             LocaleId = 6,
                             Name = "Phandalin_Night",
