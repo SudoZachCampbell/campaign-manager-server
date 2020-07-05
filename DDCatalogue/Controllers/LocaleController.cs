@@ -16,5 +16,12 @@ namespace DDCatalogue.Controllers
         {
             return GetGen(id, include);
         }
+
+        // GET: api/Region
+        [HttpGet("Region/{regionId}")]
+        public ActionResult<List<Locale>> GetRegionsFromContinent(int regionId, [FromQuery] string include)
+        {
+            return UnitOfWork.Repository.Get(x => x.Region.Id.Equals(regionId), includeProperties: include?.Split(',')).ToList();
+        }
     }
 }

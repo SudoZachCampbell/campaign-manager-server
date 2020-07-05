@@ -1,6 +1,7 @@
 [
-    {
-        "name": "Sword Coast North",
-        "map": "Sword_Coast_North.png"
-    }
+  {
+    "name": "Sword Coast North",
+    "map": "Sword_Coast_North.png",
+    "continent_id": 1
+  }
 ]

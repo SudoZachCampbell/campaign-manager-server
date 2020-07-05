@@ -13,45 +13,45 @@ namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BuildingController : GenericController<Building>
+    public class ContinentController : GenericController<Continent>
     {
-        // GET: api/Building
-        [HttpGet("Locale/{localeId}")]
-        public ActionResult<List<Building>> GetBuildingsFromLocale(int localeId, [FromQuery] string include)
+        // GET: api/Continent
+        [HttpGet]
+        public ActionResult<List<Continent>> GetContinents([FromQuery] string include)
         {
-            return UnitOfWork.Repository.Get(x => x.Locale.Id.Equals(localeId), includeProperties: include?.Split(',')).ToList();
+            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
-        // GET: api/Building/5
+        // GET: api/Continent/5
         [HttpGet("{id}")]
-        public ActionResult<Building> GetBuildingById(int id, [FromQuery] string include)
+        public ActionResult<Continent> GetContinentById(int id, [FromQuery] string include)
         {
             return GetGen(id, include);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Building> PatchBuilding(int id, [FromBody] JsonPatchDocument<Building> patchDoc, [FromQuery] string include)
+        public ActionResult<Continent> PatchContinent(int id, [FromBody] JsonPatchDocument<Continent> patchDoc, [FromQuery] string include)
         {
             return PatchGen(id, patchDoc, include);
         }
 
-        // PUT: api/Building/5
+        // PUT: api/Continent/5
         [HttpPut("{id}")]
-        public IActionResult PutBuilding(int id, Building building)
+        public IActionResult PutContinent(int id, Continent continent)
         {
-            return PutGen(id, building);
+            return PutGen(id, continent);
         }
 
-        // POST: api/Building
+        // POST: api/Continent
         [HttpPost]
-        public ActionResult<Building> PostBuilding(Building building)
+        public ActionResult<Continent> PostContinent(Continent continent)
         {
-            return PostGen(building);
+            return PostGen(continent);
         }
 
-        // DELETE: api/Building/5
+        // DELETE: api/Continent/5
         [HttpDelete("{id}")]
-        public ActionResult<Building> DeleteBuilding(int id)
+        public ActionResult<Continent> DeleteContinent(int id)
         {
             return DeleteGen(id);
         }
@@ -59,13 +59,13 @@ namespace DDCatalogue.Controllers
         [HttpGet("[action]")]
         public ActionResult<dynamic> GetTable()
         {
-            dynamic buildings = UnitOfWork.Repository.Get()
+            dynamic continents = UnitOfWork.Repository.Get()
                 .Select(m => new
                 {
                     id = m.Id,
                     name = m.Name
                 }).ToList();
-            return buildings;
+            return continents;
         }
 
         [HttpGet("[action]/{name}")]

@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-
+using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace DDCatalogue.Controllers
 {
@@ -37,7 +38,8 @@ namespace DDCatalogue.Controllers
         {
             if (patchDoc != null)
             {
-                T instance = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
+                string[] includeArray = include?.Split(',');
+                T instance = UnitOfWork.Repository.GetById(id, includeProperties: includeArray);
 
                 if (instance != null)
                 {
@@ -50,6 +52,11 @@ namespace DDCatalogue.Controllers
 
                 UnitOfWork.Repository.Update(instance);
                 UnitOfWork.Save();
+
+                foreach (string prop in includeArray)
+                {
+                    instance = UnitOfWork.Repository.dbSet.Include(prop).SingleOrDefault(x => x.Id.Equals(instance.Id));
+                }
 
                 return instance;
             }
@@ -72,7 +79,7 @@ namespace DDCatalogue.Controllers
             return NoContent();
         }
 
-        public ActionResult<Monster> PostGen(T instance)
+        public ActionResult<T> PostGen(T instance)
         {
             UnitOfWork.Repository.Insert(instance);
             UnitOfWork.Save();
