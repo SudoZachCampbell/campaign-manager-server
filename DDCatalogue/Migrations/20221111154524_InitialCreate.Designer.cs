@@ -3,85 +3,89 @@ using System;
 using DDCatalogue.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
 
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20200617200753_Added Barthan's Map Location")]
-    partial class AddedBarthansMapLocation
+    [Migration("20221111154524_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Creature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Alignment")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ArmorClass")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Charisma")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Constitution")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Dexterity")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("HitDice")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("HitPoints")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Intelligence")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Languages")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Proficiencies")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Reactions")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Speed")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Strength")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Wisdom")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -94,38 +98,39 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Background")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Beliefs")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("BuildingId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Flaws")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("LocaleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("MonsterId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NoteableEvents")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Passions")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -348,15 +353,16 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -368,13 +374,13 @@ namespace DDCatalogue.Migrations
             modelBuilder.Entity("DDCatalogue.Model.Joins.BuildingMap", b =>
                 {
                     b.Property<int>("BuildingId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("MapId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Coords")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("BuildingId", "MapId");
 
@@ -393,17 +399,125 @@ namespace DDCatalogue.Migrations
                         {
                             BuildingId = 2,
                             MapId = 1,
-                            Coords = "[1100,3743]"
+                            Coords = "[1107,3735]"
+                        },
+                        new
+                        {
+                            BuildingId = 3,
+                            MapId = 1,
+                            Coords = "[1041,876]"
+                        },
+                        new
+                        {
+                            BuildingId = 4,
+                            MapId = 1,
+                            Coords = "[2280,2300]"
+                        },
+                        new
+                        {
+                            BuildingId = 5,
+                            MapId = 1,
+                            Coords = "[3101,2115]"
+                        },
+                        new
+                        {
+                            BuildingId = 6,
+                            MapId = 1,
+                            Coords = "[2971,4447]"
+                        },
+                        new
+                        {
+                            BuildingId = 7,
+                            MapId = 1,
+                            Coords = "[1656,2445]"
+                        },
+                        new
+                        {
+                            BuildingId = 8,
+                            MapId = 1,
+                            Coords = "[1913,4396]"
+                        },
+                        new
+                        {
+                            BuildingId = 9,
+                            MapId = 1,
+                            Coords = "[2382,2836]"
+                        },
+                        new
+                        {
+                            BuildingId = 10,
+                            MapId = 1,
+                            Coords = "[1351,6418]"
+                        },
+                        new
+                        {
+                            BuildingId = 1,
+                            MapId = 2,
+                            Coords = "[1830,3083]"
+                        },
+                        new
+                        {
+                            BuildingId = 2,
+                            MapId = 2,
+                            Coords = "[1107,3735]"
+                        },
+                        new
+                        {
+                            BuildingId = 3,
+                            MapId = 2,
+                            Coords = "[1041,876]"
+                        },
+                        new
+                        {
+                            BuildingId = 4,
+                            MapId = 2,
+                            Coords = "[2280,2300]"
+                        },
+                        new
+                        {
+                            BuildingId = 5,
+                            MapId = 2,
+                            Coords = "[3101,2115]"
+                        },
+                        new
+                        {
+                            BuildingId = 6,
+                            MapId = 2,
+                            Coords = "[2971,4447]"
+                        },
+                        new
+                        {
+                            BuildingId = 7,
+                            MapId = 2,
+                            Coords = "[1656,2445]"
+                        },
+                        new
+                        {
+                            BuildingId = 8,
+                            MapId = 2,
+                            Coords = "[1913,4396]"
+                        },
+                        new
+                        {
+                            BuildingId = 9,
+                            MapId = 2,
+                            Coords = "[2382,2836]"
+                        },
+                        new
+                        {
+                            BuildingId = 10,
+                            MapId = 2,
+                            Coords = "[1351,6418]"
                         });
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterBuilding", b =>
                 {
                     b.Property<int>("MonsterId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("BuildingId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("MonsterId", "BuildingId");
 
@@ -415,10 +529,10 @@ namespace DDCatalogue.Migrations
             modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterLocale", b =>
                 {
                     b.Property<int>("MonsterId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("LocaleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("MonsterId", "LocaleId");
 
@@ -431,17 +545,18 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("LocaleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Map")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -517,41 +632,50 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("Map")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Continents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Faerun"
+                        });
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Dungeon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("BuildingId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("LocaleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<byte[]>("Map")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -573,17 +697,15 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Map")
-                        .HasColumnType("nvarchar(max)");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("RegionId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -595,49 +717,56 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Neverwinter"
+                            Name = "Neverwinter",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Thundertree"
+                            Name = "Thundertree",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Cragmaw Castle"
+                            Name = "Cragmaw Castle",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Conyberry"
+                            Name = "Conyberry",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Old Owl Well"
+                            Name = "Old Owl Well",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 6,
-                            Map = "Phandalin.png",
                             Name = "Phandalin",
                             RegionId = 1
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Leilon"
+                            Name = "Leilon",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Neverwinter"
+                            Name = "Neverwinter",
+                            RegionId = 1
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Cragmaw Hideout"
+                            Name = "Cragmaw Hideout",
+                            RegionId = 1
                         });
                 });
 
@@ -645,20 +774,24 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Center")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("LocaleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("Variation")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -670,9 +803,26 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
+                            ImageUrl = "PhanDawn.jpg",
+                            LocaleId = 6,
+                            Name = "Phandalin_Dawn",
+                            Variation = "Dawn"
+                        },
+                        new
+                        {
+                            Id = 2,
                             ImageUrl = "PhanDay.jpg",
                             LocaleId = 6,
-                            Name = "Phandalin_Day"
+                            Name = "Phandalin_Day",
+                            Variation = "Day"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImageUrl = "PhanNight.jpg",
+                            LocaleId = 6,
+                            Name = "Phandalin_Night",
+                            Variation = "Night"
                         });
                 });
 
@@ -680,17 +830,18 @@ namespace DDCatalogue.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ContinentId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Map")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -702,6 +853,7 @@ namespace DDCatalogue.Migrations
                         new
                         {
                             Id = 1,
+                            ContinentId = 1,
                             Map = "Sword_Coast_North.png",
                             Name = "Sword Coast North"
                         });
@@ -712,28 +864,28 @@ namespace DDCatalogue.Migrations
                     b.HasBaseType("DDCatalogue.Model.Creatures.Creature");
 
                     b.Property<string>("Actions")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<double>("ChallengeRating")
-                        .HasColumnType("float");
+                        .HasColumnType("double precision");
 
                     b.Property<string>("LegendaryActions")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("MonsterType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("PassivePerception")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Senses")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SpecialAbilities")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Xp")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasDiscriminator().HasValue("Monster");
 
@@ -948,22 +1100,22 @@ namespace DDCatalogue.Migrations
                     b.HasBaseType("DDCatalogue.Model.Creatures.Creature");
 
                     b.Property<string>("Background")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("BuildingId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Faction")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("LocaleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PlayerName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Race")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasIndex("BuildingId");
 
@@ -1009,6 +1161,12 @@ namespace DDCatalogue.Migrations
                         .WithMany("Npcs")
                         .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Building");
+
+                    b.Navigation("Locale");
+
+                    b.Navigation("Monster");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.BuildingMap", b =>
@@ -1024,6 +1182,10 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("MapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Building");
+
+                    b.Navigation("Map");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterBuilding", b =>
@@ -1039,6 +1201,10 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Building");
+
+                    b.Navigation("Monster");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterLocale", b =>
@@ -1054,6 +1220,10 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Locale");
+
+                    b.Navigation("Monster");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
@@ -1061,6 +1231,8 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
                         .WithMany("Buildings")
                         .HasForeignKey("LocaleId");
+
+                    b.Navigation("Locale");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Dungeon", b =>
@@ -1072,6 +1244,10 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Locations.Locale", "Locale")
                         .WithMany("Dungeons")
                         .HasForeignKey("LocaleId");
+
+                    b.Navigation("Building");
+
+                    b.Navigation("Locale");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Locale", b =>
@@ -1079,6 +1255,8 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Locations.Region", "Region")
                         .WithMany("Locales")
                         .HasForeignKey("RegionId");
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Map", b =>
@@ -1088,6 +1266,8 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("LocaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Locale");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>
@@ -1095,6 +1275,8 @@ namespace DDCatalogue.Migrations
                     b.HasOne("DDCatalogue.Model.Locations.Continent", "Continent")
                         .WithMany("Regions")
                         .HasForeignKey("ContinentId");
+
+                    b.Navigation("Continent");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
@@ -1108,6 +1290,60 @@ namespace DDCatalogue.Migrations
                         .WithMany("Players")
                         .HasForeignKey("LocaleId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Building");
+
+                    b.Navigation("Locale");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
+                {
+                    b.Navigation("Maps");
+
+                    b.Navigation("Monsters");
+
+                    b.Navigation("Npcs");
+
+                    b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Continent", b =>
+                {
+                    b.Navigation("Regions");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Locale", b =>
+                {
+                    b.Navigation("Buildings");
+
+                    b.Navigation("Dungeons");
+
+                    b.Navigation("Maps");
+
+                    b.Navigation("Monsters");
+
+                    b.Navigation("Npcs");
+
+                    b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Map", b =>
+                {
+                    b.Navigation("Buildings");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>
+                {
+                    b.Navigation("Locales");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
+                {
+                    b.Navigation("Buildings");
+
+                    b.Navigation("Locales");
+
+                    b.Navigation("Npcs");
                 });
 #pragma warning restore 612, 618
         }

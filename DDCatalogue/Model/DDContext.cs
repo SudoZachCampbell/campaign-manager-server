@@ -3,6 +3,7 @@ using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Joins;
 using DDCatalogue.Model.Locations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -27,7 +28,7 @@ namespace DDCatalogue.Model
         public DbSet<Region> Regions { get; set; }
         public DbSet<Continent> Continents { get; set; }
         public DbSet<Dungeon> Dungeons { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(@"Server=192.168.0.41;Database=DDCatalogue;User Id=sa;Password=Microsoft1!");
+        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseNpgsql(@"Server=172.17.0.1:5432;Database=postgres;User Id=postgres;Password=postgres");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.AddConversions();
@@ -165,7 +166,7 @@ namespace DDCatalogue.Model
         public static void DefineKeys(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BuildingMap>()
-                .HasKey(bm => new { bm.BuildingId, bm.MapId });     
+                .HasKey(bm => new { bm.BuildingId, bm.MapId });
 
             modelBuilder.Entity<MonsterBuilding>()
                 .HasKey(mb => new { mb.MonsterId, mb.BuildingId });
@@ -185,31 +186,42 @@ namespace DDCatalogue.Model
         public static void AddConversions(this ModelBuilder modelBuilder)
         {
 
+            var valueComparer = new ValueComparer<JArray>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => new JArray(c));
+
             // Creature
             modelBuilder.Entity<Creature>().Property(c => c.Speed).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                valueComparer);
 
             modelBuilder.Entity<Creature>().Property(c => c.Proficiencies).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                valueComparer);
 
             modelBuilder.Entity<Creature>().Property(c => c.Reactions).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                valueComparer);
 
             // Monster
             modelBuilder.Entity<Monster>().Property(c => c.Actions).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                valueComparer);
 
             modelBuilder.Entity<Monster>().Property(c => c.LegendaryActions).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                valueComparer);
 
             modelBuilder.Entity<Monster>().Property(c => c.SpecialAbilities).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                valueComparer);
 
             modelBuilder.Entity<Monster>().Property(c => c.Senses).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
@@ -218,29 +230,35 @@ namespace DDCatalogue.Model
             // NPC
             modelBuilder.Entity<Npc>().Property(c => c.NoteableEvents).HasConversion(
                v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+               valueComparer);
 
             modelBuilder.Entity<Npc>().Property(c => c.Beliefs).HasConversion(
                v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+               valueComparer);
 
             modelBuilder.Entity<Npc>().Property(c => c.Passions).HasConversion(
                v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+               valueComparer);
 
             modelBuilder.Entity<Npc>().Property(c => c.Flaws).HasConversion(
                v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+               valueComparer);
 
             // Map
             modelBuilder.Entity<Map>().Property(c => c.Center).HasConversion(
               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-              v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+              v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+              valueComparer);
 
             // Building Map
             modelBuilder.Entity<BuildingMap>().Property(c => c.Coords).HasConversion(
              v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-             v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+             v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+             valueComparer);
         }
     }
 }
