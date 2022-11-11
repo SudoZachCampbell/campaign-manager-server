@@ -3,10 +3,8 @@ using Newtonsoft.Json.Linq;
 
 namespace DDCatalogue.Model.Creatures
 {
-    public class Npc : ICreature
+    public class Npc : Base, ICreature
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
         public string Picture { get; set; } = string.Empty;
         public string Background { get; set; } = string.Empty;
         public JArray NoteableEvents { get; set; } = new JArray();

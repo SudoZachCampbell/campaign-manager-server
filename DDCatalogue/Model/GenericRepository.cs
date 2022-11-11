@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
-    public class GenericRepository<TEntity> where TEntity : class, IModel
+    public class GenericRepository<TEntity> where TEntity : class, IBase
     {
         internal DDContext _context;
         internal DbSet<TEntity> dbSet;
@@ -35,7 +35,7 @@ namespace DDCatalogue.Model
             return orderBy != null ? orderBy(query).ToList() : query.ToList();
         }
 
-        public virtual TEntity GetById(int id, string[] includeProperties = null)
+        public virtual TEntity GetById(Guid id, string[] includeProperties = null)
         {
             IQueryable<TEntity> query = dbSet;
 

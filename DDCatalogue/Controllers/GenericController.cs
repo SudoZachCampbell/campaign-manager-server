@@ -10,7 +10,7 @@ using System.Reflection.Metadata;
 
 namespace DDCatalogue.Controllers
 {
-    public class GenericController<T> : ControllerBase where T : class, IModel
+    public class GenericController<T> : ControllerBase where T : class, IBase
     {
         protected readonly UnitOfWork<T> UnitOfWork = new UnitOfWork<T>();
 
@@ -25,7 +25,7 @@ namespace DDCatalogue.Controllers
             return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
-        public ActionResult<T> GetGen(int id, [FromQuery] string include)
+        public ActionResult<T> GetGen(Guid id, [FromQuery] string include)
         {
             T instance = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
 
@@ -34,7 +34,7 @@ namespace DDCatalogue.Controllers
             return instance;
         }
 
-        public ActionResult<T> PatchGen(int id, [FromBody] JsonPatchDocument<T> patchDoc, [FromQuery] string include)
+        public ActionResult<T> PatchGen(Guid id, [FromBody] JsonPatchDocument<T> patchDoc, [FromQuery] string include)
         {
             if (patchDoc != null)
             {
@@ -66,7 +66,7 @@ namespace DDCatalogue.Controllers
             }
         }
 
-        public IActionResult PutGen(int id, T instance)
+        public IActionResult PutGen(Guid id, T instance)
         {
             if (id != instance.Id)
             {
@@ -87,7 +87,7 @@ namespace DDCatalogue.Controllers
             return CreatedAtAction("GetMonster", new { id = instance.Id }, instance);
         }
 
-        public ActionResult<T> DeleteGen(int id)
+        public ActionResult<T> DeleteGen(Guid id)
         {
             T instance = UnitOfWork.Repository.GetById(id);
             if (instance == null)

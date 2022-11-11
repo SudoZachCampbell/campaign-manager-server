@@ -1,4 +1,5 @@
-﻿using DDCatalogue.Model;
+﻿using System;
+using DDCatalogue.Model;
 using DDCatalogue.Model.Creatures;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class NpcController : GenericController<Npc>
+    public class NpcsController : GenericController<Npc>
     {
 
         [HttpGet]
@@ -18,15 +19,15 @@ namespace DDCatalogue.Controllers
             return GetGen(include);
         }
 
-         
+
         [HttpGet("{id}")]
-        public ActionResult<Npc> Get(int id, [FromQuery] string include)
+        public ActionResult<Npc> Get(Guid id, [FromQuery] string include)
         {
             return GetGen(id, include);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Npc> Patch(int id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] string include)
+        public ActionResult<Npc> Patch(Guid id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] string include)
         {
             return PatchGen(id, patchDoc, include);
         }

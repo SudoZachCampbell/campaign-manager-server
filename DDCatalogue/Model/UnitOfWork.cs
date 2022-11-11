@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model
 {
-    public class UnitOfWork<T>: IDisposable where T : class, IModel
+    public class UnitOfWork<T> : IDisposable where T : class, IBase
     {
         private DDContext Context = new DDContext();
         private GenericRepository<T> Repo;

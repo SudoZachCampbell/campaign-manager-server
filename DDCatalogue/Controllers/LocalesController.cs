@@ -9,10 +9,10 @@ namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class LocaleController : GenericController<Locale>
+    public class LocalesController : GenericController<Locale>
     {
         [HttpGet("{id}")]
-        public ActionResult<Locale> GetLocale(int id, [FromQuery] string include)
+        public ActionResult<Locale> GetLocale(Guid id, [FromQuery] string include)
         {
             return GetGen(id, include);
         }

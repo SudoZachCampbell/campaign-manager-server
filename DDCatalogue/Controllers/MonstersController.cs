@@ -5,53 +5,51 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Linq.Expressions;
-using DDCatalogue.Model.Locations;
+
 
 namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ContinentController : GenericController<Continent>
+    public class MonstersController : GenericController<Monster>
     {
-        // GET: api/Continent
+        // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Continent>> GetContinents([FromQuery] string include)
+        public ActionResult<List<Monster>> GetMonsters([FromQuery] string include)
         {
             return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
         }
 
-        // GET: api/Continent/5
+        // GET: api/Monster/5
         [HttpGet("{id}")]
-        public ActionResult<Continent> GetContinentById(int id, [FromQuery] string include)
+        public ActionResult<Monster> GetMonsterById(Guid id, [FromQuery] string include)
         {
             return GetGen(id, include);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Continent> PatchContinent(int id, [FromBody] JsonPatchDocument<Continent> patchDoc, [FromQuery] string include)
+        public ActionResult<Monster> PatchMonster(Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
         {
             return PatchGen(id, patchDoc, include);
         }
 
-        // PUT: api/Continent/5
+        // PUT: api/Monster/5
         [HttpPut("{id}")]
-        public IActionResult PutContinent(int id, Continent continent)
+        public IActionResult PutMonster(Guid id, Monster monster)
         {
-            return PutGen(id, continent);
+            return PutGen(id, monster);
         }
 
-        // POST: api/Continent
+        // POST: api/Monster
         [HttpPost]
-        public ActionResult<Continent> PostContinent(Continent continent)
+        public ActionResult<Monster> PostMonster(Monster monster)
         {
-            return PostGen(continent);
+            return PostGen(monster);
         }
 
-        // DELETE: api/Continent/5
+        // DELETE: api/Monster/5
         [HttpDelete("{id}")]
-        public ActionResult<Continent> DeleteContinent(int id)
+        public ActionResult<Monster> DeleteMonster(Guid id)
         {
             return DeleteGen(id);
         }
@@ -59,13 +57,15 @@ namespace DDCatalogue.Controllers
         [HttpGet("[action]")]
         public ActionResult<dynamic> GetTable()
         {
-            dynamic continents = UnitOfWork.Repository.Get()
+            dynamic monsters = UnitOfWork.Repository.Get()
                 .Select(m => new
                 {
                     id = m.Id,
-                    name = m.Name
+                    name = m.Name,
+                    passivePerception = m.PassivePerception,
+                    alignment = m.Alignment
                 }).ToList();
-            return continents;
+            return monsters;
         }
 
         [HttpGet("[action]/{name}")]

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Locations
 {
-    public class Map : ILocation
+    public class Map : Base, ILocation
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Variation { get; set; }
         public string ImageUrl { get; set; }
         public JArray Center { get; set; }

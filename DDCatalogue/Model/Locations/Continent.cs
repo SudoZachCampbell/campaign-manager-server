@@ -2,10 +2,8 @@
 
 namespace DDCatalogue.Model.Locations
 {
-    public class Continent : ILocation
+    public class Continent : Base, ILocation
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public List<Region> Regions { get; set; }
         public byte[] Map { get; set; }
     }

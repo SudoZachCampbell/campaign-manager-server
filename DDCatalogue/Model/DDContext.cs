@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 namespace DDCatalogue.Model
 {
     public class DDContext : DbContext
@@ -31,6 +30,9 @@ namespace DDCatalogue.Model
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseNpgsql(@"Server=172.17.0.1:5432;Database=postgres;User Id=postgres;Password=postgres");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Addd the Postgres Extension for UUID generation
+            modelBuilder.HasPostgresExtension("uuid-ossp");
+
             modelBuilder.AddConversions();
             modelBuilder.DefineKeys();
             modelBuilder.BuildRelationships();
@@ -48,22 +50,18 @@ namespace DDCatalogue.Model
         /// <param name="modelBuilder"></param>
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            //if (System.Diagnostics.Debugger.IsAttached == false)
-            //{
-            //    System.Diagnostics.Debugger.Launch();
-            //}
 
             string baseSeedPath = $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Model{Path.DirectorySeparatorChar}Seeds";
 
             DirectoryInfo dObjectInfo = new DirectoryInfo($"{baseSeedPath}{Path.DirectorySeparatorChar}Objects");
 
-            Dictionary<Type, IList<IModel>> objectSeeds = new Dictionary<Type, IList<IModel>>();
+            Dictionary<Type, IList<IBase>> objectSeeds = new Dictionary<Type, IList<IBase>>();
             foreach (var file in dObjectInfo.GetFiles("*.json"))
             {
                 string[] splitName = file.Name.Split("_");
                 Tuple<string, string> fileDetails = new Tuple<string, string>(splitName[0], splitName[1].Split(".")[0]);
                 Type type = Type.GetType($"DDCatalogue.Model.{fileDetails.Item1}.{fileDetails.Item2}");
-                IList<IModel> genericList = CreateTypeList<IModel>(type);
+                IList<IBase> genericList = CreateTypeList<IBase>(type);
                 JArray aOfObjects = JArray.Parse(file.OpenText().ReadToEnd());
                 var settings = new JsonSerializerSettings
                 {
@@ -76,7 +74,7 @@ namespace DDCatalogue.Model
                 foreach (JToken token in aOfObjects)
                 {
                     var obj = JsonConvert.DeserializeObject(token.ToString(), type, settings);
-                    genericList.Add((IModel)obj);
+                    genericList.Add((IBase)obj);
                 }
                 objectSeeds.Add(type, genericList);
             }
@@ -85,13 +83,28 @@ namespace DDCatalogue.Model
             {
                 foreach (var modelList in objectSeeds)
                 {
-                    int i = 1;
-                    foreach (var model in modelList.Value)
+                    // int i = 1;
+                    // foreach (IBase model in modelList.Value)
+                    // {
+                    //     model.Id = i;
+                    //     i++;
+                    // }
+                    var builder = modelBuilder.Entity(modelList.Key);
+                    if (modelList.Key.IsAssignableFrom(typeof(Base)))
                     {
-                        model.Id = i;
-                        i++;
+                        builder.HasKey(new string[] { "Id" });
+
+                        builder.HasIndex(new string[] { "Id" })
+                               .HasDatabaseName("identifier")
+                               .IsUnique();
+
+                        builder.Property("Id")
+                               .HasColumnName("identifier")
+                               .HasColumnType("uuid")
+                               .HasDefaultValueSql("uuid_generate_v4()")    // Use 
+                               .IsRequired();
                     }
-                    modelBuilder.Entity(modelList.Key).HasData(modelList.Value);
+                    builder.HasData(modelList.Value);
                 }
             }
 

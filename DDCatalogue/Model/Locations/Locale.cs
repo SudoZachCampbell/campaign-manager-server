@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Locations
 {
-    public class Locale : ILocation
+    public class Locale : Base, ILocation
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public int? RegionId { get; set; }
         public Region Region { get; set; }
         public List<Building> Buildings { get; set; }

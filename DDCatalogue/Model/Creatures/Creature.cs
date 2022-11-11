@@ -6,10 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DDCatalogue.Model.Creatures
 {
-    public class Creature : ICreature
+    public class Creature : Base, ICreature
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
         public int Strength { get; set; } = 0;
         public int Dexterity { get; set; } = 0;
         public int Constitution { get; set; } = 0;

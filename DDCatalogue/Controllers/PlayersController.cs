@@ -12,11 +12,11 @@ namespace DDCatalogue.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class PlayerController : ControllerBase
+    public class PlayersController : ControllerBase
     {
         private readonly DDContext _context;
 
-        public PlayerController(DDContext context)
+        public PlayersController(DDContext context)
         {
             _context = context;
         }
@@ -30,7 +30,7 @@ namespace DDCatalogue.Controllers
 
         // GET: api/Player/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(int id)
+        public async Task<ActionResult<Player>> GetPlayer(Guid id)
         {
             var player = await _context.Players.FindAsync(id);
 
@@ -46,7 +46,7 @@ namespace DDCatalogue.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayer(int id, Player player)
+        public async Task<IActionResult> PutPlayer(Guid id, Player player)
         {
             if (id != player.Id)
             {
@@ -88,7 +88,7 @@ namespace DDCatalogue.Controllers
 
         // DELETE: api/Player/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Player>> DeletePlayer(int id)
+        public async Task<ActionResult<Player>> DeletePlayer(Guid id)
         {
             var player = await _context.Players.FindAsync(id);
             if (player == null)
@@ -102,7 +102,7 @@ namespace DDCatalogue.Controllers
             return player;
         }
 
-        private bool PlayerExists(int id)
+        private bool PlayerExists(Guid id)
         {
             return _context.Players.Any(e => e.Id == id);
         }
