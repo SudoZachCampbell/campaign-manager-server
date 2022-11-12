@@ -1,7 +1,8 @@
 [
   {
+    "id": "050b1c46-0676-420b-872c-143db80d358b",
     "name": "Sword Coast North",
     "map": "Sword_Coast_North.png",
-    "continent_id": 1
+    "continent_id": "9504646c-77c0-4f92-aec1-2fadf62cd2b7"
   }
 ]

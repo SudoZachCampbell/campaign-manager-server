@@ -1,4 +1,5 @@
-﻿using DDCatalogue.Model.Creatures;
+﻿using System;
+using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Joins;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace DDCatalogue.Model.Locations
 {
     public class Locale : Base, ILocation
     {
-        public int? RegionId { get; set; }
+        public Guid? RegionId { get; set; }
         public Region Region { get; set; }
         public List<Building> Buildings { get; set; }
         public List<Dungeon> Dungeons { get; set; }

@@ -1,20 +1,22 @@
 [
   {
+    "id": "148d6be4-48e7-451e-8096-2f399937fc51",
     "name": "Phandalin_Dawn",
     "variation": "Dawn",
     "image_url": "PhanDawn.jpg",
-    "locale_id": 6
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
+    "id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
     "name": "Phandalin_Day",
     "variation": "Day",
     "image_url": "PhanDay.jpg",
-    "locale_id": 6
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Phandalin_Night",
     "variation": "Night",
     "image_url": "PhanNight.jpg",
-    "locale_id": 6
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   }
 ]

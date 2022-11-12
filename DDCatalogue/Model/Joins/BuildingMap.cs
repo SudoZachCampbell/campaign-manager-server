@@ -9,9 +9,9 @@ namespace DDCatalogue.Model.Joins
 {
     public class BuildingMap : IJoin
     {
-        public int BuildingId { get; set; }
+        public Guid BuildingId { get; set; }
         public Building Building { get; set; }
-        public int MapId { get; set; }
+        public Guid MapId { get; set; }
         public Map Map { get; set; }
         public JArray Coords { get; set; }
     }

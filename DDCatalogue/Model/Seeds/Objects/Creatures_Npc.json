@@ -1,94 +1,94 @@
 [
   {
     "name": "Klarg BigCrown",
-    "monster_id": 2,
-    "locale_id": 9,
+    "monster_id": "dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34",
+    "locale_id": "a5d3885b-7b2a-466d-88ba-921f1d71f1b4",
     "picture": "Klarg_BigCrown.jpg",
     "background": "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.",
     "noteable_events": [
       "Made a deal with the party for Yeemik's head",
       "Killed by the party"
     ]
-
   },
   {
     "name": "Gundren Rockseeker",
-    "monster_id": 1,
-    "locale_id": 3
+    "monster_id": "0cc31a48-dfa1-403c-ac9a-1c39bd533dfb",
+    "locale_id": "9b2ff871-d933-4811-acfa-764f8173df3c"
   },
   {
     "name": "Sildar Hallwinter",
-    "monster_id": 3,
-    "building_id":  9,
-    "locale_id": 6
+    "monster_id": "fe3133a3-b86a-4f53-833c-df0bb75dc2a2",
+    "building_id": "3829d18f-0c01-4c08-a16f-55d983db578a",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Elmar Barthen",
-    "monster_id": 5,
-    "building_id":  2,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "b3c67d0b-ba6c-4974-b393-5c7d3f1d6644",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Linene Graywind",
-    "monster_id": 3,
-    "building_id":  4,
-    "locale_id": 6
+    "monster_id": "fe3133a3-b86a-4f53-833c-df0bb75dc2a2",
+    "building_id": "b439fe6f-dde1-4854-8ea6-a5972a6ea06e",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Yeemik Largebrain",
-    "monster_id": 4,
-    "locale_id": 9
+    "monster_id": "a17bd70f-a811-4a63-bd43-17f77f696e86",
+    "locale_id": "a5d3885b-7b2a-466d-88ba-921f1d71f1b4"
   },
   {
     "name": "Iarno Albrek",
-    "building_id": 10,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "5ca1de81-cf25-4c98-a251-1c3fe661457f",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Tharden Rockseeker",
-    "monster_id": 1,
-    "locale_id": 6
+    "monster_id": "0cc31a48-dfa1-403c-ac9a-1c39bd533dfb",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Nundro Rockseeker",
-    "monster_id": 1,
-    "locale_id": 6
+    "monster_id": "0cc31a48-dfa1-403c-ac9a-1c39bd533dfb",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Toblen Stonehill",
-    "monster_id": 7,
-    "building_id":  1,
-    "locale_id": 6,
+    "monster_id": "2dc5b20f-6d65-4c4d-8928-597d3e8291fa",
+    "building_id": "6f6bfd5e-a158-487a-b54a-9f27842ce762",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed",
     "picture": "Toblen_Stonehill.jpg"
   },
   {
     "name": "Daran Edermath",
-    "monster_id": 5,
-    "building_id":  3,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "0110289a-95c6-4385-be5d-741821c8a107",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Halia Thornton",
-    "monster_id": 5,
-    "building_id":  5,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "e54fa7e6-34c0-4ed4-9338-9341162739e5",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Qelline Alderleaf",
-    "monster_id": 5,
-    "building_id":  6,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "7042bd21-7239-4866-bcd3-a7a054c05430",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Sister Garaele",
-    "monster_id": 5,
-    "building_id":  7,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "4c3bf7ce-dfd6-4894-afa7-f86137003e87",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   },
   {
     "name": "Harbin Wester",
-    "monster_id": 5,
-    "building_id":  9,
-    "locale_id": 6
+    "monster_id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
+    "building_id": "3829d18f-0c01-4c08-a16f-55d983db578a",
+    "locale_id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed"
   }
 ]

@@ -95,11 +95,11 @@ namespace DDCatalogue.Model
                         builder.HasKey(new string[] { "Id" });
 
                         builder.HasIndex(new string[] { "Id" })
-                               .HasDatabaseName("identifier")
+                               .HasDatabaseName("id")
                                .IsUnique();
 
                         builder.Property("Id")
-                               .HasColumnName("identifier")
+                               .HasColumnName("id")
                                .HasColumnType("uuid")
                                .HasDefaultValueSql("uuid_generate_v4()")    // Use 
                                .IsRequired();

@@ -1,4 +1,5 @@
-﻿using DDCatalogue.Model.Locations;
+﻿using System;
+using DDCatalogue.Model.Locations;
 using Newtonsoft.Json.Linq;
 
 namespace DDCatalogue.Model.Creatures
@@ -11,11 +12,11 @@ namespace DDCatalogue.Model.Creatures
         public JArray Beliefs { get; set; } = new JArray();
         public JArray Passions { get; set; } = new JArray();
         public JArray Flaws { get; set; } = new JArray();
-        public int? MonsterId { get; set; }
+        public Guid? MonsterId { get; set; }
         public Monster Monster { get; set; }
-        public int? LocaleId { get; set; }
+        public Guid? LocaleId { get; set; }
         public Locale Locale { get; set; }
-        public int? BuildingId { get; set; }
+        public Guid? BuildingId { get; set; }
         public Building Building { get; set; }
     }
 }

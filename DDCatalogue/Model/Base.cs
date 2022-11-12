@@ -8,7 +8,7 @@ namespace DDCatalogue.Model
 {
     public class Base
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = new Guid();
         public string Name { get; set; } = string.Empty;
     }
 }

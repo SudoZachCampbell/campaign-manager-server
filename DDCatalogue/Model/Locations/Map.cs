@@ -12,7 +12,7 @@ namespace DDCatalogue.Model.Locations
         public string Variation { get; set; }
         public string ImageUrl { get; set; }
         public JArray Center { get; set; }
-        public int LocaleId { get; set; }
+        public Guid LocaleId { get; set; }
         public Locale Locale { get; set; }
         public List<BuildingMap> Buildings { get; set; }
     }

@@ -1,5 +1,6 @@
 [
   {
+    "id": "0cc31a48-dfa1-403c-ac9a-1c39bd533dfb",
     "name": "Drawf Warrior",
     "armor_class": 16,
     "hit_points": 39,
@@ -26,6 +27,7 @@
     "passive_perception": 10
   },
   {
+    "id": "dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34",
     "name": "Bugbear",
     "size": "Medium",
     "type": 9,
@@ -106,6 +108,7 @@
     "picture": "bugbear.jpeg"
   },
   {
+    "id": "fe3133a3-b86a-4f53-833c-df0bb75dc2a2",
     "name": "Knight",
     "armor_class": 18,
     "hit_points": 52,
@@ -129,6 +132,7 @@
     "passive_perception": 10
   },
   {
+    "id": "a17bd70f-a811-4a63-bd43-17f77f696e86",
     "name": "Goblin",
     "armor_class": 15,
     "hit_points": 7,
@@ -152,6 +156,7 @@
     "passive_perception": 9
   },
   {
+    "id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
     "name": "Commoner",
     "armor_class": 10,
     "hit_points": 4,
@@ -198,6 +203,7 @@
     "passive_perception": 13
   },
   {
+    "id": "2dc5b20f-6d65-4c4d-8928-597d3e8291fa",
     "Name": "Dwarf",
     "armor_class": 14,
     "hit_points": 26,
