@@ -17,9 +17,10 @@ namespace DDCatalogue.Controllers
     {
         // GET: api/Building
         [HttpGet("Locale/{localeId}")]
-        public ActionResult<List<Building>> GetBuildingsFromLocale(Guid localeId, [FromQuery] string include)
+        public ActionResult<List<Building>> GetBuildingsFromLocale(Guid localeId, [FromQuery] ListingParameters<Building> parameters)
         {
-            return UnitOfWork.Repository.Get(x => x.Locale.Id.Equals(localeId), includeProperties: include?.Split(',')).ToList();
+            parameters.Filter = x => x.Locale.Id.Equals(localeId);
+            return UnitOfWork.Repository.Get(parameters).ToList();
         }
 
         // GET: api/Building/5
@@ -56,17 +57,17 @@ namespace DDCatalogue.Controllers
             return DeleteGen(id);
         }
 
-        [HttpGet("[action]")]
-        public ActionResult<dynamic> GetTable()
-        {
-            dynamic buildings = UnitOfWork.Repository.Get()
-                .Select(m => new
-                {
-                    id = m.Id,
-                    name = m.Name
-                }).ToList();
-            return buildings;
-        }
+        // [HttpGet("[action]")]
+        // public ActionResult<dynamic> GetTable()
+        // {
+        //     dynamic buildings = UnitOfWork.Repository.Get()
+        //         .Select(m => new
+        //         {
+        //             id = m.Id,
+        //             name = m.Name
+        //         }).ToList();
+        //     return buildings;
+        // }
 
         [HttpGet("[action]/{name}")]
         public ActionResult<List<string>> GetEnum(string name)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DDCatalogue.Model.Locations;
 using Microsoft.AspNetCore.Mvc;
+using DDCatalogue.Model;
 
 namespace DDCatalogue.Controllers
 {
@@ -19,9 +20,10 @@ namespace DDCatalogue.Controllers
 
         // GET: api/Region
         [HttpGet("Region/{regionId}")]
-        public ActionResult<List<Locale>> GetRegionsFromContinent(int regionId, [FromQuery] string include)
+        public ActionResult<List<Locale>> GetRegionsFromContinent(int regionId, [FromQuery] ListingParameters<Locale> parameters)
         {
-            return UnitOfWork.Repository.Get(x => x.Region.Id.Equals(regionId), includeProperties: include?.Split(',')).ToList();
+            parameters.Filter = x => x.Region.Id.Equals(regionId);
+            return UnitOfWork.Repository.Get(parameters).ToList();
         }
     }
 }

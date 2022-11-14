@@ -14,9 +14,9 @@ namespace DDCatalogue.Controllers
     {
 
         [HttpGet]
-        public ActionResult<List<Npc>> Get([FromQuery] string include)
+        public ActionResult<List<Npc>> Get([FromQuery] ListingParameters<Npc> parameters)
         {
-            return GetGen(include);
+            return GetGen(parameters);
         }
 
 
@@ -32,18 +32,18 @@ namespace DDCatalogue.Controllers
             return PatchGen(id, patchDoc, include);
         }
 
-        [HttpGet("[action]")]
-        public ActionResult<dynamic> Table()
-        {
-            dynamic npcs = UnitOfWork.Repository.Get()
-                .Select(n => new
-                {
-                    id = n.Id,
-                    name = n.Name,
-                    monsterName = n.Monster.Name,
-                    location = n.Building.Name != null ? $"{n.Building.Name} in {n.Locale.Name}" : n.Locale.Name
-                }).ToList();
-            return npcs;
-        }
+        // [HttpGet("[action]")]
+        // public ActionResult<dynamic> Table()
+        // {
+        //     dynamic npcs = UnitOfWork.Repository.Get()
+        //         .Select(n => new
+        //         {
+        //             id = n.Id,
+        //             name = n.Name,
+        //             monsterName = n.Monster.Name,
+        //             location = n.Building.Name != null ? $"{n.Building.Name} in {n.Locale.Name}" : n.Locale.Name
+        //         }).ToList();
+        //     return npcs;
+        // }
     }
 }

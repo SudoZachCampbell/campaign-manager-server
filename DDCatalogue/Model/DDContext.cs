@@ -89,22 +89,22 @@ namespace DDCatalogue.Model
                     //     model.Id = i;
                     //     i++;
                     // }
-                    var builder = modelBuilder.Entity(modelList.Key);
-                    if (modelList.Key.IsAssignableFrom(typeof(Base)))
-                    {
-                        builder.HasKey(new string[] { "Id" });
+                    // var builder = modelBuilder.Entity(modelList.Key);
+                    // if (modelList.Key.IsAssignableFrom(typeof(Base)))
+                    // {
+                    //     builder.HasKey(new string[] { "Id" });
 
-                        builder.HasIndex(new string[] { "Id" })
-                               .HasDatabaseName("id")
-                               .IsUnique();
+                    //     builder.HasIndex(new string[] { "Id" })
+                    //            .HasDatabaseName("Id")
+                    //            .IsUnique();
 
-                        builder.Property("Id")
-                               .HasColumnName("id")
-                               .HasColumnType("uuid")
-                               .HasDefaultValueSql("uuid_generate_v4()")    // Use 
-                               .IsRequired();
-                    }
-                    builder.HasData(modelList.Value);
+                    //     builder.Property("Id")
+                    //            .HasColumnName("Id")
+                    //            .HasColumnType("uuid")
+                    //            .HasDefaultValueSql("newid()")    // Use 
+                    //            .IsRequired();
+                    // }
+                    modelBuilder.Entity(modelList.Key).HasData(modelList.Value);
                 }
             }
 

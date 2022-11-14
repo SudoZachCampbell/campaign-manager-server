@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
+using System.Text.Json.Serialization;
 namespace DDCatalogue.Model
 {
     public class GenericRepository<TEntity> where TEntity : class, IBase
@@ -18,22 +19,22 @@ namespace DDCatalogue.Model
             dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string[] includeProperties = null)
+        public virtual IEnumerable<TEntity> Get(ListingParameters<TEntity> parameters)
         {
             IQueryable<TEntity> query = dbSet;
 
-            if (filter != null)
+            if (parameters.Filter != null)
             {
-                query = query.Where(filter);
+                query = query.Where(parameters.Filter);
             }
 
-            query = Includes(query, includeProperties);
+            query = Includes(query, parameters.IncludeProperties)
+                    .Skip((parameters.Page - 1) * parameters.PageSize)
+                    .Take(parameters.PageSize);
 
-            return orderBy != null ? orderBy(query).ToList() : query.ToList();
+            return parameters.OrderBy != null ? parameters.OrderBy(query).ToList() : query.ToList();
         }
+
 
         public virtual TEntity GetById(Guid id, string[] includeProperties = null)
         {
@@ -86,11 +87,28 @@ namespace DDCatalogue.Model
             {
                 foreach (var includeProperty in includeProperties)
                 {
-                    query = query.Include(includeProperty);
+                    query = query.Include(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(includeProperty));
                 }
             }
             return query;
         }
 
     }
+    public class ListingParameters<T> where T : IBase
+    {
+        const int maxPageSize = 50;
+        private int _pageSize = 10;
+        public int Page { get; set; } = 1;
+        public int PageSize
+        {
+            get { return _pageSize; }
+            set { _pageSize = (value > maxPageSize) ? maxPageSize : value; }
+        }
+        public Expression<Func<T, bool>> Filter { get; set; } = null;
+        public Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy { get; set; } = null;
+        public string Include { get; set; } = null;
+        public string[] IncludeProperties { get { return Include?.Split(','); } }
+    }
 }
+
+

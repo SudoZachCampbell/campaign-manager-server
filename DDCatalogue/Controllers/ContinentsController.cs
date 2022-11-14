@@ -17,9 +17,9 @@ namespace DDCatalogue.Controllers
     {
         // GET: api/Continent
         [HttpGet]
-        public ActionResult<List<Continent>> GetContinents([FromQuery] string include)
+        public ActionResult<List<Continent>> GetContinents([FromQuery] ListingParameters<Continent> parameters)
         {
-            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
+            return UnitOfWork.Repository.Get(parameters).ToList();
         }
 
         // GET: api/Continent/5
@@ -56,17 +56,17 @@ namespace DDCatalogue.Controllers
             return DeleteGen(id);
         }
 
-        [HttpGet("[action]")]
-        public ActionResult<dynamic> GetTable()
-        {
-            dynamic continents = UnitOfWork.Repository.Get()
-                .Select(m => new
-                {
-                    id = m.Id,
-                    name = m.Name
-                }).ToList();
-            return continents;
-        }
+        // [HttpGet("[action]")]
+        // public ActionResult<dynamic> GetTable()
+        // {
+        //     dynamic continents = UnitOfWork.Repository.Get()
+        //         .Select(m => new
+        //         {
+        //             id = m.Id,
+        //             name = m.Name
+        //         }).ToList();
+        //     return continents;
+        // }
 
         [HttpGet("[action]/{name}")]
         public ActionResult<List<string>> GetEnum(string name)

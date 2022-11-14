@@ -15,9 +15,9 @@ namespace DDCatalogue.Controllers
     {
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Monster>> GetMonsters([FromQuery] string include)
+        public ActionResult<List<Monster>> GetMonsters([FromQuery] ListingParameters<Monster> query)
         {
-            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
+            return UnitOfWork.Repository.Get(query).ToList();
         }
 
         // GET: api/Monster/5
@@ -54,19 +54,19 @@ namespace DDCatalogue.Controllers
             return DeleteGen(id);
         }
 
-        [HttpGet("[action]")]
-        public ActionResult<dynamic> GetTable()
-        {
-            dynamic monsters = UnitOfWork.Repository.Get()
-                .Select(m => new
-                {
-                    id = m.Id,
-                    name = m.Name,
-                    passivePerception = m.PassivePerception,
-                    alignment = m.Alignment
-                }).ToList();
-            return monsters;
-        }
+        // [HttpGet("[action]")]
+        // public ActionResult<dynamic> GetTable()
+        // {
+        //     dynamic monsters = UnitOfWork.Repository.Get()
+        //         .Select(m => new
+        //         {
+        //             id = m.Id,
+        //             name = m.Name,
+        //             passivePerception = m.PassivePerception,
+        //             alignment = m.Alignment
+        //         }).ToList();
+        //     return monsters;
+        // }
 
         [HttpGet("[action]/{name}")]
         public ActionResult<List<string>> GetEnum(string name)

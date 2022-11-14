@@ -7,7 +7,8 @@ using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace DDCatalogue.Controllers
 {
     public class GenericController<T> : ControllerBase where T : class, IBase
@@ -20,9 +21,23 @@ namespace DDCatalogue.Controllers
             return "Running";
         }
 
-        public ActionResult<List<T>> GetGen([FromQuery] string include)
+        public ActionResult<List<T>> GetGen([FromQuery] ListingParameters<T> parameters)
         {
-            return UnitOfWork.Repository.Get(includeProperties: include?.Split(',')).ToList();
+            Response.Headers.Add("X-Pagination",
+                JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                }
+            ));
+            try
+            {
+                return UnitOfWork.Repository.Get(parameters).ToList();
+            }
+            catch
+            {
+                return BadRequest("Invalid Query");
+            }
         }
 
         public ActionResult<T> GetGen(Guid id, [FromQuery] string include)
