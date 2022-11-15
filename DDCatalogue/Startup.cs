@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 using Microsoft.AspNetCore.HttpOverrides;
-
+using System.Text.Json.Serialization;
 namespace DDCatalogue
 {
     public class Startup
@@ -48,15 +48,11 @@ namespace DDCatalogue
 
             services.AddScoped<DDContext>();
 
-            services.AddControllers().AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.ContractResolver = new DefaultContractResolver()
-                    {
-                        NamingStrategy = new SnakeCaseNamingStrategy()
-                    };
-                }
-            );
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.DictionaryKeyPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+            });
 
             services.AddCors(options =>
             {
@@ -68,6 +64,8 @@ namespace DDCatalogue
                         .AllowAnyHeader();
                     });
             });
+
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +85,9 @@ namespace DDCatalogue
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseDefaultFiles();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 

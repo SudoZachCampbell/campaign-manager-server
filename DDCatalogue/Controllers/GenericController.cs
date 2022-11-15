@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
 namespace DDCatalogue.Controllers
 {
     public class GenericController<T> : ControllerBase where T : class, IBase
@@ -16,12 +17,12 @@ namespace DDCatalogue.Controllers
         protected readonly UnitOfWork<T> UnitOfWork = new UnitOfWork<T>();
 
         [HttpGet("[action]")]
-        public ActionResult<string> Status()
+        protected ActionResult<string> Status()
         {
             return "Running";
         }
 
-        public ActionResult<List<T>> GetGen([FromQuery] ListingParameters<T> parameters)
+        protected ActionResult<List<dynamic>> GetGen([FromQuery] ListingParameters<T> parameters)
         {
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()
@@ -32,15 +33,15 @@ namespace DDCatalogue.Controllers
             ));
             try
             {
-                return UnitOfWork.Repository.Get(parameters).ToList();
+                return UnitOfWork.Repository.Get(parameters).AsQueryable().FilterProperties(parameters.IncludeProperties);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Invalid Query");
+                return BadRequest(ex);
             }
         }
 
-        public ActionResult<T> GetGen(Guid id, [FromQuery] string include)
+        protected ActionResult<T> GetGen(Guid id, [FromQuery] string include)
         {
             T instance = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
 
@@ -49,7 +50,7 @@ namespace DDCatalogue.Controllers
             return instance;
         }
 
-        public ActionResult<T> PatchGen(Guid id, [FromBody] JsonPatchDocument<T> patchDoc, [FromQuery] string include)
+        protected ActionResult<T> PatchGen(Guid id, [FromBody] JsonPatchDocument<T> patchDoc, [FromQuery] string include)
         {
             if (patchDoc != null)
             {
@@ -81,7 +82,7 @@ namespace DDCatalogue.Controllers
             }
         }
 
-        public IActionResult PutGen(Guid id, T instance)
+        protected IActionResult PutGen(Guid id, T instance)
         {
             if (id != instance.Id)
             {
@@ -94,7 +95,7 @@ namespace DDCatalogue.Controllers
             return NoContent();
         }
 
-        public ActionResult<T> PostGen(T instance)
+        protected ActionResult<T> PostGen(T instance)
         {
             UnitOfWork.Repository.Insert(instance);
             UnitOfWork.Save();
@@ -102,7 +103,7 @@ namespace DDCatalogue.Controllers
             return CreatedAtAction("GetMonster", new { id = instance.Id }, instance);
         }
 
-        public ActionResult<T> DeleteGen(Guid id)
+        protected ActionResult<T> DeleteGen(Guid id)
         {
             T instance = UnitOfWork.Repository.GetById(id);
             if (instance == null)
@@ -116,7 +117,7 @@ namespace DDCatalogue.Controllers
             return instance;
         }
 
-        public ActionResult<List<string>> GetEnumGen(string name)
+        protected ActionResult<List<string>> GetEnumGen(string name)
         {
             if (string.IsNullOrEmpty(name))
             {

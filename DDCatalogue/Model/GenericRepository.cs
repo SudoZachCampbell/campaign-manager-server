@@ -28,7 +28,7 @@ namespace DDCatalogue.Model
                 query = query.Where(parameters.Filter);
             }
 
-            query = Includes(query, parameters.IncludeProperties)
+            query = Expand(query, parameters.ExpandProperties)
                     .Skip((parameters.Page - 1) * parameters.PageSize)
                     .Take(parameters.PageSize);
 
@@ -46,7 +46,7 @@ namespace DDCatalogue.Model
             }
             else
             {
-                query = Includes(query, includeProperties);
+                query = Expand(query, includeProperties);
                 return query.SingleOrDefault(x => x.Id == id);
             }
         }
@@ -81,33 +81,35 @@ namespace DDCatalogue.Model
             return Enum.GetNames(Type.GetType($"{typeof(TEntity).Namespace}.{name}")).ToList();
         }
 
-        private IQueryable<TEntity> Includes(IQueryable<TEntity> query, string[] includeProperties = null)
+        // private IQueryable<TEntity> Include(IQueryable<TEntity> query, string[] includeProperties = null)
+        // {
+        //     if (includeProperties != null)
+        //     {
+        //         // var parameter = Expression.Parameter(typeof(TEntity), "e");
+        //         // var bindings = includeProperties
+        //         //     .Select(name => Expression.PropertyOrField(parameter, CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name).Replace("_", "")))
+        //         //     .Select(member => Expression.Bind(member.Member, member));
+        //         // var body = Expression.MemberInit(Expression.New(typeof(TEntity)), bindings);
+        //         // var selector = Expression.Lambda<Func<TEntity, TEntity>>(body, parameter);
+        //         return 
+
+        //     }
+        //     else
+        //         return query;
+        // }
+
+        private IQueryable<TEntity> Expand(IQueryable<TEntity> query, string[] expandProperties = null)
         {
-            if (includeProperties != null)
+            if (expandProperties != null)
             {
-                foreach (var includeProperty in includeProperties)
+                foreach (var expandProperty in expandProperties)
                 {
-                    query = query.Include(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(includeProperty));
+                    query = query.Include(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(expandProperty));
                 }
             }
             return query;
         }
 
-    }
-    public class ListingParameters<T> where T : IBase
-    {
-        const int maxPageSize = 50;
-        private int _pageSize = 10;
-        public int Page { get; set; } = 1;
-        public int PageSize
-        {
-            get { return _pageSize; }
-            set { _pageSize = (value > maxPageSize) ? maxPageSize : value; }
-        }
-        public Expression<Func<T, bool>> Filter { get; set; } = null;
-        public Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy { get; set; } = null;
-        public string Include { get; set; } = null;
-        public string[] IncludeProperties { get { return Include?.Split(','); } }
     }
 }
 

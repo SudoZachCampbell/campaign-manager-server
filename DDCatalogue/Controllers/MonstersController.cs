@@ -15,9 +15,9 @@ namespace DDCatalogue.Controllers
     {
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Monster>> GetMonsters([FromQuery] ListingParameters<Monster> query)
+        public ActionResult<List<dynamic>> GetMonsters([FromQuery] ListingParameters<Monster> query)
         {
-            return UnitOfWork.Repository.Get(query).ToList();
+            return GetGen(query);
         }
 
         // GET: api/Monster/5
@@ -55,9 +55,9 @@ namespace DDCatalogue.Controllers
         }
 
         // [HttpGet("[action]")]
-        // public ActionResult<dynamic> GetTable()
+        // public ActionResult<dynamic> GetTable([FromQuery] ListingParameters<Monster> query)
         // {
-        //     dynamic monsters = UnitOfWork.Repository.Get()
+        //     dynamic monsters = UnitOfWork.Repository.Get(query)
         //         .Select(m => new
         //         {
         //             id = m.Id,
