@@ -33,7 +33,7 @@ namespace DDCatalogue.Controllers
             ));
             try
             {
-                return UnitOfWork.Repository.Get(parameters).AsQueryable().FilterProperties(parameters.IncludeProperties);
+                return UnitOfWork.Repository.Get(parameters).AsQueryable().IncludeProperties(parameters.IncludeProperties);
             }
             catch (Exception ex)
             {
