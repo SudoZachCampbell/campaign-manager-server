@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Linq.Dynamic.Core;
 
 namespace DDCatalogue.Controllers
 {
@@ -33,7 +34,7 @@ namespace DDCatalogue.Controllers
             ));
             try
             {
-                return UnitOfWork.Repository.Get(parameters).AsQueryable().IncludeProperties(parameters.IncludeProperties);
+                return UnitOfWork.Repository.Get(parameters).AsQueryable().IncludeProperties(parameters.IncludeProperties).Filter(parameters.Filter).ToDynamicList();
             }
             catch (Exception ex)
             {
