@@ -23,16 +23,10 @@ namespace DDCatalogue.Model
         {
             IQueryable<TEntity> query = dbSet;
 
-            // if (parameters.Filter != null)
-            // {
-            //     query = query.Where(parameters.Filter);
-            // }
-
             query = Expand(query, parameters.ExpandProperties)
                     .Skip((parameters.Page - 1) * parameters.PageSize)
                     .Take(parameters.PageSize);
 
-            // return parameters.OrderBy != null ? parameters.OrderBy(query).ToList() : query.ToList();
             return query.ToList();
         }
 

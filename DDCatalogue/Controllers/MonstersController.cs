@@ -15,7 +15,7 @@ namespace DDCatalogue.Controllers
     {
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<dynamic>> GetMonsters([FromQuery] ListingParameters<Monster> query)
+        public ActionResult<List<Monster>> GetMonsters([FromQuery] ListingParameters<Monster> query)
         {
             return GetGen(query);
         }

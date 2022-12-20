@@ -23,7 +23,7 @@ namespace DDCatalogue.Controllers
             return "Running";
         }
 
-        protected ActionResult<List<dynamic>> GetGen([FromQuery] ListingParameters<T> parameters)
+        protected ActionResult<List<T>> GetGen([FromQuery] ListingParameters<T> parameters)
         {
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()
@@ -32,7 +32,11 @@ namespace DDCatalogue.Controllers
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 }
             ));
-            return UnitOfWork.Repository.Get(parameters).AsQueryable().Filter(parameters.Filter).IncludeProperties(parameters.IncludeProperties).ToDynamicList();
+            return UnitOfWork.Repository.Get(parameters).AsQueryable()
+                .Filter(parameters.Filter)
+                .OrderBy(parameters.OrderBy ?? "name")
+                .IncludeProperties<T>(parameters.IncludeProperties)
+                .ToDynamicList<T>();
 
         }
 

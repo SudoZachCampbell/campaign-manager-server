@@ -1,0 +1,2305 @@
+{
+  "x-generator": "NSwag v13.17.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v12.0.0.0))",
+  "swagger": "2.0",
+  "runtime": "Net60",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "schemes": ["http"],
+  "paths": {
+    "/Buildings/Locale/{localeId}": {
+      "get": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_GetBuildingsFromLocale",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "localeId",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "PageSize",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "Filter",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "OrderBy",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Include",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "IncludeProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "string",
+            "name": "Expand",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "ExpandProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Building"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Buildings/{id}": {
+      "get": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_GetBuildingById",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Building"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_PatchBuilding",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "patchDoc",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JsonPatchDocumentOfBuilding"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Building"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_PutBuilding",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "building",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Building"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_DeleteBuilding",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Building"
+            }
+          }
+        }
+      }
+    },
+    "/Buildings": {
+      "post": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_PostBuilding",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "name": "building",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Building"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Building"
+            }
+          }
+        }
+      }
+    },
+    "/Buildings/GetEnum/{name}": {
+      "get": {
+        "tags": ["Buildings"],
+        "operationId": "Buildings_GetEnum",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Continents": {
+      "get": {
+        "tags": ["Continents"],
+        "operationId": "Continents_GetContinents",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "PageSize",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "Filter",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "OrderBy",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Include",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "IncludeProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "string",
+            "name": "Expand",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "ExpandProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Continent"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Continents"],
+        "operationId": "Continents_PostContinent",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "name": "continent",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Continent"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Continent"
+            }
+          }
+        }
+      }
+    },
+    "/Continents/{id}": {
+      "get": {
+        "tags": ["Continents"],
+        "operationId": "Continents_GetContinentById",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Continent"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Continents"],
+        "operationId": "Continents_PatchContinent",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "patchDoc",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JsonPatchDocumentOfContinent"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Continent"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Continents"],
+        "operationId": "Continents_PutContinent",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "continent",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Continent"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Continents"],
+        "operationId": "Continents_DeleteContinent",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Continent"
+            }
+          }
+        }
+      }
+    },
+    "/Continents/GetEnum/{name}": {
+      "get": {
+        "tags": ["Continents"],
+        "operationId": "Continents_GetEnum",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Locales/{id}": {
+      "get": {
+        "tags": ["Locales"],
+        "operationId": "Locales_GetLocale",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Locale"
+            }
+          }
+        }
+      }
+    },
+    "/Locales/Region/{regionId}": {
+      "get": {
+        "tags": ["Locales"],
+        "operationId": "Locales_GetRegionsFromContinent",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "regionId",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "PageSize",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "Filter",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "OrderBy",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Include",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "IncludeProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "string",
+            "name": "Expand",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "ExpandProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Locale"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Monsters": {
+      "get": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_GetMonsters",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "PageSize",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "Filter",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "OrderBy",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Include",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "IncludeProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "string",
+            "name": "Expand",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "ExpandProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Monster"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_PostMonster",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "name": "monster",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Monster"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Monster"
+            }
+          }
+        }
+      }
+    },
+    "/Monsters/{id}": {
+      "get": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_GetMonsterById",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Monster"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_PatchMonster",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "patchDoc",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JsonPatchDocumentOfMonster"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Monster"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_PutMonster",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "monster",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Monster"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_DeleteMonster",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Monster"
+            }
+          }
+        }
+      }
+    },
+    "/Monsters/GetEnum/{name}": {
+      "get": {
+        "tags": ["Monsters"],
+        "operationId": "Monsters_GetEnum",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Npcs": {
+      "get": {
+        "tags": ["Npcs"],
+        "operationId": "Npcs_GetAll",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "PageSize",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "Filter",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "OrderBy",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Include",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "IncludeProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "string",
+            "name": "Expand",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "ExpandProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Npc"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Npcs/{id}": {
+      "get": {
+        "tags": ["Npcs"],
+        "operationId": "Npcs_Get",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Npc"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Npcs"],
+        "operationId": "Npcs_Patch",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "patchDoc",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JsonPatchDocumentOfNpc"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Npc"
+            }
+          }
+        }
+      }
+    },
+    "/Players": {
+      "get": {
+        "tags": ["Players"],
+        "operationId": "Players_GetPlayers",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Players"],
+        "operationId": "Players_PostPlayer",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "name": "player",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        }
+      }
+    },
+    "/Players/{id}": {
+      "get": {
+        "tags": ["Players"],
+        "operationId": "Players_GetPlayer",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Players"],
+        "operationId": "Players_PutPlayer",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "player",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Players"],
+        "operationId": "Players_DeletePlayer",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        }
+      }
+    },
+    "/Regions/Continent/{continentId}": {
+      "get": {
+        "tags": ["Regions"],
+        "operationId": "Regions_GetRegionsFromContinent",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "continentId",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "PageSize",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "Filter",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "OrderBy",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Include",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "IncludeProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "string",
+            "name": "Expand",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "array",
+            "name": "ExpandProperties",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Region"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Regions/{id}": {
+      "get": {
+        "tags": ["Regions"],
+        "operationId": "Regions_GetRegionById",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Region"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Regions"],
+        "operationId": "Regions_PatchRegion",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "patchDoc",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JsonPatchDocumentOfRegion"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "include",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Region"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Regions"],
+        "operationId": "Regions_PutRegion",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          },
+          {
+            "name": "region",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Region"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Regions"],
+        "operationId": "Regions_DeleteRegion",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Region"
+            }
+          }
+        }
+      }
+    },
+    "/Regions": {
+      "post": {
+        "tags": ["Regions"],
+        "operationId": "Regions_PostRegion",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Region"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Region"
+            }
+          }
+        }
+      }
+    },
+    "/Regions/GetEnum/{name}": {
+      "get": {
+        "tags": ["Regions"],
+        "operationId": "Regions_GetEnum",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Building": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "localeId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "locale": {
+              "$ref": "#/definitions/Locale"
+            },
+            "map": {
+              "type": "string"
+            },
+            "npcs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Npc"
+              }
+            },
+            "monsters": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MonsterBuilding"
+              }
+            },
+            "players": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            },
+            "maps": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BuildingMap"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Locale": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "regionId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "region": {
+              "$ref": "#/definitions/Region"
+            },
+            "buildings": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Building"
+              }
+            },
+            "dungeons": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Dungeon"
+              }
+            },
+            "players": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            },
+            "npcs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Npc"
+              }
+            },
+            "monsters": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MonsterLocale"
+              }
+            },
+            "maps": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Map"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Region": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "locales": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Locale"
+              }
+            },
+            "continentId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "continent": {
+              "$ref": "#/definitions/Continent"
+            },
+            "map": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Continent": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "regions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Region"
+              }
+            },
+            "map": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        }
+      ]
+    },
+    "Base": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "guid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Dungeon": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "map": {
+              "type": "string",
+              "format": "byte"
+            },
+            "building": {
+              "$ref": "#/definitions/Building"
+            },
+            "locale": {
+              "$ref": "#/definitions/Locale"
+            }
+          }
+        }
+      ]
+    },
+    "Player": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Creature"
+        },
+        {
+          "type": "object",
+          "required": ["level", "xp", "inspiration"],
+          "properties": {
+            "level": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "xp": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "inspiration": {
+              "type": "boolean"
+            },
+            "playerName": {
+              "type": "string"
+            },
+            "background": {
+              "type": "string"
+            },
+            "faction": {
+              "type": "string"
+            },
+            "race": {
+              "type": "string"
+            },
+            "localeId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "locale": {
+              "$ref": "#/definitions/Locale"
+            },
+            "buildingId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "building": {
+              "$ref": "#/definitions/Building"
+            }
+          }
+        }
+      ]
+    },
+    "Creature": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "required": [
+            "strength",
+            "dexterity",
+            "constitution",
+            "intelligence",
+            "wisdom",
+            "charisma",
+            "armorClass",
+            "hitPoints",
+            "alignment"
+          ],
+          "properties": {
+            "strength": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "dexterity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "constitution": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "intelligence": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "wisdom": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "charisma": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "proficiencies": {
+              "type": "array",
+              "items": {}
+            },
+            "armorClass": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "hitPoints": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "hitDice": {
+              "type": "string"
+            },
+            "size": {
+              "type": "string"
+            },
+            "speed": {
+              "type": "array",
+              "items": {}
+            },
+            "languages": {
+              "type": "string"
+            },
+            "alignment": {
+              "$ref": "#/definitions/Alignment"
+            },
+            "reactions": {
+              "type": "array",
+              "items": {}
+            },
+            "picture": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Alignment": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "LawfulGood",
+        "LawfulNeutral",
+        "LawfulEvil",
+        "NeutralGood",
+        "TrueNeutral",
+        "NeutralEvil",
+        "ChaoticGood",
+        "ChaoticNeutral",
+        "ChaoticEvil",
+        "Any",
+        "None"
+      ],
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    "Npc": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "picture": {
+              "type": "string"
+            },
+            "background": {
+              "type": "string"
+            },
+            "noteableEvents": {
+              "type": "array",
+              "items": {}
+            },
+            "beliefs": {
+              "type": "array",
+              "items": {}
+            },
+            "passions": {
+              "type": "array",
+              "items": {}
+            },
+            "flaws": {
+              "type": "array",
+              "items": {}
+            },
+            "monsterId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "monster": {
+              "$ref": "#/definitions/Monster"
+            },
+            "localeId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "locale": {
+              "$ref": "#/definitions/Locale"
+            },
+            "buildingId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "building": {
+              "$ref": "#/definitions/Building"
+            }
+          }
+        }
+      ]
+    },
+    "Monster": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Creature"
+        },
+        {
+          "type": "object",
+          "required": [
+            "challengeRating",
+            "xp",
+            "passivePerception",
+            "monsterType"
+          ],
+          "properties": {
+            "challengeRating": {
+              "type": "number",
+              "format": "double"
+            },
+            "xp": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "passivePerception": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "monsterType": {
+              "$ref": "#/definitions/MonsterType"
+            },
+            "actions": {
+              "type": "array",
+              "items": {}
+            },
+            "legendaryActions": {
+              "type": "array",
+              "items": {}
+            },
+            "specialAbilities": {
+              "type": "array",
+              "items": {}
+            },
+            "senses": {},
+            "npcs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Npc"
+              }
+            },
+            "locales": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MonsterLocale"
+              }
+            },
+            "buildings": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MonsterBuilding"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "MonsterType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Abberation",
+        "Beast",
+        "Celestial",
+        "Construct",
+        "Dragon",
+        "Elemental",
+        "Fey",
+        "Fiend",
+        "Giant",
+        "Humanoid",
+        "Monstrosity",
+        "Ooze",
+        "Plant",
+        "Undead",
+        "None"
+      ],
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    },
+    "MonsterLocale": {
+      "type": "object",
+      "required": ["monsterId", "localeId"],
+      "properties": {
+        "monsterId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "monster": {
+          "$ref": "#/definitions/Monster"
+        },
+        "localeId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "locale": {
+          "$ref": "#/definitions/Locale"
+        }
+      }
+    },
+    "MonsterBuilding": {
+      "type": "object",
+      "required": ["monsterId", "buildingId"],
+      "properties": {
+        "monsterId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "monster": {
+          "$ref": "#/definitions/Monster"
+        },
+        "buildingId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "building": {
+          "$ref": "#/definitions/Building"
+        }
+      }
+    },
+    "Map": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Base"
+        },
+        {
+          "type": "object",
+          "required": ["localeId"],
+          "properties": {
+            "variation": {
+              "type": "string"
+            },
+            "imageUrl": {
+              "type": "string"
+            },
+            "center": {
+              "type": "array",
+              "items": {}
+            },
+            "localeId": {
+              "type": "string",
+              "format": "guid"
+            },
+            "locale": {
+              "$ref": "#/definitions/Locale"
+            },
+            "buildings": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BuildingMap"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BuildingMap": {
+      "type": "object",
+      "required": ["buildingId", "mapId"],
+      "properties": {
+        "buildingId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "building": {
+          "$ref": "#/definitions/Building"
+        },
+        "mapId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "map": {
+          "$ref": "#/definitions/Map"
+        },
+        "coords": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "JsonPatchDocumentOfBuilding": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperationOfBuilding"
+          }
+        },
+        "contractResolver": {
+          "$ref": "#/definitions/IContractResolver"
+        }
+      }
+    },
+    "OperationOfBuilding": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Operation"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "Operation": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OperationBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "value": {}
+          }
+        }
+      ]
+    },
+    "OperationBase": {
+      "type": "object",
+      "required": ["operationType"],
+      "properties": {
+        "operationType": {
+          "$ref": "#/definitions/OperationType"
+        },
+        "path": {
+          "type": "string"
+        },
+        "op": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        }
+      }
+    },
+    "OperationType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Add",
+        "Remove",
+        "Replace",
+        "Move",
+        "Copy",
+        "Test",
+        "Invalid"
+      ],
+      "enum": [0, 1, 2, 3, 4, 5, 6]
+    },
+    "IContractResolver": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "JsonPatchDocumentOfContinent": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperationOfContinent"
+          }
+        },
+        "contractResolver": {
+          "$ref": "#/definitions/IContractResolver"
+        }
+      }
+    },
+    "OperationOfContinent": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Operation"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "JsonPatchDocumentOfMonster": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperationOfMonster"
+          }
+        },
+        "contractResolver": {
+          "$ref": "#/definitions/IContractResolver"
+        }
+      }
+    },
+    "OperationOfMonster": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Operation"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "JsonPatchDocumentOfNpc": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperationOfNpc"
+          }
+        },
+        "contractResolver": {
+          "$ref": "#/definitions/IContractResolver"
+        }
+      }
+    },
+    "OperationOfNpc": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Operation"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "JsonPatchDocumentOfRegion": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperationOfRegion"
+          }
+        },
+        "contractResolver": {
+          "$ref": "#/definitions/IContractResolver"
+        }
+      }
+    },
+    "OperationOfRegion": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Operation"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    }
+  }
+}

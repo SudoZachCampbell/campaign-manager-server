@@ -29,7 +29,7 @@ namespace DDCatalogue.Model
             }
         }
         private string filterPattern = @"(AND|OR)(\(((?>\((?<c>)|[^()]+|\)(?<-c>))*(?(c)(?!)))\))";
-        // public Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy { get; set; } = null;
+        public string OrderBy { get; set; } = null;
         public string Include { get; set; } = null;
         public string[] IncludeProperties { get { return Include?.Split(','); } }
         public string Expand { get; set; } = null;
@@ -92,17 +92,17 @@ namespace DDCatalogue.Model
     }
     public static class QueryableExtensions
     {
-        public static IQueryable IncludeProperties(this IQueryable result, string[] includeProperties)
+        public static IQueryable<T> IncludeProperties<T>(this IQueryable<T> result, string[] includeProperties)
         {
             if (includeProperties?.Length > 0)
             {
-                return result.Select(
+                return result.Select<T>(
                     $"new {{ {String.Join(",", includeProperties.Select(name => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name).Replace("_", "")))} }}");
             }
             else return result;
         }
 
-        public static IQueryable Filter(this IQueryable result, string filterQuery)
+        public static IQueryable<T> Filter<T>(this IQueryable<T> result, string filterQuery)
         {
             try
             {
