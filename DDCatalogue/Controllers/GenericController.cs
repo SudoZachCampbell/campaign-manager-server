@@ -32,14 +32,8 @@ namespace DDCatalogue.Controllers
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 }
             ));
-            try
-            {
-                return UnitOfWork.Repository.Get(parameters).AsQueryable().IncludeProperties(parameters.IncludeProperties).Filter(parameters.Filter).ToDynamicList();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return UnitOfWork.Repository.Get(parameters).AsQueryable().Filter(parameters.Filter).IncludeProperties(parameters.IncludeProperties).ToDynamicList();
+
         }
 
         protected ActionResult<T> GetGen(Guid id, [FromQuery] string include)

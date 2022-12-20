@@ -25,16 +25,9 @@ namespace DDCatalogue.Model
             get { return filter; }
             set
             {
-                // ParameterExpression parameter = Expression.Parameter(typeof(T));
-                // IEnumerable<MemberAssignment> bindings = value
-                //     .Select(name => Expression.PropertyOrField(parameter, name))
-                //     .Select(member => Expression.Bind(member.Member, member));
-                // MemberInitExpression body = Expression.MemberInit(Expression.New(typeof(T)), bindings);
-                // filter = Expression.Lambda<Func<T, T>>(body, parameter);
-                filter = ParseFilterLogic(value);
+                filter = ParseFilterLogic(value, initial: true);
             }
         }
-        // private string filterPattern = @"(AND|OR)\((.*?)\)$";
         private string filterPattern = @"(AND|OR)(\(((?>\((?<c>)|[^()]+|\)(?<-c>))*(?(c)(?!)))\))";
         // public Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy { get; set; } = null;
         public string Include { get; set; } = null;
@@ -44,43 +37,57 @@ namespace DDCatalogue.Model
         private Dictionary<string, string> operators = new() {
             {"eq", "=="},
             {"gt" , ">"},
-            {"gte" , ">="},
+            {"ge" , ">="},
             {"lt", "<"},
-            { "lte", "<="},
-            { "neq", "!="},
+            {"le", "<="},
+            {"neq", "!="},
         };
 
-        private string ParseFilterLogic(string filter, string gate = "AND")
+        private string ParseFilterLogic(string filter, string gate = "AND", bool initial = false)
         {
-            string query = "";
-            string currentFilter = filter;
-            MatchCollection matches = Regex.Matches(filter, filterPattern, RegexOptions.IgnoreCase);
-            if (matches.Count > 0)
+            try
             {
-                List<string> innerOperations = new();
-                foreach (Match match in matches)
+                string query = "";
+                string currentFilter = filter;
+                MatchCollection matches = Regex.Matches(filter, filterPattern, RegexOptions.IgnoreCase);
+                if (matches.Count > 0)
                 {
-                    var groups = match.Groups;
-                    innerOperations.Add($"({ParseFilterLogic(groups[3].Value, groups[1].Value)})");
+                    List<string> innerOperations = new();
+                    foreach (Match match in matches)
+                    {
+                        var groups = match.Groups;
+                        innerOperations.Add($"{ParseFilterLogic(groups[3].Value, groups[1].Value)}");
+                    }
+                    query += $"{string.Join($" {gate} ", innerOperations)}";
+                    currentFilter = Regex.Replace(filter, filterPattern, string.Empty, RegexOptions.IgnoreCase);
+
                 }
-                query += $"({string.Join($" {gate} ", innerOperations)})";
-                currentFilter = Regex.Replace(filter, filterPattern, string.Empty, RegexOptions.IgnoreCase);
 
+                List<string> operations = new();
+                foreach (string operation in currentFilter.Split(','))
+                {
+                    if (!string.IsNullOrEmpty(operation))
+                    {
+                        string[] opParams = operation.Split('|');
+                        operations.Add($"{opParams[0]} {opParams[1]} {opParams[2]}");
+                    }
+                }
+                if (operations.Count > 1)
+                {
+                    query += $"{(initial || string.IsNullOrEmpty(query) ? "" : $" {gate} ")}{string.Join($" {gate} ", operations)}";
+
+                }
+                else if (operations.Count > 0)
+                {
+                    query += $" {(initial ? "" : gate)} {operations[0]}";
+                }
+
+                return $"({query})";
             }
-
-            List<string> operations = new();
-            foreach (string operation in currentFilter.Split(','))
+            catch (Exception ex)
             {
-                if (!string.IsNullOrEmpty(operation))
-                {
-                    string[] opParams = operation.Split('|');
-                    operations.Add($"{opParams[0]} {operators[opParams[1]]} {opParams[2]}");
-                }
+                throw new Exception("Failed to parse filter query", ex);
             }
-            query += $"{string.Join($" {gate} ", operations)}";
-
-
-            return query;
         }
     }
     public static class QueryableExtensions
@@ -97,11 +104,18 @@ namespace DDCatalogue.Model
 
         public static IQueryable Filter(this IQueryable result, string filterQuery)
         {
-            if (!string.IsNullOrEmpty(filterQuery))
+            try
             {
-                return result.Where(filterQuery);
+                if (!string.IsNullOrEmpty(filterQuery))
+                {
+                    return result.Where(filterQuery);
+                }
+                else return result;
             }
-            else return result;
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to execute filter query", ex);
+            }
         }
     }
 }
