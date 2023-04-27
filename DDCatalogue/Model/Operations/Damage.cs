@@ -11,6 +11,6 @@ namespace DDCatalogue.Model.Operations
         [JsonPropertyName("damageDice")]
         public string DamageDice { get; set; }
         [JsonPropertyName("damageBonus")]
-        public int DamageBonus { get; set; }
+        public int? DamageBonus { get; set; }
     }
 }

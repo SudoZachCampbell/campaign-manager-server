@@ -12,9 +12,9 @@ namespace DDCatalogue.Model.Operations
         [JsonPropertyName("desc")]
         public string Desc { get; set; }
         [JsonPropertyName("count")]
-        public int Count { get; set; }
+        public int? Count { get; set; }
         [JsonPropertyName("attackBonus")]
-        public int AttackBonus { get; set; }
+        public int? AttackBonus { get; set; }
         [JsonPropertyName("damage")]
         public List<Damage> Damage { get; set; }
         [JsonPropertyName("usage")]
@@ -30,9 +30,9 @@ namespace DDCatalogue.Model.Operations
         [JsonPropertyName("type")]
         public string Type { get; set; }
         [JsonPropertyName("times")]
-        public string Times { get; set; }
+        public int? Times { get; set; }
         [JsonPropertyName("minValue")]
-        public int MinValue { get; set; }
+        public int? MinValue { get; set; }
     }
 
     public class DC
