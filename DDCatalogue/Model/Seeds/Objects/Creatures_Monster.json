@@ -2,8 +2,8 @@
   {
     "id": "0cc31a48-dfa1-403c-ac9a-1c39bd533dfb",
     "name": "Drawf Warrior",
-    "armor_class": 16,
-    "hit_points": 39,
+    "armorClass": 16,
+    "hitPoints": 39,
     "alignment": 0,
     "strength": 14,
     "dexterity": 11,
@@ -14,17 +14,17 @@
     "size": "Medium",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 25,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 25,
+        "measurement": "ft"
       }
     ],
-    "challenge_rating": 1,
+    "challengeRating": 1,
     "languages": "Common, Dwarvish",
     "senses": {
       "darkvision": "60 ft."
     },
-    "passive_perception": 10
+    "passivePerception": 10
   },
   {
     "id": "dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34",
@@ -32,14 +32,14 @@
     "size": "Medium",
     "type": 9,
     "alignment": 8,
-    "armor_class": 16,
-    "hit_points": 27,
-    "hit_dice": "5d8",
+    "armorClass": 16,
+    "hitPoints": 27,
+    "hitDice": "5d8",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 30,
+        "measurement": "ft"
       }
     ],
     "strength": 15,
@@ -61,11 +61,37 @@
     "senses": {
       "darkvision": "60 ft."
     },
-    "passive_perception": 10,
+    "actions": [
+      {
+        "name": "Morningstar",
+        "desc": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.",
+        "attackBonus": 4,
+        "damage": [
+          {
+            "damageType": "Piercing",
+            "damageDice": "2d8",
+            "damageBonus": 2
+          }
+        ]
+      },
+      {
+        "name": "Javelin",
+        "desc": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.",
+        "attackBonus": 4,
+        "damage": [
+          {
+            "damageType": "Piercing",
+            "damageDice": "2d6",
+            "damageBonus": 2
+          }
+        ]
+      }
+    ],
+    "passivePerception": 10,
     "languages": "Common, Goblin",
-    "challenge_rating": 1,
+    "challengeRating": 1,
     "xp": 200,
-    "special_abilities": [
+    "specialAbilities": [
       {
         "name": "Brute",
         "desc": "A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack)."
@@ -75,43 +101,13 @@
         "desc": "If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack."
       }
     ],
-    "actions": [
-      {
-        "name": "Morningstar",
-        "desc": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.",
-        "attack_bonus": 4,
-        "damage": [
-          {
-            "damage_type": {
-              "name": "Piercing"
-            },
-            "damage_dice": "2d8",
-            "damage_bonus": 2
-          }
-        ]
-      },
-      {
-        "name": "Javelin",
-        "desc": "Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.",
-        "attack_bonus": 4,
-        "damage": [
-          {
-            "damage_type": {
-              "name": "Piercing"
-            },
-            "damage_dice": "2d6",
-            "damage_bonus": 2
-          }
-        ]
-      }
-    ],
     "picture": "bugbear.jpeg"
   },
   {
     "id": "fe3133a3-b86a-4f53-833c-df0bb75dc2a2",
     "name": "Knight",
-    "armor_class": 18,
-    "hit_points": 52,
+    "armorClass": 18,
+    "hitPoints": 52,
     "alignment": 9,
     "strength": 16,
     "dexterity": 11,
@@ -122,20 +118,20 @@
     "size": "Medium",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 30,
+        "measurement": "ft"
       }
     ],
-    "challenge_rating": 3,
+    "challengeRating": 3,
     "languages": "Any one",
-    "passive_perception": 10
+    "passivePerception": 10
   },
   {
     "id": "a17bd70f-a811-4a63-bd43-17f77f696e86",
     "name": "Goblin",
-    "armor_class": 15,
-    "hit_points": 7,
+    "armorClass": 15,
+    "hitPoints": 7,
     "alignment": 5,
     "strength": 8,
     "dexterity": 14,
@@ -146,20 +142,20 @@
     "size": "Small",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 30,
+        "measurement": "ft"
       }
     ],
-    "challenge_rating": 0.25,
+    "challengeRating": 0.25,
     "languages": "Common, Goblin",
-    "passive_perception": 9
+    "passivePerception": 9
   },
   {
     "id": "daf11f58-fdc0-4ca7-a291-8b7f1d248070",
     "name": "Commoner",
-    "armor_class": 10,
-    "hit_points": 4,
+    "armorClass": 10,
+    "hitPoints": 4,
     "alignment": 9,
     "strength": 10,
     "dexterity": 10,
@@ -170,19 +166,19 @@
     "size": "Medium",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 30,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 30,
+        "measurement": "ft"
       }
     ],
-    "challenge_rating": 0,
+    "challengeRating": 0,
     "languages": "Any one",
-    "passive_perception": 10
+    "passivePerception": 10
   },
   {
     "Name": "Wolf",
-    "armor_class": 13,
-    "hit_points": 11,
+    "armorClass": 13,
+    "hitPoints": 11,
     "alignment": 10,
     "strength": 12,
     "dexterity": 15,
@@ -193,20 +189,20 @@
     "size": "Medium",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 40,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 40,
+        "measurement": "ft"
       }
     ],
-    "challenge_rating": 0.25,
+    "challengeRating": 0.25,
     "languages": "",
-    "passive_perception": 13
+    "passivePerception": 13
   },
   {
     "id": "2dc5b20f-6d65-4c4d-8928-597d3e8291fa",
     "Name": "Dwarf",
-    "armor_class": 14,
-    "hit_points": 26,
+    "armorClass": 14,
+    "hitPoints": 26,
     "alignment": 0,
     "strength": 13,
     "dexterity": 10,
@@ -217,13 +213,196 @@
     "size": "Medium",
     "speed": [
       {
-        "Name": "walk",
-        "Value": 25,
-        "Measurement": "ft"
+        "name": "walk",
+        "value": 25,
+        "measurement": "ft"
       }
     ],
-    "challenge_rating": 0.5,
+    "challengeRating": 0.5,
     "languages": "Common, Dwarvish",
-    "passive_perception": 10
+    "passivePerception": 10
+  },
+  {
+    "id": "bae8d32f-dab9-4fd9-81c8-c35bd5a1f8b9",
+    "name": "Adult Black Dragon",
+    "size": "Huge",
+    "alignment": 8,
+    "armorClass": 19,
+    "hitPoints": 195,
+    "hitDice": "17d12",
+    "speed": [
+      { "name": "walk", "value": 40, "measurement": "ft" },
+      { "name": "fly", "value": 80, "measurement": "ft" },
+      { "name": "swim", "value": 40, "measurement": "ft" }
+    ],
+    "strength": 23,
+    "dexterity": 14,
+    "constitution": 21,
+    "intelligence": 14,
+    "wisdom": 13,
+    "charisma": 17,
+    "proficiencies": [
+      {
+        "value": 7,
+        "name": "Saving Throw: DEX"
+      },
+      {
+        "value": 10,
+        "name": "Saving Throw: CON"
+      },
+      {
+        "value": 6,
+        "name": "Saving Throw: WIS"
+      },
+      {
+        "value": 8,
+        "name": "Saving Throw: CHA"
+      },
+      {
+        "value": 11,
+        "name": "Skill: Perception"
+      },
+      {
+        "value": 7,
+        "name": "Skill: Stealth"
+      }
+    ],
+    "passivePerception": 21,
+    "senses": {
+      "blindsight": "60 ft.",
+      "darkvision": "120 ft."
+    },
+    "languages": "Common, Draconic",
+    "challengeRating": 14,
+    "xp": 11500,
+    "specialAbilities": [
+      {
+        "name": "Amphibious",
+        "desc": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "desc": "If the dragon fails a saving throw, it can choose to succeed instead.",
+        "usage": {
+          "type": "per day",
+          "times": 3
+        }
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiattack",
+        "type": "actions",
+        "desc": "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws.",
+        "actions": [
+          {
+            "name": "Frightful Presence",
+            "count": 1,
+            "type": "ability"
+          },
+          {
+            "name": "Bite",
+            "count": 1,
+            "type": "melee"
+          },
+          {
+            "name": "Claw",
+            "count": 2,
+            "type": "melee"
+          }
+        ]
+      },
+      {
+        "name": "Bite",
+        "desc": "Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 17 (2d10 + 6) piercing damage plus 4 (1d8) acid damage.",
+        "attackBonus": 11,
+        "damage": [
+          {
+            "damageType": "Piercing",
+            "damageDice": "2d10+6"
+          },
+          {
+            "damageType": "Acid",
+            "damageDice": "1d8"
+          }
+        ]
+      },
+      {
+        "name": "Claw",
+        "desc": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) slashing damage.",
+        "attackBonus": 11,
+        "damage": [
+          {
+            "damageType": "Slashing",
+            "damageDice": "2d6+6"
+          }
+        ]
+      },
+      {
+        "name": "Tail",
+        "desc": "Melee Weapon Attack: +11 to hit, reach 15 ft., one target. Hit: 15 (2d8 + 6) bludgeoning damage.",
+        "attackBonus": 11,
+        "damage": [
+          {
+            "damageType": "Bludgeoning",
+            "damageDice": "2d8+6"
+          }
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "desc": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+        "dc": {
+          "dcType": "wisdom",
+          "dcValue": 16,
+          "successType": "none"
+        }
+      },
+      {
+        "name": "Acid Breath",
+        "desc": "The dragon exhales acid in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 54 (12d8) acid damage on a failed save, or half as much damage on a successful one.",
+        "usage": {
+          "type": "recharge on roll",
+          "dice": "1d6",
+          "minValue": 5
+        },
+        "dc": {
+          "dcType": "dexterity",
+          "dcValue": 18,
+          "successType": "half"
+        },
+        "damage": [
+          {
+            "damageType": "Acid",
+            "damageDice": "12d8"
+          }
+        ]
+      }
+    ],
+    "legendaryActions": [
+      {
+        "name": "Detect",
+        "desc": "The dragon makes a Wisdom (Perception) check."
+      },
+      {
+        "name": "Tail Attack",
+        "desc": "The dragon makes a tail attack."
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "desc": "The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed.",
+        "dc": {
+          "dcType": "dexterity",
+          "dcValue": 19,
+          "successType": "none"
+        },
+        "damage": [
+          {
+            "damageType": "Bludgeoning",
+            "damageDice": "2d6+6"
+          }
+        ]
+      }
+    ]
   }
 ]

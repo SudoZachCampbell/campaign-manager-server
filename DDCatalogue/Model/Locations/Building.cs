@@ -1,7 +1,6 @@
 ﻿using System;
 using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Joins;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Locations

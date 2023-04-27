@@ -1,8 +1,9 @@
 ﻿using DDCatalogue.Model.Joins;
-using Newtonsoft.Json;
+using DDCatalogue.Model.Attributes;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using DDCatalogue.Model.Operations;
 
 namespace DDCatalogue.Model.Creatures
 {
@@ -14,15 +15,18 @@ namespace DDCatalogue.Model.Creatures
         public int Intelligence { get; set; } = 0;
         public int Wisdom { get; set; } = 0;
         public int Charisma { get; set; } = 0;
-        public JArray Proficiencies { get; set; } = new JArray();
+        [Column(TypeName = "jsonb")]
+        public List<Proficiencies> Proficiencies { get; set; }
         public int ArmorClass { get; set; } = 0;
         public int HitPoints { get; set; } = 0;
         public string HitDice { get; set; } = string.Empty;
         public string Size { get; set; } = string.Empty;
-        public JArray Speed { get; set; } = new JArray();
+        [Column(TypeName = "jsonb")]
+        public List<Speed> Speed { get; set; }
         public string Languages { get; set; } = string.Empty;
         public Alignment Alignment { get; set; } = Alignment.None;
-        public JArray Reactions { get; set; } = new JArray();
+        [Column(TypeName = "jsonb")]
+        public List<CreatureAction> Reactions { get; set; }
         public string Picture { get; set; } = string.Empty;
     }
 

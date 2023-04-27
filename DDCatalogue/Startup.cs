@@ -1,5 +1,5 @@
 using Amazon.S3;
-using DDCatalogue.Model;
+using DDCatalogue.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Serialization;
 using System.Linq;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Text.Json.Serialization;

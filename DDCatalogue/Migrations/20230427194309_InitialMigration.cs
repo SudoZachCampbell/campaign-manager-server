@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using DDCatalogue.Model.Properties;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DDCatalogue.Migrations
 {
-    public partial class InitialCreate : Migration
+    /// <inheritdoc />
+    public partial class InitialMigration : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
@@ -142,7 +148,7 @@ namespace DDCatalogue.Migrations
                     Xp = table.Column<int>(type: "integer", nullable: true),
                     PassivePerception = table.Column<int>(type: "integer", nullable: true),
                     MonsterType = table.Column<int>(type: "integer", nullable: true),
-                    Actions = table.Column<string>(type: "text", nullable: true),
+                    Actions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     LegendaryActions = table.Column<string>(type: "text", nullable: true),
                     SpecialAbilities = table.Column<string>(type: "text", nullable: true),
                     Senses = table.Column<string>(type: "text", nullable: true),
@@ -319,19 +325,19 @@ namespace DDCatalogue.Migrations
                 columns: new[] { "Id", "Actions", "Alignment", "ArmorClass", "ChallengeRating", "Charisma", "Constitution", "Dexterity", "Discriminator", "HitDice", "HitPoints", "Intelligence", "Languages", "LegendaryActions", "MonsterType", "Name", "PassivePerception", "Picture", "Proficiencies", "Reactions", "Senses", "Size", "SpecialAbilities", "Speed", "Strength", "Wisdom", "Xp" },
                 values: new object[,]
                 {
-                    { new Guid("02108b37-768b-45dc-82ae-968041ee541f"), "[]", 10, 13, 0.25, 6, 12, 15, "Monster", "", 11, 3, "", "[]", 14, "Wolf", 13, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]", 12, 12, 0 },
-                    { new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "[]", 0, 16, 1.0, 10, 14, 11, "Monster", "", 39, 10, "Common, Dwarvish", "[]", 14, "Drawf Warrior", 10, "", "[]", "[]", "{\"darkvision\":\"60 ft.\"}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 14, 11, 0 },
-                    { new Guid("2dc5b20f-6d65-4c4d-8928-597d3e8291fa"), "[]", 0, 14, 0.5, 10, 12, 10, "Monster", "", 26, 10, "Common, Dwarvish", "[]", 14, "Dwarf", 10, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 13, 12, 0 },
-                    { new Guid("a17bd70f-a811-4a63-bd43-17f77f696e86"), "[]", 5, 15, 0.25, 8, 10, 14, "Monster", "", 7, 10, "Common, Goblin", "[]", 14, "Goblin", 9, "", "[]", "[]", "{}", "Small", "[]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 8, 8, 0 },
-                    { new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "[]", 9, 10, 0.0, 10, 10, 10, "Monster", "", 4, 10, "Any one", "[]", 14, "Commoner", 10, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 10, 10, 0 },
-                    { new Guid("dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34"), "[{\"name\":\"Morningstar\",\"desc\":\"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d8\",\"damage_bonus\":2}]},{\"name\":\"Javelin\",\"desc\":\"Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.\",\"attack_bonus\":4,\"damage\":[{\"damage_type\":{\"name\":\"Piercing\"},\"damage_dice\":\"2d6\",\"damage_bonus\":2}]}]", 8, 16, 1.0, 9, 13, 14, "Monster", "5d8", 27, 8, "Common, Goblin", "[]", 14, "Bugbear", 10, "bugbear.jpeg", "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]", "[]", "{\"darkvision\":\"60 ft.\"}", "Medium", "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 15, 11, 200 },
-                    { new Guid("fe3133a3-b86a-4f53-833c-df0bb75dc2a2"), "[]", 9, 18, 3.0, 15, 14, 11, "Monster", "", 52, 11, "Any one", "[]", 14, "Knight", 10, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 16, 11, 0 }
+                    { new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), null, 0, 16, 1.0, 10, 14, 11, "Monster", "", 39, 10, "Common, Dwarvish", "[]", 14, "Drawf Warrior", 10, "", "[]", "[]", "{\"darkvision\":\"60 ft.\"}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 14, 11, 0 },
+                    { new Guid("2dc5b20f-6d65-4c4d-8928-597d3e8291fa"), null, 0, 14, 0.5, 10, 12, 10, "Monster", "", 26, 10, "Common, Dwarvish", "[]", 14, "Dwarf", 10, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":25,\"Measurement\":\"ft\"}]", 13, 12, 0 },
+                    { new Guid("a17bd70f-a811-4a63-bd43-17f77f696e86"), null, 5, 15, 0.25, 8, 10, 14, "Monster", "", 7, 10, "Common, Goblin", "[]", 14, "Goblin", 9, "", "[]", "[]", "{}", "Small", "[]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 8, 8, 0 },
+                    { new Guid("ab4d8995-b5d1-4e07-aad8-249faee6d16d"), null, 10, 13, 0.25, 6, 12, 15, "Monster", "", 11, 3, "", "[]", 14, "Wolf", 13, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":40,\"Measurement\":\"ft\"}]", 12, 12, 0 },
+                    { new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), null, 9, 10, 0.0, 10, 10, 10, "Monster", "", 4, 10, "Any one", "[]", 14, "Commoner", 10, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 10, 10, 0 },
+                    { new Guid("dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34"), null, 8, 16, 1.0, 9, 13, 14, "Monster", "5d8", 27, 8, "Common, Goblin", "[]", 14, "Bugbear", 10, "bugbear.jpeg", "[{\"name\":\"Skill: Stealth\",\"value\":6},{\"name\":\"Skill: Survival\",\"value\":2}]", "[]", "{\"darkvision\":\"60 ft.\"}", "Medium", "[{\"name\":\"Brute\",\"desc\":\"A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).\"},{\"name\":\"Surprise Attack\",\"desc\":\"If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.\"}]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 15, 11, 200 },
+                    { new Guid("fe3133a3-b86a-4f53-833c-df0bb75dc2a2"), null, 9, 18, 3.0, 15, 14, 11, "Monster", "", 52, 11, "Any one", "[]", 14, "Knight", 10, "", "[]", "[]", "{}", "Medium", "[]", "[{\"Name\":\"walk\",\"Value\":30,\"Measurement\":\"ft\"}]", 16, 11, 0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Dungeons",
                 columns: new[] { "Id", "BuildingId", "LocaleId", "Map", "Name", "Type" },
-                values: new object[] { new Guid("20d431a5-d40e-4e75-a9c1-ca8ae353e0ed"), null, null, null, "Cragmaw Hideout", null });
+                values: new object[] { new Guid("7f005891-d2fb-4207-9df9-bb5de4a59bd5"), null, null, null, "Cragmaw Hideout", null });
 
             migrationBuilder.InsertData(
                 table: "Regions",
@@ -343,15 +349,15 @@ namespace DDCatalogue.Migrations
                 columns: new[] { "Id", "Name", "RegionId" },
                 values: new object[,]
                 {
-                    { new Guid("05b8a745-b8aa-4bba-b7c7-507cd352b02e"), "Old Owl Well", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
-                    { new Guid("23f6a61a-bf84-4039-9be4-9eb5192c57c6"), "Neverwinter", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
-                    { new Guid("46a4a3a3-70bb-4782-bfa9-ea13397cb4ac"), "Leilon", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
-                    { new Guid("70c4e46c-0287-4320-a4dc-6adfd08011b0"), "Conyberry", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
-                    { new Guid("82cb5a0f-a72a-4b3b-adbe-4c540bae2eee"), "Neverwinter", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
+                    { new Guid("05a500d0-ab28-47dd-8a70-af9befc98589"), "Neverwinter", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
+                    { new Guid("3087d4c8-1435-4f90-9a55-b532847190f2"), "Leilon", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
+                    { new Guid("76b7fe93-49cb-45cc-bb11-042999aa0216"), "Conyberry", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
+                    { new Guid("8cc5872e-b07b-4134-ae92-a60773901584"), "Thundertree", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
                     { new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), "Phandalin", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
                     { new Guid("9b2ff871-d933-4811-acfa-764f8173df3c"), "Cragmaw Castle", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
                     { new Guid("a5d3885b-7b2a-466d-88ba-921f1d71f1b4"), "Cragmaw Hideout", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
-                    { new Guid("cfbe696c-02af-47e8-9b58-2103a6f04c9b"), "Thundertree", new Guid("050b1c46-0676-420b-872c-143db80d358b") }
+                    { new Guid("c32bcb3c-12db-4b9d-8660-abc61ea9f4b6"), "Old Owl Well", new Guid("050b1c46-0676-420b-872c-143db80d358b") },
+                    { new Guid("e6128841-36f5-4acb-8448-a37fbd1806c8"), "Neverwinter", new Guid("050b1c46-0676-420b-872c-143db80d358b") }
                 });
 
             migrationBuilder.InsertData(
@@ -377,7 +383,7 @@ namespace DDCatalogue.Migrations
                 values: new object[,]
                 {
                     { new Guid("148d6be4-48e7-451e-8096-2f399937fc51"), null, "PhanDawn.jpg", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), "Phandalin_Dawn", "Dawn" },
-                    { new Guid("a4fa09ec-f479-464b-afd0-1c9e89ff080b"), null, "PhanNight.jpg", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), "Phandalin_Night", "Night" },
+                    { new Guid("4fd05e80-0d1f-4497-9886-61d1137c3272"), null, "PhanNight.jpg", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), "Phandalin_Night", "Night" },
                     { new Guid("d6236d75-aa21-4569-bc13-7a8c913997d9"), null, "PhanDay.jpg", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), "Phandalin_Day", "Day" }
                 });
 
@@ -386,11 +392,11 @@ namespace DDCatalogue.Migrations
                 columns: new[] { "Id", "Background", "Beliefs", "BuildingId", "Flaws", "LocaleId", "MonsterId", "Name", "NoteableEvents", "Passions", "Picture" },
                 values: new object[,]
                 {
-                    { new Guid("5004c517-1e49-4a93-917a-f6de57262c70"), "", "[]", null, "[]", new Guid("a5d3885b-7b2a-466d-88ba-921f1d71f1b4"), new Guid("a17bd70f-a811-4a63-bd43-17f77f696e86"), "Yeemik Largebrain", "[]", "[]", "" },
-                    { new Guid("915c0e65-755d-4a10-9ebc-1d2ef045f5f6"), "", "[]", null, "[]", new Guid("9b2ff871-d933-4811-acfa-764f8173df3c"), new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "Gundren Rockseeker", "[]", "[]", "" },
-                    { new Guid("ada63dfd-4645-49ad-b64d-fc3ccfb642e3"), "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.", "[]", null, "[]", new Guid("a5d3885b-7b2a-466d-88ba-921f1d71f1b4"), new Guid("dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34"), "Klarg BigCrown", "[\"Made a deal with the party for Yeemik's head\",\"Killed by the party\"]", "[]", "Klarg_BigCrown.jpg" },
-                    { new Guid("b11241c1-f071-4103-a03f-b3dcd806d61c"), "", "[]", null, "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "Tharden Rockseeker", "[]", "[]", "" },
-                    { new Guid("f0df09cf-a538-482a-8a08-ffc47b0f27a0"), "", "[]", null, "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "Nundro Rockseeker", "[]", "[]", "" }
+                    { new Guid("17286391-d384-4c99-a5d7-25b8b745841b"), "", "[]", null, "[]", new Guid("a5d3885b-7b2a-466d-88ba-921f1d71f1b4"), new Guid("a17bd70f-a811-4a63-bd43-17f77f696e86"), "Yeemik Largebrain", "[]", "[]", "" },
+                    { new Guid("6a84b114-50eb-4a8e-8d9f-7af748fb4a7e"), "", "[]", null, "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "Tharden Rockseeker", "[]", "[]", "" },
+                    { new Guid("b3d85d3d-e8b5-4348-9c09-fcf6beb4aa1b"), "", "[]", null, "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "Nundro Rockseeker", "[]", "[]", "" },
+                    { new Guid("ce2d5a1c-3b0b-4f15-92bc-4e9580be1d95"), "Raised with his three brothers, Klarg was below average intelligence to say the least. Always playing Kings and Queens, he became obsessed with being the ruler of a country. He forged his own crown, and took over a goblin bandit gang declaring himself as their King.|Klarg has since made a deal with Iarno to steal supplies from Phandalin and to resupply the Redbrands instead.", "[]", null, "[]", new Guid("a5d3885b-7b2a-466d-88ba-921f1d71f1b4"), new Guid("dbfb7da7-08b2-4b12-adf4-2f8fe7c15c34"), "Klarg BigCrown", "[\"Made a deal with the party for Yeemik's head\",\"Killed by the party\"]", "[]", "Klarg_BigCrown.jpg" },
+                    { new Guid("e5188e4c-6375-4d9e-8ae8-01e97f975bf0"), "", "[]", null, "[]", new Guid("9b2ff871-d933-4811-acfa-764f8173df3c"), new Guid("0cc31a48-dfa1-403c-ac9a-1c39bd533dfb"), "Gundren Rockseeker", "[]", "[]", "" }
                 });
 
             migrationBuilder.InsertData(
@@ -425,16 +431,16 @@ namespace DDCatalogue.Migrations
                 columns: new[] { "Id", "Background", "Beliefs", "BuildingId", "Flaws", "LocaleId", "MonsterId", "Name", "NoteableEvents", "Passions", "Picture" },
                 values: new object[,]
                 {
-                    { new Guid("08740102-65fd-47d4-a1c2-eeb07b6e0915"), "", "[]", new Guid("3829d18f-0c01-4c08-a16f-55d983db578a"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Harbin Wester", "[]", "[]", "" },
-                    { new Guid("21327109-05b8-44a7-961c-f511101bc7b4"), "", "[]", new Guid("6f6bfd5e-a158-487a-b54a-9f27842ce762"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("2dc5b20f-6d65-4c4d-8928-597d3e8291fa"), "Toblen Stonehill", "[]", "[]", "Toblen_Stonehill.jpg" },
-                    { new Guid("25af5ee4-f7e3-415b-9555-198e75d20a07"), "", "[]", new Guid("e54fa7e6-34c0-4ed4-9338-9341162739e5"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Halia Thornton", "[]", "[]", "" },
-                    { new Guid("2ce5db2b-57d8-4078-96bb-ec8f999b2b89"), "", "[]", new Guid("7042bd21-7239-4866-bcd3-a7a054c05430"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Qelline Alderleaf", "[]", "[]", "" },
-                    { new Guid("328e57d4-fe0c-4603-b85f-a54c303b359f"), "", "[]", new Guid("5ca1de81-cf25-4c98-a251-1c3fe661457f"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Iarno Albrek", "[]", "[]", "" },
-                    { new Guid("436c3a8a-3f57-4393-aad7-2531d1ab2233"), "", "[]", new Guid("0110289a-95c6-4385-be5d-741821c8a107"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Daran Edermath", "[]", "[]", "" },
-                    { new Guid("60d13f9d-a971-4d4c-aef9-88101fac543f"), "", "[]", new Guid("b3c67d0b-ba6c-4974-b393-5c7d3f1d6644"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Elmar Barthen", "[]", "[]", "" },
-                    { new Guid("a54f8ba3-3dfe-47dd-912f-e76f773ab133"), "", "[]", new Guid("b439fe6f-dde1-4854-8ea6-a5972a6ea06e"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("fe3133a3-b86a-4f53-833c-df0bb75dc2a2"), "Linene Graywind", "[]", "[]", "" },
-                    { new Guid("b3aa1448-07e6-401b-87ca-a94bdda81f68"), "", "[]", new Guid("4c3bf7ce-dfd6-4894-afa7-f86137003e87"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Sister Garaele", "[]", "[]", "" },
-                    { new Guid("b50fcd71-3fe3-4387-bd2a-8045ec5c3fc9"), "", "[]", new Guid("3829d18f-0c01-4c08-a16f-55d983db578a"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("fe3133a3-b86a-4f53-833c-df0bb75dc2a2"), "Sildar Hallwinter", "[]", "[]", "" }
+                    { new Guid("2af8e063-a51c-4b35-b2aa-afe4c80bcfae"), "", "[]", new Guid("6f6bfd5e-a158-487a-b54a-9f27842ce762"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("2dc5b20f-6d65-4c4d-8928-597d3e8291fa"), "Toblen Stonehill", "[]", "[]", "Toblen_Stonehill.jpg" },
+                    { new Guid("3ae33b0e-eff1-42d3-94eb-978151447d3a"), "", "[]", new Guid("b3c67d0b-ba6c-4974-b393-5c7d3f1d6644"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Elmar Barthen", "[]", "[]", "" },
+                    { new Guid("47b3dc26-04c8-48e9-abc0-a0520feca227"), "", "[]", new Guid("e54fa7e6-34c0-4ed4-9338-9341162739e5"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Halia Thornton", "[]", "[]", "" },
+                    { new Guid("62375d83-0351-4968-959d-8cd329d279fa"), "", "[]", new Guid("5ca1de81-cf25-4c98-a251-1c3fe661457f"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Iarno Albrek", "[]", "[]", "" },
+                    { new Guid("701cf283-f930-42b1-a5df-de4ed109a693"), "", "[]", new Guid("4c3bf7ce-dfd6-4894-afa7-f86137003e87"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Sister Garaele", "[]", "[]", "" },
+                    { new Guid("8ad35369-4c60-4bc0-a43a-ecd13fcc5094"), "", "[]", new Guid("b439fe6f-dde1-4854-8ea6-a5972a6ea06e"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("fe3133a3-b86a-4f53-833c-df0bb75dc2a2"), "Linene Graywind", "[]", "[]", "" },
+                    { new Guid("99dc4563-34da-4558-a5c7-a39cf1bb296b"), "", "[]", new Guid("3829d18f-0c01-4c08-a16f-55d983db578a"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("fe3133a3-b86a-4f53-833c-df0bb75dc2a2"), "Sildar Hallwinter", "[]", "[]", "" },
+                    { new Guid("b1d2b4b7-dab2-4d4b-b757-a47b62ac45e7"), "", "[]", new Guid("7042bd21-7239-4866-bcd3-a7a054c05430"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Qelline Alderleaf", "[]", "[]", "" },
+                    { new Guid("d00283f9-c643-4ad6-8bff-bd18fb816300"), "", "[]", new Guid("3829d18f-0c01-4c08-a16f-55d983db578a"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Harbin Wester", "[]", "[]", "" },
+                    { new Guid("d4368ed6-b706-45d1-9b70-93df51d3d285"), "", "[]", new Guid("0110289a-95c6-4385-be5d-741821c8a107"), "[]", new Guid("97e40163-3c5c-4f76-b3ce-e6e88ec936ed"), new Guid("daf11f58-fdc0-4ca7-a291-8b7f1d248070"), "Daran Edermath", "[]", "[]", "" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -508,6 +514,7 @@ namespace DDCatalogue.Migrations
                 column: "ContinentId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

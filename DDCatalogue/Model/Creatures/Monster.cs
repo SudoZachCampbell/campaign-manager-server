@@ -1,4 +1,6 @@
-﻿using DDCatalogue.Model.Joins;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DDCatalogue.Model.Operations;
+using DDCatalogue.Model.Joins;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
@@ -10,10 +12,14 @@ namespace DDCatalogue.Model.Creatures
         public int Xp { get; set; } = 0;
         public int PassivePerception { get; set; } = 0;
         public MonsterType MonsterType { get; set; } = MonsterType.None;
-        public JArray Actions { get; set; } = new JArray();
-        public JArray LegendaryActions { get; set; } = new JArray();
-        public JArray SpecialAbilities { get; set; } = new JArray();
-        public JObject Senses { get; set; } = new JObject();
+        [Column(TypeName = "jsonb")]
+        public List<CreatureAction> Actions { get; set; }
+        [Column(TypeName = "jsonb")]
+        public List<CreatureAction> LegendaryActions { get; set; }
+        [Column(TypeName = "jsonb")]
+        public List<CreatureAction> SpecialAbilities { get; set; }
+        [Column(TypeName = "jsonb")]
+        public Dictionary<string, string> Senses { get; set; }
         public List<Npc> Npcs { get; set; }
         public List<MonsterLocale> Locales { get; set; }
         public List<MonsterBuilding> Buildings { get; set; }

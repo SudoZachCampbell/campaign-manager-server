@@ -1,4 +1,5 @@
-﻿using DDCatalogue.Model.Creatures;
+﻿using DDCatalogue.Model;
+using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Joins;
 using DDCatalogue.Model.Locations;
@@ -11,7 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-namespace DDCatalogue.Model
+
+namespace DDCatalogue.Contexts
 {
     public class DDContext : DbContext
     {
@@ -35,11 +37,10 @@ namespace DDCatalogue.Model
 
             modelBuilder.AddConversions();
             modelBuilder.DefineKeys();
+            // modelBuilder.BuildJsonProperties();
             modelBuilder.BuildRelationships();
             modelBuilder.Seed();
         }
-
-
     }
 
     public static class ModelBuilderExtensions
@@ -143,6 +144,20 @@ namespace DDCatalogue.Model
             }
         }
 
+        // public static void BuildJsonProperties(this ModelBuilder modelBuilder)
+        // {
+        //     modelBuilder.Entity<Monster>().OwnsMany(
+        //         monster => monster.Actions,
+        //         options =>
+        //         {
+        //             options.ToJson();
+        //             options.OwnsMany(action => action.Damage, actionOptions =>
+        //             {
+        //                 actionOptions.ToJson();
+        //             });
+        //         });
+        // }
+
         public static void BuildRelationships(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Npc>()
@@ -221,10 +236,10 @@ namespace DDCatalogue.Model
                 valueComparer);
 
             // Monster
-            modelBuilder.Entity<Monster>().Property(c => c.Actions).HasConversion(
-                v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                valueComparer);
+            // modelBuilder.Entity<Monster>().Property(c => c.Actions).HasConversion(
+            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //     valueComparer);
 
             modelBuilder.Entity<Monster>().Property(c => c.LegendaryActions).HasConversion(
                 v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
