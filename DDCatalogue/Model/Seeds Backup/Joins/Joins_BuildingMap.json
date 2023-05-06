@@ -1,0 +1,102 @@
+[
+  {
+    "building_id": "6f6bfd5e-a158-487a-b54a-9f27842ce762",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [1830, 3083]
+  },
+  {
+    "building_id": "b3c67d0b-ba6c-4974-b393-5c7d3f1d6644",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [1107, 3735]
+  },
+  {
+    "building_id": "0110289a-95c6-4385-be5d-741821c8a107",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [1041, 876]
+  },
+  {
+    "building_id": "b439fe6f-dde1-4854-8ea6-a5972a6ea06e",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [2280, 2300]
+  },
+  {
+    "building_id": "e54fa7e6-34c0-4ed4-9338-9341162739e5",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [3101, 2115]
+  },
+  {
+    "building_id": "7042bd21-7239-4866-bcd3-a7a054c05430",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [2971, 4447]
+  },
+  {
+    "building_id": "4c3bf7ce-dfd6-4894-afa7-f86137003e87",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [1656, 2445]
+  },
+  {
+    "building_id": "d4b56822-cd18-4a75-b8c9-b51f1d32236c",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [1913, 4396]
+  },
+  {
+    "building_id": "3829d18f-0c01-4c08-a16f-55d983db578a",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [2382, 2836]
+  },
+  {
+    "building_id": "5ca1de81-cf25-4c98-a251-1c3fe661457f",
+    "map_id": "148d6be4-48e7-451e-8096-2f399937fc51",
+    "coords": [1351, 6418]
+  },
+  {
+    "building_id": "6f6bfd5e-a158-487a-b54a-9f27842ce762",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [1830, 3083]
+  },
+  {
+    "building_id": "b3c67d0b-ba6c-4974-b393-5c7d3f1d6644",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [1107, 3735]
+  },
+  {
+    "building_id": "0110289a-95c6-4385-be5d-741821c8a107",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [1041, 876]
+  },
+  {
+    "building_id": "b439fe6f-dde1-4854-8ea6-a5972a6ea06e",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [2280, 2300]
+  },
+  {
+    "building_id": "e54fa7e6-34c0-4ed4-9338-9341162739e5",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [3101, 2115]
+  },
+  {
+    "building_id": "7042bd21-7239-4866-bcd3-a7a054c05430",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [2971, 4447]
+  },
+  {
+    "building_id": "4c3bf7ce-dfd6-4894-afa7-f86137003e87",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [1656, 2445]
+  },
+  {
+    "building_id": "d4b56822-cd18-4a75-b8c9-b51f1d32236c",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [1913, 4396]
+  },
+  {
+    "building_id": "3829d18f-0c01-4c08-a16f-55d983db578a",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [2382, 2836]
+  },
+  {
+    "building_id": "5ca1de81-cf25-4c98-a251-1c3fe661457f",
+    "map_id": "d6236d75-aa21-4569-bc13-7a8c913997d9",
+    "coords": [1351, 6418]
+  }
+]

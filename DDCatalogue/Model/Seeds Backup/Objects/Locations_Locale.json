@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Neverwinter",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "name": "Thundertree",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "id": "9b2ff871-d933-4811-acfa-764f8173df3c",
+    "name": "Cragmaw Castle",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "name": "Conyberry",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "name": "Old Owl Well",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "id": "97e40163-3c5c-4f76-b3ce-e6e88ec936ed",
+    "name": "Phandalin",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b",
+    "map": "Phandalin.png"
+  },
+  {
+    "name": "Leilon",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "name": "Neverwinter",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  },
+  {
+    "id": "a5d3885b-7b2a-466d-88ba-921f1d71f1b4",
+    "name": "Cragmaw Hideout",
+    "region_id": "050b1c46-0676-420b-872c-143db80d358b"
+  }
+]

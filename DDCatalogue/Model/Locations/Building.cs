@@ -2,9 +2,11 @@
 using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Joins;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DDCatalogue.Model.Locations
 {
+    [Table("buildings")]
     public class Building : Base, ILocation
     {
         public Guid? LocaleId { get; set; }

@@ -6,8 +6,9 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
+using DDCatalogue.Model;
 
-namespace DDCatalogue.Model
+namespace DDCatalogue.Controllers
 {
     public class ListingParameters<T> where T : IBase
     {

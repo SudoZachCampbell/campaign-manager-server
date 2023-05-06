@@ -10,12 +10,20 @@ using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Linq.Dynamic.Core;
+using DDCatalogue.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace DDCatalogue.Controllers
 {
     public class GenericController<T> : ControllerBase where T : class, IBase
     {
-        protected readonly UnitOfWork<T> UnitOfWork = new UnitOfWork<T>();
+        protected virtual UnitOfWork<T> UnitOfWork { get; } = new();
+        protected readonly IConfiguration Configuration;
+
+        public GenericController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         [HttpGet("[action]")]
         protected ActionResult<string> Status()
@@ -94,12 +102,19 @@ namespace DDCatalogue.Controllers
             return NoContent();
         }
 
-        protected ActionResult<T> PostGen(T instance)
+        protected CreatedResult PostGen(T instance)
         {
             UnitOfWork.Repository.Insert(instance);
-            UnitOfWork.Save();
+            int result = UnitOfWork.Save();
 
-            return CreatedAtAction("GetMonster", new { id = instance.Id }, instance);
+            if (result > 0)
+            {
+                return Created($"accounts/{instance.Id}", instance.Id);
+            }
+            else
+            {
+                throw new Exception($"Error creating {instance.GetType().Name}");
+            }
         }
 
         protected ActionResult<T> DeleteGen(Guid id)
@@ -113,7 +128,7 @@ namespace DDCatalogue.Controllers
             UnitOfWork.Repository.Delete(instance);
             UnitOfWork.Save();
 
-            return instance;
+            return NoContent();
         }
 
         protected ActionResult<List<string>> GetEnumGen(string name)

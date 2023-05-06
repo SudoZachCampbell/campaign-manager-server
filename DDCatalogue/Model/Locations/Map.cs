@@ -2,11 +2,13 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Locations
 {
+    [Table("maps")]
     public class Map : Base, ILocation
     {
         public string Variation { get; set; }

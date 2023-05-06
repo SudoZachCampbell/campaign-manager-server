@@ -3,6 +3,7 @@ using DDCatalogue.Model.Creatures;
 using DDCatalogue.Model.Items;
 using DDCatalogue.Model.Joins;
 using DDCatalogue.Model.Locations;
+using DDCatalogue.Model.Auth;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -30,6 +31,7 @@ namespace DDCatalogue.Contexts
         public DbSet<Region> Regions { get; set; }
         public DbSet<Continent> Continents { get; set; }
         public DbSet<Dungeon> Dungeons { get; set; }
+        public DbSet<Account> CampaignUsers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseNpgsql(@"Server=172.17.0.1:5432;Database=postgres;User Id=postgres;Password=postgres");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -284,10 +286,10 @@ namespace DDCatalogue.Contexts
               valueComparer);
 
             // Building Map
-            modelBuilder.Entity<BuildingMap>().Property(c => c.Coords).HasConversion(
-             v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-             v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-             valueComparer);
+            // modelBuilder.Entity<BuildingMap>().Property(c => c.Coords).HasConversion(
+            //  v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //  v => JsonConvert.DeserializeObject<Tuple<int, int>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //  valueComparer);
         }
     }
 }

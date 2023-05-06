@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using DDCatalogue.Model.Locations;
 using Newtonsoft.Json.Linq;
 
 namespace DDCatalogue.Model.Creatures
 {
+    [Table("npcs")]
     public class Npc : Base, ICreature
     {
         public string Picture { get; set; } = string.Empty;

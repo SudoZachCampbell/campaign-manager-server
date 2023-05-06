@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace DDCatalogue.Model.Creatures
 {
+    [Table("monsters")]
     public class Monster : Creature
     {
         public double ChallengeRating { get; set; } = 0;

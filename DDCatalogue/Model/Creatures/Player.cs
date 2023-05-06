@@ -1,9 +1,11 @@
 ﻿using System;
 using DDCatalogue.Model.Locations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DDCatalogue.Model.Creatures
 {
+    [Table("players")]
     public class Player : Creature
     {
         public string PlayerName { get; set; }

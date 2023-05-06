@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DDCatalogue.Model.Locations
 {
+    [Table("regions")]
     public class Region : Base, ILocation
     {
         public List<Locale> Locales { get; set; }

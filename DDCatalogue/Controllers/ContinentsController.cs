@@ -8,6 +8,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Linq.Expressions;
 using DDCatalogue.Model.Locations;
+using Microsoft.Extensions.Configuration;
 
 namespace DDCatalogue.Controllers
 {
@@ -15,6 +16,8 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class ContinentsController : GenericController<Continent>
     {
+        public ContinentsController(IConfiguration configuration) : base(configuration) { }
+
         // GET: api/Continent
         [HttpGet]
         public ActionResult<List<Continent>> GetContinents([FromQuery] ListingParameters<Continent> parameters)

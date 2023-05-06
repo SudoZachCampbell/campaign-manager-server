@@ -11,6 +11,10 @@ using Microsoft.Extensions.Options;
 using System.Linq;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace DDCatalogue
 {
     public class Startup
@@ -66,6 +70,28 @@ namespace DDCatalogue
             });
 
             services.AddSwaggerDocument();
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(o =>
+                {
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey
+                        (Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = false,
+                        ValidateIssuerSigningKey = true
+                    };
+                });
+            services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +106,9 @@ namespace DDCatalogue
                 app.UseExceptionHandler("/error");
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();

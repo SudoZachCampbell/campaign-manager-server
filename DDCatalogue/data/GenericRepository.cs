@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DDCatalogue.Contexts;
-namespace DDCatalogue.Model
+using DDCatalogue.Model;
+using DDCatalogue.Controllers;
+
+namespace DDCatalogue.Data
 {
     public class GenericRepository<TEntity> where TEntity : class, IBase
     {

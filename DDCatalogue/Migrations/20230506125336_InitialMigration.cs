@@ -18,7 +18,24 @@ namespace DDCatalogue.Migrations
                 .Annotation("Npgsql:PostgresExtension:uuid-ossp", ",,");
 
             migrationBuilder.CreateTable(
-                name: "Continents",
+                name: "accounts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Salt = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_accounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "continents",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -27,11 +44,11 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Continents", x => x.Id);
+                    table.PrimaryKey("PK_continents", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "items",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -40,11 +57,11 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_items", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Monsters",
+                name: "monsters",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -76,11 +93,11 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Monsters", x => x.Id);
+                    table.PrimaryKey("PK_monsters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Regions",
+                name: "regions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -90,16 +107,16 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Regions", x => x.Id);
+                    table.PrimaryKey("PK_regions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Regions_Continents_ContinentId",
+                        name: "FK_regions_continents_ContinentId",
                         column: x => x.ContinentId,
-                        principalTable: "Continents",
+                        principalTable: "continents",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Locales",
+                name: "locales",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -108,16 +125,16 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locales", x => x.Id);
+                    table.PrimaryKey("PK_locales", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Locales_Regions_RegionId",
+                        name: "FK_locales_regions_RegionId",
                         column: x => x.RegionId,
-                        principalTable: "Regions",
+                        principalTable: "regions",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Buildings",
+                name: "buildings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -127,16 +144,16 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buildings", x => x.Id);
+                    table.PrimaryKey("PK_buildings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Buildings_Locales_LocaleId",
+                        name: "FK_buildings_locales_LocaleId",
                         column: x => x.LocaleId,
-                        principalTable: "Locales",
+                        principalTable: "locales",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Map",
+                name: "maps",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -148,17 +165,17 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Map", x => x.Id);
+                    table.PrimaryKey("PK_maps", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Map_Locales_LocaleId",
+                        name: "FK_maps_locales_LocaleId",
                         column: x => x.LocaleId,
-                        principalTable: "Locales",
+                        principalTable: "locales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MonsterLocale",
+                name: "monsters_locales",
                 columns: table => new
                 {
                     MonsterId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -166,23 +183,23 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MonsterLocale", x => new { x.MonsterId, x.LocaleId });
+                    table.PrimaryKey("PK_monsters_locales", x => new { x.MonsterId, x.LocaleId });
                     table.ForeignKey(
-                        name: "FK_MonsterLocale_Locales_LocaleId",
+                        name: "FK_monsters_locales_locales_LocaleId",
                         column: x => x.LocaleId,
-                        principalTable: "Locales",
+                        principalTable: "locales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MonsterLocale_Monsters_MonsterId",
+                        name: "FK_monsters_locales_monsters_MonsterId",
                         column: x => x.MonsterId,
-                        principalTable: "Monsters",
+                        principalTable: "monsters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dungeons",
+                name: "dungeons",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -194,21 +211,21 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dungeons", x => x.Id);
+                    table.PrimaryKey("PK_dungeons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dungeons_Buildings_BuildingId",
+                        name: "FK_dungeons_buildings_BuildingId",
                         column: x => x.BuildingId,
-                        principalTable: "Buildings",
+                        principalTable: "buildings",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Dungeons_Locales_LocaleId",
+                        name: "FK_dungeons_locales_LocaleId",
                         column: x => x.LocaleId,
-                        principalTable: "Locales",
+                        principalTable: "locales",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "MonsterBuilding",
+                name: "monsters_buildings",
                 columns: table => new
                 {
                     MonsterId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -216,23 +233,23 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MonsterBuilding", x => new { x.MonsterId, x.BuildingId });
+                    table.PrimaryKey("PK_monsters_buildings", x => new { x.MonsterId, x.BuildingId });
                     table.ForeignKey(
-                        name: "FK_MonsterBuilding_Buildings_BuildingId",
+                        name: "FK_monsters_buildings_buildings_BuildingId",
                         column: x => x.BuildingId,
-                        principalTable: "Buildings",
+                        principalTable: "buildings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MonsterBuilding_Monsters_MonsterId",
+                        name: "FK_monsters_buildings_monsters_MonsterId",
                         column: x => x.MonsterId,
-                        principalTable: "Monsters",
+                        principalTable: "monsters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Npcs",
+                name: "npcs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -249,29 +266,29 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Npcs", x => x.Id);
+                    table.PrimaryKey("PK_npcs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Npcs_Buildings_BuildingId",
+                        name: "FK_npcs_buildings_BuildingId",
                         column: x => x.BuildingId,
-                        principalTable: "Buildings",
+                        principalTable: "buildings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Npcs_Locales_LocaleId",
+                        name: "FK_npcs_locales_LocaleId",
                         column: x => x.LocaleId,
-                        principalTable: "Locales",
+                        principalTable: "locales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Npcs_Monsters_MonsterId",
+                        name: "FK_npcs_monsters_MonsterId",
                         column: x => x.MonsterId,
-                        principalTable: "Monsters",
+                        principalTable: "monsters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Players",
+                name: "players",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -301,114 +318,114 @@ namespace DDCatalogue.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Players", x => x.Id);
+                    table.PrimaryKey("PK_players", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Players_Buildings_BuildingId",
+                        name: "FK_players_buildings_BuildingId",
                         column: x => x.BuildingId,
-                        principalTable: "Buildings",
+                        principalTable: "buildings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Players_Locales_LocaleId",
+                        name: "FK_players_locales_LocaleId",
                         column: x => x.LocaleId,
-                        principalTable: "Locales",
+                        principalTable: "locales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BuildingMap",
+                name: "buildings_maps",
                 columns: table => new
                 {
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: false),
                     MapId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Coords = table.Column<string>(type: "text", nullable: true)
+                    Coords = table.Column<List<int>>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingMap", x => new { x.BuildingId, x.MapId });
+                    table.PrimaryKey("PK_buildings_maps", x => new { x.BuildingId, x.MapId });
                     table.ForeignKey(
-                        name: "FK_BuildingMap_Buildings_BuildingId",
+                        name: "FK_buildings_maps_buildings_BuildingId",
                         column: x => x.BuildingId,
-                        principalTable: "Buildings",
+                        principalTable: "buildings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BuildingMap_Map_MapId",
+                        name: "FK_buildings_maps_maps_MapId",
                         column: x => x.MapId,
-                        principalTable: "Map",
+                        principalTable: "maps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BuildingMap_MapId",
-                table: "BuildingMap",
+                name: "IX_buildings_LocaleId",
+                table: "buildings",
+                column: "LocaleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_buildings_maps_MapId",
+                table: "buildings_maps",
                 column: "MapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Buildings_LocaleId",
-                table: "Buildings",
-                column: "LocaleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Dungeons_BuildingId",
-                table: "Dungeons",
+                name: "IX_dungeons_BuildingId",
+                table: "dungeons",
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dungeons_LocaleId",
-                table: "Dungeons",
+                name: "IX_dungeons_LocaleId",
+                table: "dungeons",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locales_RegionId",
-                table: "Locales",
+                name: "IX_locales_RegionId",
+                table: "locales",
                 column: "RegionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Map_LocaleId",
-                table: "Map",
+                name: "IX_maps_LocaleId",
+                table: "maps",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MonsterBuilding_BuildingId",
-                table: "MonsterBuilding",
+                name: "IX_monsters_buildings_BuildingId",
+                table: "monsters_buildings",
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MonsterLocale_LocaleId",
-                table: "MonsterLocale",
+                name: "IX_monsters_locales_LocaleId",
+                table: "monsters_locales",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Npcs_BuildingId",
-                table: "Npcs",
+                name: "IX_npcs_BuildingId",
+                table: "npcs",
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Npcs_LocaleId",
-                table: "Npcs",
+                name: "IX_npcs_LocaleId",
+                table: "npcs",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Npcs_MonsterId",
-                table: "Npcs",
+                name: "IX_npcs_MonsterId",
+                table: "npcs",
                 column: "MonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_BuildingId",
-                table: "Players",
+                name: "IX_players_BuildingId",
+                table: "players",
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_LocaleId",
-                table: "Players",
+                name: "IX_players_LocaleId",
+                table: "players",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Regions_ContinentId",
-                table: "Regions",
+                name: "IX_regions_ContinentId",
+                table: "regions",
                 column: "ContinentId");
         }
 
@@ -416,43 +433,46 @@ namespace DDCatalogue.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BuildingMap");
+                name: "accounts");
 
             migrationBuilder.DropTable(
-                name: "Dungeons");
+                name: "buildings_maps");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "dungeons");
 
             migrationBuilder.DropTable(
-                name: "MonsterBuilding");
+                name: "items");
 
             migrationBuilder.DropTable(
-                name: "MonsterLocale");
+                name: "monsters_buildings");
 
             migrationBuilder.DropTable(
-                name: "Npcs");
+                name: "monsters_locales");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "npcs");
 
             migrationBuilder.DropTable(
-                name: "Map");
+                name: "players");
 
             migrationBuilder.DropTable(
-                name: "Monsters");
+                name: "maps");
 
             migrationBuilder.DropTable(
-                name: "Buildings");
+                name: "monsters");
 
             migrationBuilder.DropTable(
-                name: "Locales");
+                name: "buildings");
 
             migrationBuilder.DropTable(
-                name: "Regions");
+                name: "locales");
 
             migrationBuilder.DropTable(
-                name: "Continents");
+                name: "regions");
+
+            migrationBuilder.DropTable(
+                name: "continents");
         }
     }
 }

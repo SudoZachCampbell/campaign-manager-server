@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DDCatalogue.Model.Locations;
 using Microsoft.AspNetCore.Mvc;
 using DDCatalogue.Model;
+using Microsoft.Extensions.Configuration;
 
 namespace DDCatalogue.Controllers
 {
@@ -12,6 +13,8 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class LocalesController : GenericController<Locale>
     {
+        public LocalesController(IConfiguration configuration) : base(configuration) { }
+
         [HttpGet("{id}")]
         public ActionResult<Locale> GetLocale(Guid id, [FromQuery] string include)
         {

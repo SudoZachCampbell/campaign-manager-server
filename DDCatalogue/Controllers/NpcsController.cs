@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace DDCatalogue.Controllers
 {
@@ -12,6 +13,7 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class NpcsController : GenericController<Npc>
     {
+        public NpcsController(IConfiguration configuration) : base(configuration) { }
 
         [HttpGet]
         public ActionResult<List<Npc>> Get([FromQuery] ListingParameters<Npc> parameters)

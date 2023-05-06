@@ -1,5 +1,8 @@
-﻿namespace DDCatalogue.Model.Locations
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DDCatalogue.Model.Locations
 {
+    [Table("dungeons")]
     public class Dungeon : Base, ILocation
     {
         public string Type { get; set; }

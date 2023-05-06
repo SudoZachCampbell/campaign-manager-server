@@ -1,18 +1,16 @@
 ﻿using DDCatalogue.Contexts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DDCatalogue.Model;
 
-namespace DDCatalogue.Model
+namespace DDCatalogue.Data
 {
     public class UnitOfWork<T> : IDisposable where T : class, IBase
     {
-        private DDContext Context = new DDContext();
-        private GenericRepository<T> Repo;
+        protected DDContext Context = new DDContext();
+        protected GenericRepository<T> Repo;
 
 
-        public GenericRepository<T> Repository
+        public virtual GenericRepository<T> Repository
         {
             get
             {
@@ -21,9 +19,9 @@ namespace DDCatalogue.Model
         }
 
 
-        public void Save()
+        public int Save()
         {
-            Context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         private bool Disposed = false;

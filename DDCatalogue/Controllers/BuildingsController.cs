@@ -8,6 +8,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Linq.Expressions;
 using DDCatalogue.Model.Locations;
+using Microsoft.Extensions.Configuration;
 
 namespace DDCatalogue.Controllers
 {
@@ -15,6 +16,8 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class BuildingsController : GenericController<Building>
     {
+        public BuildingsController(IConfiguration configuration) : base(configuration) { }
+
         // GET: api/Building
         [HttpGet("Locale/{localeId}")]
         public ActionResult<List<Building>> GetBuildingsFromLocale(Guid localeId, [FromQuery] ListingParameters<Building> parameters)

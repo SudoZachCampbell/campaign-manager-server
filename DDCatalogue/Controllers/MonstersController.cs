@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-
+using Microsoft.Extensions.Configuration;
 
 namespace DDCatalogue.Controllers
 {
@@ -13,6 +13,8 @@ namespace DDCatalogue.Controllers
     [ApiController]
     public class MonstersController : GenericController<Monster>
     {
+        public MonstersController(IConfiguration configuration) : base(configuration) { }
+
         // GET: api/Monster
         [HttpGet]
         public ActionResult<List<Monster>> GetMonsters([FromQuery] ListingParameters<Monster> query)

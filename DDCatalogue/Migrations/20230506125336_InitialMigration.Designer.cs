@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230427205310_InitialMigration")]
+    [Migration("20230506125336_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -28,6 +28,38 @@ namespace DDCatalogue.Migrations
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("DDCatalogue.Model.Auth.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Salt")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("accounts");
+                });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
                 {
@@ -112,7 +144,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Monsters");
+                    b.ToTable("monsters");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Npc", b =>
@@ -159,7 +191,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("MonsterId");
 
-                    b.ToTable("Npcs");
+                    b.ToTable("npcs");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
@@ -243,7 +275,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("LocaleId");
 
-                    b.ToTable("Players");
+                    b.ToTable("players");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Items.Item", b =>
@@ -261,7 +293,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.ToTable("items");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Item");
 
@@ -276,14 +308,14 @@ namespace DDCatalogue.Migrations
                     b.Property<Guid>("MapId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Coords")
-                        .HasColumnType("text");
+                    b.Property<List<int>>("Coords")
+                        .HasColumnType("jsonb");
 
                     b.HasKey("BuildingId", "MapId");
 
                     b.HasIndex("MapId");
 
-                    b.ToTable("BuildingMap");
+                    b.ToTable("buildings_maps");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterBuilding", b =>
@@ -298,7 +330,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("MonsterBuilding");
+                    b.ToTable("monsters_buildings");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.MonsterLocale", b =>
@@ -313,7 +345,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("LocaleId");
 
-                    b.ToTable("MonsterLocale");
+                    b.ToTable("monsters_locales");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Building", b =>
@@ -335,7 +367,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("LocaleId");
 
-                    b.ToTable("Buildings");
+                    b.ToTable("buildings");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Continent", b =>
@@ -352,7 +384,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Continents");
+                    b.ToTable("continents");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Dungeon", b =>
@@ -382,7 +414,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("LocaleId");
 
-                    b.ToTable("Dungeons");
+                    b.ToTable("dungeons");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Locale", b =>
@@ -401,7 +433,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Locales");
+                    b.ToTable("locales");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Map", b =>
@@ -429,7 +461,7 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("LocaleId");
 
-                    b.ToTable("Map");
+                    b.ToTable("maps");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>
@@ -451,12 +483,14 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("ContinentId");
 
-                    b.ToTable("Regions");
+                    b.ToTable("regions");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Items.Armour", b =>
                 {
                     b.HasBaseType("DDCatalogue.Model.Items.Item");
+
+                    b.ToTable("items");
 
                     b.HasDiscriminator().HasValue("Armour");
                 });
@@ -465,12 +499,16 @@ namespace DDCatalogue.Migrations
                 {
                     b.HasBaseType("DDCatalogue.Model.Items.Item");
 
+                    b.ToTable("items");
+
                     b.HasDiscriminator().HasValue("Treasure");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Items.Weapon", b =>
                 {
                     b.HasBaseType("DDCatalogue.Model.Items.Item");
+
+                    b.ToTable("items");
 
                     b.HasDiscriminator().HasValue("Weapon");
                 });
