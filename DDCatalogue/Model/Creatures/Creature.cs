@@ -7,8 +7,9 @@ using DDCatalogue.Model.Operations;
 
 namespace DDCatalogue.Model.Creatures
 {
-    public class Creature : Base, ICreature
+    public class Creature : Owned, ICreature
     {
+        public string Name { get; set; } = string.Empty;
         public int Strength { get; set; } = 0;
         public int Dexterity { get; set; } = 0;
         public int Constitution { get; set; } = 0;

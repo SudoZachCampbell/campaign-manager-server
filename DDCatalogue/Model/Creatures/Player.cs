@@ -8,6 +8,7 @@ namespace DDCatalogue.Model.Creatures
     [Table("players")]
     public class Player : Creature
     {
+        public string CharacterName { get; set; } = string.Empty;
         public string PlayerName { get; set; }
         public int Level = 1;
         public string Background { get; set; }

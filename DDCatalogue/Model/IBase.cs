@@ -10,6 +10,5 @@ namespace DDCatalogue.Model
     public interface IBase
     {
         Guid Id { get; set; }
-        string Name { get; set; }
     }
 }

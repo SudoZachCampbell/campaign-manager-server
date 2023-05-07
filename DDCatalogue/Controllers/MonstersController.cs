@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DDCatalogue.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize]
     [ApiController]
     public class MonstersController : GenericController<Monster>
     {
@@ -30,21 +31,21 @@ namespace DDCatalogue.Controllers
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Monster> PatchMonster(Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
+        public ActionResult<Monster> UpdateMonster(Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
         {
             return PatchGen(id, patchDoc, include);
         }
 
         // PUT: api/Monster/5
         [HttpPut("{id}")]
-        public IActionResult PutMonster(Guid id, Monster monster)
+        public IActionResult UpdateMonster(Guid id, Monster monster)
         {
             return PutGen(id, monster);
         }
 
         // POST: api/Monster
         [HttpPost]
-        public ActionResult<Monster> PostMonster(Monster monster)
+        public ActionResult<Monster> CreateMonster(Monster monster)
         {
             return PostGen(monster);
         }

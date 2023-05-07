@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace DDCatalogue.Model.Items
 {
     [Table("items")]
-    public class Item : Base, IItem
+    public class Item : Owned, IItem
     {
+        public string Name { get; set; } = string.Empty;
     }
 }

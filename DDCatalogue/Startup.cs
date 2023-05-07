@@ -14,6 +14,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System;
 
 namespace DDCatalogue
 {
@@ -87,7 +88,8 @@ namespace DDCatalogue
                         (Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = false,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
                         ValidateIssuerSigningKey = true
                     };
                 });
@@ -108,7 +110,6 @@ namespace DDCatalogue
             }
 
             app.UseAuthentication();
-            app.UseAuthorization();
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -118,6 +119,8 @@ namespace DDCatalogue
             app.UseSwaggerUi3();
 
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseCors(MyAllowSpecificOrigins);
 

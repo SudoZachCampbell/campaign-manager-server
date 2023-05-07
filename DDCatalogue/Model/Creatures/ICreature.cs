@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Creatures
 {
-    interface ICreature : IBase
+    interface ICreature : IOwned
     {
     }
 }

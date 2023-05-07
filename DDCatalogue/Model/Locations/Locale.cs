@@ -7,8 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DDCatalogue.Model.Locations
 {
     [Table("locales")]
-    public class Locale : Base, ILocation
+    public class Locale : Owned, ILocation
     {
+        public string Name { get; set; } = string.Empty;
         public Guid? RegionId { get; set; }
         public Region Region { get; set; }
         public List<Building> Buildings { get; set; }

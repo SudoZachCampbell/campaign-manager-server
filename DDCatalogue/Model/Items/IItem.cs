@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DDCatalogue.Model.Items
 {
-    interface IItem : IBase
+    interface IItem : IOwned
     {
 
     }

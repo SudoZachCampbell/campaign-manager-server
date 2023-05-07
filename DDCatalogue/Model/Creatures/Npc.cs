@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 namespace DDCatalogue.Model.Creatures
 {
     [Table("npcs")]
-    public class Npc : Base, ICreature
+    public class Npc : Owned, ICreature
     {
         public string Picture { get; set; } = string.Empty;
         public string Background { get; set; } = string.Empty;

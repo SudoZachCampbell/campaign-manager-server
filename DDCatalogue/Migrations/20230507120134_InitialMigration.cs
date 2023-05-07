@@ -27,11 +27,16 @@ namespace DDCatalogue.Migrations
                     Salt = table.Column<byte[]>(type: "bytea", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: false),
                     Role = table.Column<string>(type: "text", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_accounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_accounts_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -39,12 +44,18 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Map = table.Column<byte[]>(type: "bytea", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_continents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_continents_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -52,12 +63,18 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Discriminator = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_items", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_items_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -73,6 +90,7 @@ namespace DDCatalogue.Migrations
                     LegendaryActions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     SpecialAbilities = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     Senses = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: true),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Strength = table.Column<int>(type: "integer", nullable: false),
                     Dexterity = table.Column<int>(type: "integer", nullable: false),
@@ -94,6 +112,11 @@ namespace DDCatalogue.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_monsters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_monsters_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -101,13 +124,19 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     ContinentId = table.Column<Guid>(type: "uuid", nullable: true),
                     Map = table.Column<string>(type: "text", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_regions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_regions_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_regions_continents_ContinentId",
                         column: x => x.ContinentId,
@@ -120,12 +149,18 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     RegionId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_locales", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_locales_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_locales_regions_RegionId",
                         column: x => x.RegionId,
@@ -138,13 +173,19 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     Map = table.Column<string>(type: "text", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_buildings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_buildings_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_buildings_locales_LocaleId",
                         column: x => x.LocaleId,
@@ -157,15 +198,21 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Variation = table.Column<string>(type: "text", nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     Center = table.Column<string>(type: "text", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_maps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_maps_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_maps_locales_LocaleId",
                         column: x => x.LocaleId,
@@ -203,15 +250,21 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Type = table.Column<string>(type: "text", nullable: true),
                     Map = table.Column<byte[]>(type: "bytea", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_dungeons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_dungeons_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_dungeons_buildings_BuildingId",
                         column: x => x.BuildingId,
@@ -262,11 +315,16 @@ namespace DDCatalogue.Migrations
                     MonsterId = table.Column<Guid>(type: "uuid", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_npcs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_npcs_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_npcs_buildings_BuildingId",
                         column: x => x.BuildingId,
@@ -292,12 +350,14 @@ namespace DDCatalogue.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CharacterName = table.Column<string>(type: "text", nullable: true),
                     PlayerName = table.Column<string>(type: "text", nullable: true),
                     Background = table.Column<string>(type: "text", nullable: true),
                     Faction = table.Column<string>(type: "text", nullable: true),
                     Race = table.Column<string>(type: "text", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Strength = table.Column<int>(type: "integer", nullable: false),
                     Dexterity = table.Column<int>(type: "integer", nullable: false),
@@ -319,6 +379,11 @@ namespace DDCatalogue.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_players", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_players_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_players_buildings_BuildingId",
                         column: x => x.BuildingId,
@@ -359,14 +424,29 @@ namespace DDCatalogue.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_accounts_OwnerId",
+                table: "accounts",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_buildings_LocaleId",
                 table: "buildings",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_buildings_OwnerId",
+                table: "buildings",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_buildings_maps_MapId",
                 table: "buildings_maps",
                 column: "MapId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_continents_OwnerId",
+                table: "continents",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_dungeons_BuildingId",
@@ -379,6 +459,21 @@ namespace DDCatalogue.Migrations
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_dungeons_OwnerId",
+                table: "dungeons",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_items_OwnerId",
+                table: "items",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_locales_OwnerId",
+                table: "locales",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_locales_RegionId",
                 table: "locales",
                 column: "RegionId");
@@ -387,6 +482,16 @@ namespace DDCatalogue.Migrations
                 name: "IX_maps_LocaleId",
                 table: "maps",
                 column: "LocaleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_maps_OwnerId",
+                table: "maps",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_monsters_OwnerId",
+                table: "monsters",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_monsters_buildings_BuildingId",
@@ -414,6 +519,11 @@ namespace DDCatalogue.Migrations
                 column: "MonsterId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_npcs_OwnerId",
+                table: "npcs",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_players_BuildingId",
                 table: "players",
                 column: "BuildingId");
@@ -424,17 +534,24 @@ namespace DDCatalogue.Migrations
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_players_OwnerId",
+                table: "players",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_regions_ContinentId",
                 table: "regions",
                 column: "ContinentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_regions_OwnerId",
+                table: "regions",
+                column: "OwnerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "accounts");
-
             migrationBuilder.DropTable(
                 name: "buildings_maps");
 
@@ -473,6 +590,9 @@ namespace DDCatalogue.Migrations
 
             migrationBuilder.DropTable(
                 name: "continents");
+
+            migrationBuilder.DropTable(
+                name: "accounts");
         }
     }
 }

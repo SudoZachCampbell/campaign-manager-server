@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 namespace DDCatalogue.Model.Auth
 {
     [Table("accounts")]
-    public class Account : Base, IAccount
+    public class Account : Owned, IAccount
     {
         [Required]
         public string Username { get; set; }

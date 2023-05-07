@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DDCatalogue.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230506125336_InitialMigration")]
+    [Migration("20230507120134_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -39,8 +39,8 @@ namespace DDCatalogue.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -57,6 +57,8 @@ namespace DDCatalogue.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("accounts");
                 });
@@ -109,6 +111,9 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("PassivePerception")
                         .HasColumnType("integer");
 
@@ -144,6 +149,8 @@ namespace DDCatalogue.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("monsters");
                 });
 
@@ -171,11 +178,11 @@ namespace DDCatalogue.Migrations
                     b.Property<Guid?>("MonsterId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
                     b.Property<string>("NoteableEvents")
                         .HasColumnType("text");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Passions")
                         .HasColumnType("text");
@@ -190,6 +197,8 @@ namespace DDCatalogue.Migrations
                     b.HasIndex("LocaleId");
 
                     b.HasIndex("MonsterId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("npcs");
                 });
@@ -211,6 +220,9 @@ namespace DDCatalogue.Migrations
 
                     b.Property<Guid?>("BuildingId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("CharacterName")
+                        .HasColumnType("text");
 
                     b.Property<int>("Charisma")
                         .HasColumnType("integer");
@@ -241,6 +253,9 @@ namespace DDCatalogue.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Picture")
                         .HasColumnType("text");
@@ -275,6 +290,8 @@ namespace DDCatalogue.Migrations
 
                     b.HasIndex("LocaleId");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("players");
                 });
 
@@ -291,7 +308,12 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("items");
 
@@ -363,9 +385,14 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocaleId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("buildings");
                 });
@@ -382,7 +409,12 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("continents");
                 });
@@ -405,6 +437,9 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
@@ -413,6 +448,8 @@ namespace DDCatalogue.Migrations
                     b.HasIndex("BuildingId");
 
                     b.HasIndex("LocaleId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("dungeons");
                 });
@@ -426,10 +463,15 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("RegionId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("RegionId");
 
@@ -454,12 +496,17 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Variation")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LocaleId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("maps");
                 });
@@ -479,9 +526,14 @@ namespace DDCatalogue.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ContinentId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("regions");
                 });
@@ -513,6 +565,24 @@ namespace DDCatalogue.Migrations
                     b.HasDiscriminator().HasValue("Weapon");
                 });
 
+            modelBuilder.Entity("DDCatalogue.Model.Auth.Account", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Npc", b =>
                 {
                     b.HasOne("DDCatalogue.Model.Locations.Building", "Building")
@@ -530,11 +600,17 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Building");
 
                     b.Navigation("Locale");
 
                     b.Navigation("Monster");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Player", b =>
@@ -549,9 +625,24 @@ namespace DDCatalogue.Migrations
                         .HasForeignKey("LocaleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Building");
 
                     b.Navigation("Locale");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Items.Item", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Joins.BuildingMap", b =>
@@ -617,7 +708,22 @@ namespace DDCatalogue.Migrations
                         .WithMany("Buildings")
                         .HasForeignKey("LocaleId");
 
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Locale");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("DDCatalogue.Model.Locations.Continent", b =>
+                {
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Dungeon", b =>
@@ -630,16 +736,28 @@ namespace DDCatalogue.Migrations
                         .WithMany("Dungeons")
                         .HasForeignKey("LocaleId");
 
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Building");
 
                     b.Navigation("Locale");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Locale", b =>
                 {
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.HasOne("DDCatalogue.Model.Locations.Region", "Region")
                         .WithMany("Locales")
                         .HasForeignKey("RegionId");
+
+                    b.Navigation("Owner");
 
                     b.Navigation("Region");
                 });
@@ -652,7 +770,13 @@ namespace DDCatalogue.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Locale");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Locations.Region", b =>
@@ -661,7 +785,13 @@ namespace DDCatalogue.Migrations
                         .WithMany("Regions")
                         .HasForeignKey("ContinentId");
 
+                    b.HasOne("DDCatalogue.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Continent");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("DDCatalogue.Model.Creatures.Monster", b =>

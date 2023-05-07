@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace DDCatalogue.Model.Locations
 {
     [Table("maps")]
-    public class Map : Base, ILocation
+    public class Map : Owned, ILocation
     {
+        public string Name { get; set; } = string.Empty;
         public string Variation { get; set; }
         public string ImageUrl { get; set; }
         public JArray Center { get; set; }
