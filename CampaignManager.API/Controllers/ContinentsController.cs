@@ -7,7 +7,7 @@ using CampaignManager.Data.Model.Locations;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
+using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.Data.Model.Auth
 {
     [Table("accounts")]
-    public class Account : Owned, IAccount
+    public class Account : Base, IAccount
     {
         [Required]
         public string Username { get; set; }
@@ -22,7 +23,13 @@ namespace CampaignManager.Data.Model.Auth
 
         [Required]
         public string Password { get => _password; set => _password = HashPassword(value, out _salt); }
-        public string Role { get; set; }
+        public string? Role { get; set; }
+
+        #region Foreign Keys
+
+        public List<Monster>? Monsters { get; set; }
+
+        #endregion
 
         public bool CheckPassword(string inputPassword)
             => HashPassword(inputPassword, out var salt) == Password;
@@ -44,8 +51,8 @@ namespace CampaignManager.Data.Model.Auth
 
     public class LoginAttempt
     {
-        public string Username { get; set; }
-        public string Email { get; set; }
+        public string? Username { get; set; }
+        public string? Email { get; set; }
         public string Password { get; set; }
     }
 }

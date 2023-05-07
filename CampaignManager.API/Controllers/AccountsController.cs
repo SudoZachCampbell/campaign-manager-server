@@ -5,7 +5,7 @@ using CampaignManager.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using System.Security.Authentication;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

@@ -11,7 +11,7 @@ using System.Linq.Dynamic.Core;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     public class GenericController<T> : ControllerBase where T : class, IBase
     {

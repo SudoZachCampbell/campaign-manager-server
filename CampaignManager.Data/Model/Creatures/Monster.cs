@@ -3,6 +3,7 @@ using CampaignManager.Data.Model.Operations;
 using CampaignManager.Data.Model.Joins;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.Data.Model.Creatures
 {
@@ -14,16 +15,16 @@ namespace CampaignManager.Data.Model.Creatures
         public int PassivePerception { get; set; } = 0;
         public MonsterType MonsterType { get; set; } = MonsterType.None;
         [Column(TypeName = "jsonb")]
-        public List<CreatureAction> Actions { get; set; }
+        public List<CreatureAction>? Actions { get; set; }
         [Column(TypeName = "jsonb")]
-        public List<CreatureAction> LegendaryActions { get; set; }
+        public List<CreatureAction>? LegendaryActions { get; set; }
         [Column(TypeName = "jsonb")]
-        public List<CreatureAction> SpecialAbilities { get; set; }
+        public List<CreatureAction>? SpecialAbilities { get; set; }
         [Column(TypeName = "jsonb")]
-        public Dictionary<string, string> Senses { get; set; }
-        public List<Npc> Npcs { get; set; }
-        public List<MonsterLocale> Locales { get; set; }
-        public List<MonsterBuilding> Buildings { get; set; }
+        public Dictionary<string, string>? Senses { get; set; }
+        public List<Npc>? Npcs { get; set; }
+        public List<MonsterLocale>? Locales { get; set; }
+        public List<MonsterBuilding>? Buildings { get; set; }
     }
 
     public enum MonsterType

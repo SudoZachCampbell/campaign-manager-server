@@ -12,10 +12,10 @@ namespace CampaignManager.Data.Model.Joins
     public class BuildingMap : IJoin
     {
         public Guid BuildingId { get; set; }
-        public Building Building { get; set; }
+        public Building? Building { get; set; }
         public Guid MapId { get; set; }
-        public Map Map { get; set; }
+        public Map? Map { get; set; }
         [Column(TypeName = "jsonb")]
-        public List<int> Coords { get; set; }
+        public List<int>? Coords { get; set; }
     }
 }

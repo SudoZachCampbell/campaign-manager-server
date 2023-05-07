@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

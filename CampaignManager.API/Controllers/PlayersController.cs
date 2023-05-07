@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CampaignManager.Data.Contexts;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

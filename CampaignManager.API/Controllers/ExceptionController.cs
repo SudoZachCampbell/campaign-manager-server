@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     [ApiController]
     public class ExceptionController : Controller

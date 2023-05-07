@@ -8,9 +8,9 @@ namespace CampaignManager.Data.Model.Locations
     public class Region : Owned, ILocation
     {
         public string Name { get; set; } = string.Empty;
-        public List<Locale> Locales { get; set; }
+        public List<Locale>? Locales { get; set; }
         public Guid? ContinentId { get; set; }
-        public Continent Continent { get; set; }
-        public string Map { get; set; }
+        public Continent? Continent { get; set; }
+        public string Map { get; set; } = string.Empty;
     }
 }

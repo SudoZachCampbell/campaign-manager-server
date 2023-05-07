@@ -26,18 +26,11 @@ namespace CampaignManager.Data.Migrations
                     Email = table.Column<string>(type: "text", nullable: false),
                     Salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Role = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_accounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_accounts_accounts_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +39,7 @@ namespace CampaignManager.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Map = table.Column<byte[]>(type: "bytea", nullable: false),
+                    Map = table.Column<byte[]>(type: "bytea", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -89,10 +82,10 @@ namespace CampaignManager.Data.Migrations
                     Xp = table.Column<int>(type: "integer", nullable: false),
                     PassivePerception = table.Column<int>(type: "integer", nullable: false),
                     MonsterType = table.Column<int>(type: "integer", nullable: false),
-                    Actions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: false),
-                    LegendaryActions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: false),
-                    SpecialAbilities = table.Column<List<CreatureAction>>(type: "jsonb", nullable: false),
-                    Senses = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: false),
+                    Actions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
+                    LegendaryActions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
+                    SpecialAbilities = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
+                    Senses = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Strength = table.Column<int>(type: "integer", nullable: false),
@@ -101,15 +94,15 @@ namespace CampaignManager.Data.Migrations
                     Intelligence = table.Column<int>(type: "integer", nullable: false),
                     Wisdom = table.Column<int>(type: "integer", nullable: false),
                     Charisma = table.Column<int>(type: "integer", nullable: false),
-                    Proficiencies = table.Column<List<Proficiencies>>(type: "jsonb", nullable: false),
+                    Proficiencies = table.Column<List<Proficiencies>>(type: "jsonb", nullable: true),
                     ArmorClass = table.Column<int>(type: "integer", nullable: false),
                     HitPoints = table.Column<int>(type: "integer", nullable: false),
                     HitDice = table.Column<string>(type: "text", nullable: false),
                     Size = table.Column<string>(type: "text", nullable: false),
-                    Speed = table.Column<List<Speed>>(type: "jsonb", nullable: false),
+                    Speed = table.Column<List<Speed>>(type: "jsonb", nullable: true),
                     Languages = table.Column<string>(type: "text", nullable: false),
                     Alignment = table.Column<int>(type: "integer", nullable: false),
-                    Reactions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: false),
+                    Reactions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     Picture = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -208,7 +201,7 @@ namespace CampaignManager.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Variation = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: false),
-                    Center = table.Column<string>(type: "text", nullable: false),
+                    Center = table.Column<string>(type: "text", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
@@ -260,9 +253,9 @@ namespace CampaignManager.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
-                    Map = table.Column<byte[]>(type: "bytea", nullable: false),
-                    BuildingId = table.Column<Guid>(type: "uuid", nullable: false),
-                    LocaleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Map = table.Column<byte[]>(type: "bytea", nullable: true),
+                    BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -278,14 +271,12 @@ namespace CampaignManager.Data.Migrations
                         name: "FK_dungeons_buildings_BuildingId",
                         column: x => x.BuildingId,
                         principalTable: "buildings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_dungeons_locales_LocaleId",
                         column: x => x.LocaleId,
                         principalTable: "locales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -319,13 +310,13 @@ namespace CampaignManager.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Picture = table.Column<string>(type: "text", nullable: false),
                     Background = table.Column<string>(type: "text", nullable: false),
-                    NoteableEvents = table.Column<string>(type: "text", nullable: false),
-                    Beliefs = table.Column<string>(type: "text", nullable: false),
-                    Passions = table.Column<string>(type: "text", nullable: false),
-                    Flaws = table.Column<string>(type: "text", nullable: false),
-                    MonsterId = table.Column<Guid>(type: "uuid", nullable: false),
-                    LocaleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    BuildingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    NoteableEvents = table.Column<string>(type: "text", nullable: true),
+                    Beliefs = table.Column<string>(type: "text", nullable: true),
+                    Passions = table.Column<string>(type: "text", nullable: true),
+                    Flaws = table.Column<string>(type: "text", nullable: true),
+                    MonsterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
+                    BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -367,8 +358,8 @@ namespace CampaignManager.Data.Migrations
                     Background = table.Column<string>(type: "text", nullable: false),
                     Faction = table.Column<string>(type: "text", nullable: false),
                     Race = table.Column<string>(type: "text", nullable: false),
-                    LocaleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    BuildingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
+                    BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Strength = table.Column<int>(type: "integer", nullable: false),
@@ -377,15 +368,15 @@ namespace CampaignManager.Data.Migrations
                     Intelligence = table.Column<int>(type: "integer", nullable: false),
                     Wisdom = table.Column<int>(type: "integer", nullable: false),
                     Charisma = table.Column<int>(type: "integer", nullable: false),
-                    Proficiencies = table.Column<List<Proficiencies>>(type: "jsonb", nullable: false),
+                    Proficiencies = table.Column<List<Proficiencies>>(type: "jsonb", nullable: true),
                     ArmorClass = table.Column<int>(type: "integer", nullable: false),
                     HitPoints = table.Column<int>(type: "integer", nullable: false),
                     HitDice = table.Column<string>(type: "text", nullable: false),
                     Size = table.Column<string>(type: "text", nullable: false),
-                    Speed = table.Column<List<Speed>>(type: "jsonb", nullable: false),
+                    Speed = table.Column<List<Speed>>(type: "jsonb", nullable: true),
                     Languages = table.Column<string>(type: "text", nullable: false),
                     Alignment = table.Column<int>(type: "integer", nullable: false),
-                    Reactions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: false),
+                    Reactions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     Picture = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -417,7 +408,7 @@ namespace CampaignManager.Data.Migrations
                 {
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: false),
                     MapId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Coords = table.Column<List<int>>(type: "jsonb", nullable: false)
+                    Coords = table.Column<List<int>>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -435,11 +426,6 @@ namespace CampaignManager.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_accounts_OwnerId",
-                table: "accounts",
-                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_buildings_LocaleId",

@@ -4,6 +4,7 @@ namespace CampaignManager.Data.Model
 {
     public class Owned : Base, IOwned
     {
-        public Account Owner { get; set; }
+        public Guid OwnerId { get; set; }
+        public Account? Owner { get; set; }
     }
 }

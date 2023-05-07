@@ -9,6 +9,7 @@ namespace CampaignManager.Data.Model
 {
     public class Base
     {
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
     }
 }

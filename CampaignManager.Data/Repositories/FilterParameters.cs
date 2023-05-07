@@ -15,7 +15,7 @@ namespace CampaignManager.Data.Repositories
             get { return _pageSize; }
             set { _pageSize = (value > maxPageSize) ? maxPageSize : value; }
         }
-        private string filter = null;
+        private string filter = string.Empty;
         public string Filter
         {
             get { return filter; }
@@ -25,11 +25,11 @@ namespace CampaignManager.Data.Repositories
             }
         }
         private string filterPattern = @"(AND|OR)(\(((?>\((?<c>)|[^()]+|\)(?<-c>))*(?(c)(?!)))\))";
-        public string OrderBy { get; set; } = null;
-        public string Include { get; set; } = null;
-        public string[] IncludeProperties { get { return Include?.Split(','); } }
-        public string Expand { get; set; } = null;
-        public string[] ExpandProperties { get { return Expand?.Split(','); } }
+        public string? OrderBy { get; set; }
+        public string? Include { get; set; }
+        public string[]? IncludeProperties { get { return Include?.Split(','); } }
+        public string? Expand { get; set; }
+        public string[]? ExpandProperties { get { return Expand?.Split(','); } }
         private Dictionary<string, string> operators = new() {
             {"eq", "=="},
             {"gt" , ">"},

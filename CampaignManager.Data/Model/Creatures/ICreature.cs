@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CampaignManager.Data.Model.Creatures
 {
-    interface ICreature : IOwned
+    interface ICreature : IBase
     {
     }
 }

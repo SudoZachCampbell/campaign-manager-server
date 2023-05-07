@@ -6,9 +6,9 @@ namespace CampaignManager.Data.Model.Locations
     public class Dungeon : Owned, ILocation
     {
         public string Name { get; set; } = string.Empty;
-        public string Type { get; set; }
-        public byte[] Map { get; set; }
-        public Building Building { get; set; }
-        public Locale Locale { get; set; }
+        public string Type { get; set; } = string.Empty;
+        public byte[]? Map { get; set; }
+        public Building? Building { get; set; }
+        public Locale? Locale { get; set; }
     }
 }

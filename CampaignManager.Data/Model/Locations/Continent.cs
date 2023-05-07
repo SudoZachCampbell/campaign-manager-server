@@ -7,7 +7,7 @@ namespace CampaignManager.Data.Model.Locations
     public class Continent : Owned, ILocation
     {
         public string Name { get; set; } = string.Empty;
-        public List<Region> Regions { get; set; }
-        public byte[] Map { get; set; }
+        public List<Region>? Regions { get; set; }
+        public byte[]? Map { get; set; }
     }
 }

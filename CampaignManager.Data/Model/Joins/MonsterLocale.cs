@@ -9,8 +9,8 @@ namespace CampaignManager.Data.Model.Joins
     public class MonsterLocale : IJoin
     {
         public Guid MonsterId { get; set; }
-        public Monster Monster { get; set; }
+        public Monster? Monster { get; set; }
         public Guid LocaleId { get; set; }
-        public Locale Locale { get; set; }
+        public Locale? Locale { get; set; }
     }
 }

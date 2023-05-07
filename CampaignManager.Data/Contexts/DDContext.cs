@@ -187,6 +187,7 @@ namespace CampaignManager.Data.Contexts
                 .WithMany(l => l.Players)
                 .HasForeignKey(p => p.LocaleId)
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
 
         public static void DefineKeys(this ModelBuilder modelBuilder)

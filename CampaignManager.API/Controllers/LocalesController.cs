@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 
-namespace CampaignManager.Controllers
+namespace CampaignManager.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

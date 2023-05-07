@@ -6,10 +6,10 @@ namespace CampaignManager.Data.Model.Attributes
     public class Speed
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         [JsonPropertyName("value")]
         public int Value { get; set; }
         [JsonPropertyName("measurement")]
-        public string Measurement { get; set; }
+        public string Measurement { get; set; } = string.Empty;
     }
 }
