@@ -8,6 +8,131 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
+export class AccountsClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:5000";
+    }
+
+    login(attempt: LoginAttempt): Promise<string> {
+        let url_ = this.baseUrl + "/Accounts/Login";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(attempt);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processLogin(_response);
+        });
+    }
+
+    protected processLogin(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    createAccount(user: Account): Promise<Account> {
+        let url_ = this.baseUrl + "/Accounts";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(user);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateAccount(_response);
+        });
+    }
+
+    protected processCreateAccount(response: Response): Promise<Account> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Account.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Account>(null as any);
+    }
+
+    deleteAccount(id: string): Promise<Account> {
+        let url_ = this.baseUrl + "/Accounts/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteAccount(_response);
+        });
+    }
+
+    protected processDeleteAccount(response: Response): Promise<Account> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Account.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Account>(null as any);
+    }
+}
+
 export class BuildingsClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -832,7 +957,7 @@ export class MonstersClient {
         return Promise.resolve<Monster[]>(null as any);
     }
 
-    postMonster(monster: Monster): Promise<Monster> {
+    createMonster(monster: Monster): Promise<Monster> {
         let url_ = this.baseUrl + "/Monsters";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -848,11 +973,11 @@ export class MonstersClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPostMonster(_response);
+            return this.processCreateMonster(_response);
         });
     }
 
-    protected processPostMonster(response: Response): Promise<Monster> {
+    protected processCreateMonster(response: Response): Promise<Monster> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -909,7 +1034,7 @@ export class MonstersClient {
         return Promise.resolve<Monster>(null as any);
     }
 
-    patchMonster(id: string, patchDoc: JsonPatchDocumentOfMonster, include?: string | null | undefined): Promise<Monster> {
+    updateMonsterPATCH(id: string, patchDoc: JsonPatchDocumentOfMonster, include?: string | null | undefined): Promise<Monster> {
         let url_ = this.baseUrl + "/Monsters/{id}?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -930,11 +1055,11 @@ export class MonstersClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPatchMonster(_response);
+            return this.processUpdateMonsterPATCH(_response);
         });
     }
 
-    protected processPatchMonster(response: Response): Promise<Monster> {
+    protected processUpdateMonsterPATCH(response: Response): Promise<Monster> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -952,7 +1077,7 @@ export class MonstersClient {
         return Promise.resolve<Monster>(null as any);
     }
 
-    putMonster(id: string, monster: Monster): Promise<FileResponse | null> {
+    updateMonsterPUT(id: string, monster: Monster): Promise<FileResponse | null> {
         let url_ = this.baseUrl + "/Monsters/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -971,11 +1096,11 @@ export class MonstersClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPutMonster(_response);
+            return this.processUpdateMonsterPUT(_response);
         });
     }
 
-    protected processPutMonster(response: Response): Promise<FileResponse | null> {
+    protected processUpdateMonsterPUT(response: Response): Promise<FileResponse | null> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
@@ -1230,215 +1355,6 @@ export class NpcsClient {
             });
         }
         return Promise.resolve<Npc>(null as any);
-    }
-}
-
-export class PlayersClient {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : window as any;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:5000";
-    }
-
-    getPlayers(): Promise<Player[]> {
-        let url_ = this.baseUrl + "/Players";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetPlayers(_response);
-        });
-    }
-
-    protected processGetPlayers(response: Response): Promise<Player[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Player.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Player[]>(null as any);
-    }
-
-    postPlayer(player: Player): Promise<Player> {
-        let url_ = this.baseUrl + "/Players";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(player);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPostPlayer(_response);
-        });
-    }
-
-    protected processPostPlayer(response: Response): Promise<Player> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = Player.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Player>(null as any);
-    }
-
-    getPlayer(id: string): Promise<Player> {
-        let url_ = this.baseUrl + "/Players/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetPlayer(_response);
-        });
-    }
-
-    protected processGetPlayer(response: Response): Promise<Player> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = Player.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Player>(null as any);
-    }
-
-    putPlayer(id: string, player: Player): Promise<FileResponse | null> {
-        let url_ = this.baseUrl + "/Players/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(player);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPutPlayer(_response);
-        });
-    }
-
-    protected processPutPlayer(response: Response): Promise<FileResponse | null> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-            if (fileName) {
-                fileName = decodeURIComponent(fileName);
-            } else {
-                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            }
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<FileResponse | null>(null as any);
-    }
-
-    deletePlayer(id: string): Promise<Player> {
-        let url_ = this.baseUrl + "/Players/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDeletePlayer(_response);
-        });
-    }
-
-    protected processDeletePlayer(response: Response): Promise<Player> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = Player.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Player>(null as any);
     }
 }
 
@@ -1763,9 +1679,52 @@ export class RegionsClient {
     }
 }
 
+export class LoginAttempt implements ILoginAttempt {
+    username?: string | undefined;
+    email?: string | undefined;
+    password?: string | undefined;
+
+    constructor(data?: ILoginAttempt) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.username = _data["username"];
+            this.email = _data["email"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): LoginAttempt {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginAttempt();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["username"] = this.username;
+        data["email"] = this.email;
+        data["password"] = this.password;
+        return data;
+    }
+}
+
+export interface ILoginAttempt {
+    username?: string | undefined;
+    email?: string | undefined;
+    password?: string | undefined;
+}
+
 export class Base implements IBase {
     id!: string;
-    name?: string | undefined;
 
     constructor(data?: IBase) {
         if (data) {
@@ -1779,7 +1738,6 @@ export class Base implements IBase {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.name = _data["name"];
         }
     }
 
@@ -1793,17 +1751,98 @@ export class Base implements IBase {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["name"] = this.name;
         return data;
     }
 }
 
 export interface IBase {
     id: string;
-    name?: string | undefined;
 }
 
-export class Building extends Base implements IBuilding {
+export class Owned extends Base implements IOwned {
+    owner?: Account | undefined;
+
+    constructor(data?: IOwned) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.owner = _data["owner"] ? Account.fromJS(_data["owner"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Owned {
+        data = typeof data === 'object' ? data : {};
+        let result = new Owned();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["owner"] = this.owner ? this.owner.toJSON() : <any>undefined;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IOwned extends IBase {
+    owner?: Account | undefined;
+}
+
+export class Account extends Owned implements IAccount {
+    username!: string;
+    email!: string;
+    salt?: string | undefined;
+    password!: string;
+    role?: string | undefined;
+
+    constructor(data?: IAccount) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.username = _data["username"];
+            this.email = _data["email"];
+            this.salt = _data["salt"];
+            this.password = _data["password"];
+            this.role = _data["role"];
+        }
+    }
+
+    static fromJS(data: any): Account {
+        data = typeof data === 'object' ? data : {};
+        let result = new Account();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["username"] = this.username;
+        data["email"] = this.email;
+        data["salt"] = this.salt;
+        data["password"] = this.password;
+        data["role"] = this.role;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IAccount extends IOwned {
+    username: string;
+    email: string;
+    salt?: string | undefined;
+    password: string;
+    role?: string | undefined;
+}
+
+export class Building extends Owned implements IBuilding {
+    name?: string | undefined;
     localeId?: string | undefined;
     locale?: Locale | undefined;
     map?: string | undefined;
@@ -1819,6 +1858,7 @@ export class Building extends Base implements IBuilding {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             this.localeId = _data["localeId"];
             this.locale = _data["locale"] ? Locale.fromJS(_data["locale"]) : <any>undefined;
             this.map = _data["map"];
@@ -1854,6 +1894,7 @@ export class Building extends Base implements IBuilding {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         data["localeId"] = this.localeId;
         data["locale"] = this.locale ? this.locale.toJSON() : <any>undefined;
         data["map"] = this.map;
@@ -1882,7 +1923,8 @@ export class Building extends Base implements IBuilding {
     }
 }
 
-export interface IBuilding extends IBase {
+export interface IBuilding extends IOwned {
+    name?: string | undefined;
     localeId?: string | undefined;
     locale?: Locale | undefined;
     map?: string | undefined;
@@ -1892,7 +1934,8 @@ export interface IBuilding extends IBase {
     maps?: BuildingMap[] | undefined;
 }
 
-export class Locale extends Base implements ILocale {
+export class Locale extends Owned implements ILocale {
+    name?: string | undefined;
     regionId?: string | undefined;
     region?: Region | undefined;
     buildings?: Building[] | undefined;
@@ -1909,6 +1952,7 @@ export class Locale extends Base implements ILocale {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             this.regionId = _data["regionId"];
             this.region = _data["region"] ? Region.fromJS(_data["region"]) : <any>undefined;
             if (Array.isArray(_data["buildings"])) {
@@ -1953,6 +1997,7 @@ export class Locale extends Base implements ILocale {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         data["regionId"] = this.regionId;
         data["region"] = this.region ? this.region.toJSON() : <any>undefined;
         if (Array.isArray(this.buildings)) {
@@ -1990,7 +2035,8 @@ export class Locale extends Base implements ILocale {
     }
 }
 
-export interface ILocale extends IBase {
+export interface ILocale extends IOwned {
+    name?: string | undefined;
     regionId?: string | undefined;
     region?: Region | undefined;
     buildings?: Building[] | undefined;
@@ -2001,7 +2047,8 @@ export interface ILocale extends IBase {
     maps?: Map[] | undefined;
 }
 
-export class Region extends Base implements IRegion {
+export class Region extends Owned implements IRegion {
+    name?: string | undefined;
     locales?: Locale[] | undefined;
     continentId?: string | undefined;
     continent?: Continent | undefined;
@@ -2014,6 +2061,7 @@ export class Region extends Base implements IRegion {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             if (Array.isArray(_data["locales"])) {
                 this.locales = [] as any;
                 for (let item of _data["locales"])
@@ -2034,6 +2082,7 @@ export class Region extends Base implements IRegion {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         if (Array.isArray(this.locales)) {
             data["locales"] = [];
             for (let item of this.locales)
@@ -2047,14 +2096,16 @@ export class Region extends Base implements IRegion {
     }
 }
 
-export interface IRegion extends IBase {
+export interface IRegion extends IOwned {
+    name?: string | undefined;
     locales?: Locale[] | undefined;
     continentId?: string | undefined;
     continent?: Continent | undefined;
     map?: string | undefined;
 }
 
-export class Continent extends Base implements IContinent {
+export class Continent extends Owned implements IContinent {
+    name?: string | undefined;
     regions?: Region[] | undefined;
     map?: string | undefined;
 
@@ -2065,6 +2116,7 @@ export class Continent extends Base implements IContinent {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             if (Array.isArray(_data["regions"])) {
                 this.regions = [] as any;
                 for (let item of _data["regions"])
@@ -2083,6 +2135,7 @@ export class Continent extends Base implements IContinent {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         if (Array.isArray(this.regions)) {
             data["regions"] = [];
             for (let item of this.regions)
@@ -2094,12 +2147,14 @@ export class Continent extends Base implements IContinent {
     }
 }
 
-export interface IContinent extends IBase {
+export interface IContinent extends IOwned {
+    name?: string | undefined;
     regions?: Region[] | undefined;
     map?: string | undefined;
 }
 
-export class Dungeon extends Base implements IDungeon {
+export class Dungeon extends Owned implements IDungeon {
+    name?: string | undefined;
     type?: string | undefined;
     map?: string | undefined;
     building?: Building | undefined;
@@ -2112,6 +2167,7 @@ export class Dungeon extends Base implements IDungeon {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             this.type = _data["type"];
             this.map = _data["map"];
             this.building = _data["building"] ? Building.fromJS(_data["building"]) : <any>undefined;
@@ -2128,6 +2184,7 @@ export class Dungeon extends Base implements IDungeon {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         data["type"] = this.type;
         data["map"] = this.map;
         data["building"] = this.building ? this.building.toJSON() : <any>undefined;
@@ -2137,14 +2194,16 @@ export class Dungeon extends Base implements IDungeon {
     }
 }
 
-export interface IDungeon extends IBase {
+export interface IDungeon extends IOwned {
+    name?: string | undefined;
     type?: string | undefined;
     map?: string | undefined;
     building?: Building | undefined;
     locale?: Locale | undefined;
 }
 
-export class Creature extends Base implements ICreature {
+export class Creature extends Owned implements ICreature {
+    name?: string | undefined;
     strength!: number;
     dexterity!: number;
     constitution!: number;
@@ -2169,6 +2228,7 @@ export class Creature extends Base implements ICreature {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             this.strength = _data["strength"];
             this.dexterity = _data["dexterity"];
             this.constitution = _data["constitution"];
@@ -2209,6 +2269,7 @@ export class Creature extends Base implements ICreature {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         data["strength"] = this.strength;
         data["dexterity"] = this.dexterity;
         data["constitution"] = this.constitution;
@@ -2242,7 +2303,8 @@ export class Creature extends Base implements ICreature {
     }
 }
 
-export interface ICreature extends IBase {
+export interface ICreature extends IOwned {
+    name?: string | undefined;
     strength: number;
     dexterity: number;
     constitution: number;
@@ -2265,6 +2327,7 @@ export class Player extends Creature implements IPlayer {
     level!: number;
     xp!: number;
     inspiration!: boolean;
+    characterName?: string | undefined;
     playerName?: string | undefined;
     background?: string | undefined;
     faction?: string | undefined;
@@ -2284,6 +2347,7 @@ export class Player extends Creature implements IPlayer {
             this.level = _data["level"];
             this.xp = _data["xp"];
             this.inspiration = _data["inspiration"];
+            this.characterName = _data["characterName"];
             this.playerName = _data["playerName"];
             this.background = _data["background"];
             this.faction = _data["faction"];
@@ -2307,6 +2371,7 @@ export class Player extends Creature implements IPlayer {
         data["level"] = this.level;
         data["xp"] = this.xp;
         data["inspiration"] = this.inspiration;
+        data["characterName"] = this.characterName;
         data["playerName"] = this.playerName;
         data["background"] = this.background;
         data["faction"] = this.faction;
@@ -2324,6 +2389,7 @@ export interface IPlayer extends ICreature {
     level: number;
     xp: number;
     inspiration: boolean;
+    characterName?: string | undefined;
     playerName?: string | undefined;
     background?: string | undefined;
     faction?: string | undefined;
@@ -2648,7 +2714,7 @@ export interface IDC {
     successType?: string | undefined;
 }
 
-export class Npc extends Base implements INpc {
+export class Npc extends Owned implements INpc {
     picture?: string | undefined;
     background?: string | undefined;
     noteableEvents?: any[] | undefined;
@@ -2742,7 +2808,7 @@ export class Npc extends Base implements INpc {
     }
 }
 
-export interface INpc extends IBase {
+export interface INpc extends IOwned {
     picture?: string | undefined;
     background?: string | undefined;
     noteableEvents?: any[] | undefined;
@@ -3004,7 +3070,8 @@ export interface IMonsterBuilding {
     building?: Building | undefined;
 }
 
-export class Map extends Base implements IMap {
+export class Map extends Owned implements IMap {
+    name?: string | undefined;
     variation?: string | undefined;
     imageUrl?: string | undefined;
     center?: any[] | undefined;
@@ -3019,6 +3086,7 @@ export class Map extends Base implements IMap {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
             this.variation = _data["variation"];
             this.imageUrl = _data["imageUrl"];
             if (Array.isArray(_data["center"])) {
@@ -3045,6 +3113,7 @@ export class Map extends Base implements IMap {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
         data["variation"] = this.variation;
         data["imageUrl"] = this.imageUrl;
         if (Array.isArray(this.center)) {
@@ -3064,7 +3133,8 @@ export class Map extends Base implements IMap {
     }
 }
 
-export interface IMap extends IBase {
+export interface IMap extends IOwned {
+    name?: string | undefined;
     variation?: string | undefined;
     imageUrl?: string | undefined;
     center?: any[] | undefined;
@@ -3078,7 +3148,7 @@ export class BuildingMap implements IBuildingMap {
     building?: Building | undefined;
     mapId!: string;
     map?: Map | undefined;
-    coords?: any[] | undefined;
+    coords?: number[] | undefined;
 
     constructor(data?: IBuildingMap) {
         if (data) {
@@ -3130,7 +3200,7 @@ export interface IBuildingMap {
     building?: Building | undefined;
     mapId: string;
     map?: Map | undefined;
-    coords?: any[] | undefined;
+    coords?: number[] | undefined;
 }
 
 export class JsonPatchDocumentOfBuilding implements IJsonPatchDocumentOfBuilding {
