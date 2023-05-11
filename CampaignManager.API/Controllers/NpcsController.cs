@@ -15,22 +15,22 @@ namespace CampaignManager.API.Controllers
         public NpcsController(IConfiguration configuration) : base(configuration) { }
 
         [HttpGet]
-        public ActionResult<List<Npc>> Get([FromQuery] FilterParameters<Npc> parameters)
+        public ActionResult<List<Npc>> Get([FromQuery] ListingFilterParameters<Npc> parameters)
         {
             return GetGen(parameters);
         }
 
 
         [HttpGet("{id}")]
-        public ActionResult<Npc> Get(Guid id, [FromQuery] string include)
+        public ActionResult<Npc> Get(Guid id, [FromQuery] FilterParameters<Npc> query)
         {
-            return GetGen(id, include);
+            return GetGen(id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Npc> Patch(Guid id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] string include)
+        public ActionResult<Npc> Patch(Guid id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] FilterParameters<Npc> query)
         {
-            return PatchGen(id, patchDoc, include);
+            return PatchGen(id, patchDoc, query);
         }
 
         // [HttpGet("[action]")]

@@ -18,17 +18,24 @@ namespace CampaignManager.API.Controllers
         [HttpPost("[action]")]
         public ActionResult<string> Login(LoginAttempt attempt)
         {
-            Account returnedUser = string.IsNullOrEmpty(attempt.Username)
-                ? UnitOfWork.Repository.GetUserByEmail(attempt.Email)
-                : UnitOfWork.Repository.GetUserByUsername(attempt.Username);
-
-            if (returnedUser?.CheckPassword(attempt.Password) ?? false)
+            if (attempt.ValidateLoginDetails())
             {
-                return Ok(Token.BuildToken(Configuration["Jwt:Key"], Configuration["Jwt:Issuer"], Configuration["Jwt:Audience"], returnedUser));
+                Account returnedUser = string.IsNullOrEmpty(attempt.Username)
+                    ? UnitOfWork.Repository.GetUserByEmail(attempt.Email)
+                    : UnitOfWork.Repository.GetUserByUsername(attempt.Username);
+
+                if (returnedUser?.CheckPassword(attempt.Password) ?? false)
+                {
+                    return Ok(Token.BuildToken(Configuration["Jwt:Key"], Configuration["Jwt:Issuer"], Configuration["Jwt:Audience"], returnedUser));
+                }
+                else
+                {
+                    return BadRequest("Invalid login attempt");
+                }
             }
             else
             {
-                throw new AuthenticationException("Invalid login attempt");
+                return BadRequest("Missing login details");
             }
         }
 

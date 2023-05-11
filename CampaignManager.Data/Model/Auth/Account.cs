@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -17,12 +18,11 @@ namespace CampaignManager.Data.Model.Auth
         public string Username { get; set; }
         [Required]
         public string Email { get; set; }
-        private byte[] _salt;
-        public byte[] Salt { get => _salt; set => _salt = value; }
-        private string _password;
-
-        [Required]
-        public string Password { get => _password; set => _password = HashPassword(value, out _salt); }
+        private byte[]? _salt;
+        [JsonIgnore]
+        public byte[]? Salt { get => _salt; set => _salt = value; }
+        private string? _password;
+        public string? Password { get => _password; set => _password = HashPassword(value, out _salt); }
         public string? Role { get; set; }
 
         #region Foreign Keys
@@ -53,6 +53,8 @@ namespace CampaignManager.Data.Model.Auth
     {
         public string? Username { get; set; }
         public string? Email { get; set; }
-        public string Password { get; set; }
+        public string? Password { get; set; }
+        public bool ValidateLoginDetails()
+            => !(string.IsNullOrEmpty(Username) && string.IsNullOrEmpty(Email)) && !string.IsNullOrEmpty(Password);
     }
 }

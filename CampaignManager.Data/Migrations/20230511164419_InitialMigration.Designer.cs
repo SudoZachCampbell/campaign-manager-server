@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230507192645_InitialMigration")]
+    [Migration("20230511164419_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -40,14 +40,12 @@ namespace CampaignManager.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
                     b.Property<byte[]>("Salt")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("Username")
@@ -161,6 +159,12 @@ namespace CampaignManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Alignment")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ArmorClass")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Background")
                         .IsRequired()
                         .HasColumnType("text");
@@ -171,7 +175,30 @@ namespace CampaignManager.Data.Migrations
                     b.Property<Guid?>("BuildingId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Charisma")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Constitution")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Dexterity")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Flaws")
+                        .HasColumnType("text");
+
+                    b.Property<string>("HitDice")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Intelligence")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Languages")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LocaleId")
@@ -179,6 +206,10 @@ namespace CampaignManager.Data.Migrations
 
                     b.Property<Guid?>("MonsterId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("NoteableEvents")
                         .HasColumnType("text");
@@ -192,6 +223,25 @@ namespace CampaignManager.Data.Migrations
                     b.Property<string>("Picture")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<List<Proficiencies>>("Proficiencies")
+                        .HasColumnType("jsonb");
+
+                    b.Property<List<CreatureAction>>("Reactions")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<List<Speed>>("Speed")
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("Strength")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Wisdom")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

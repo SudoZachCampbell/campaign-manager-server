@@ -24,8 +24,8 @@ namespace CampaignManager.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Username = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    Salt = table.Column<byte[]>(type: "bytea", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
+                    Salt = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: true),
                     Role = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -308,7 +308,6 @@ namespace CampaignManager.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Picture = table.Column<string>(type: "text", nullable: false),
                     Background = table.Column<string>(type: "text", nullable: false),
                     NoteableEvents = table.Column<string>(type: "text", nullable: true),
                     Beliefs = table.Column<string>(type: "text", nullable: true),
@@ -317,7 +316,24 @@ namespace CampaignManager.Data.Migrations
                     MonsterId = table.Column<Guid>(type: "uuid", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Strength = table.Column<int>(type: "integer", nullable: false),
+                    Dexterity = table.Column<int>(type: "integer", nullable: false),
+                    Constitution = table.Column<int>(type: "integer", nullable: false),
+                    Intelligence = table.Column<int>(type: "integer", nullable: false),
+                    Wisdom = table.Column<int>(type: "integer", nullable: false),
+                    Charisma = table.Column<int>(type: "integer", nullable: false),
+                    Proficiencies = table.Column<List<Proficiencies>>(type: "jsonb", nullable: true),
+                    ArmorClass = table.Column<int>(type: "integer", nullable: false),
+                    HitPoints = table.Column<int>(type: "integer", nullable: false),
+                    HitDice = table.Column<string>(type: "text", nullable: false),
+                    Size = table.Column<string>(type: "text", nullable: false),
+                    Speed = table.Column<List<Speed>>(type: "jsonb", nullable: true),
+                    Languages = table.Column<string>(type: "text", nullable: false),
+                    Alignment = table.Column<int>(type: "integer", nullable: false),
+                    Reactions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
+                    Picture = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

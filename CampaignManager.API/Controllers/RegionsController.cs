@@ -16,7 +16,7 @@ namespace CampaignManager.API.Controllers
         public RegionsController(IConfiguration configuration) : base(configuration) { }
         // GET: api/Region
         [HttpGet("Continent/{continentId}")]
-        public ActionResult<List<Region>> GetRegionsFromContinent(Guid continentId, [FromQuery] FilterParameters<Region> parameters)
+        public ActionResult<List<Region>> GetRegionsFromContinent(Guid continentId, [FromQuery] ListingFilterParameters<Region> parameters)
         {
             parameters.Filter = $"continentId|eq|{continentId}";
             return UnitOfWork.Repository.Get(parameters).ToList();
@@ -24,15 +24,15 @@ namespace CampaignManager.API.Controllers
 
         // GET: api/Region/5
         [HttpGet("{id}")]
-        public ActionResult<Region> GetRegionById(Guid id, [FromQuery] string include)
+        public ActionResult<Region> GetRegionById(Guid id, [FromQuery] FilterParameters<Region> query)
         {
-            return GetGen(id, include);
+            return GetGen(id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Region> PatchRegion(Guid id, [FromBody] JsonPatchDocument<Region> patchDoc, [FromQuery] string include)
+        public ActionResult<Region> PatchRegion(Guid id, [FromBody] JsonPatchDocument<Region> patchDoc, [FromQuery] FilterParameters<Region> query)
         {
-            return PatchGen(id, patchDoc, include);
+            return PatchGen(id, patchDoc, query);
         }
 
         // PUT: api/Region/5

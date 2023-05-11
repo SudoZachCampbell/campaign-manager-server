@@ -15,7 +15,7 @@ namespace CampaignManager.Data.Repositories
             dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(FilterParameters<TEntity> parameters)
+        public virtual IEnumerable<TEntity> Get(ListingFilterParameters<TEntity> parameters)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -26,20 +26,16 @@ namespace CampaignManager.Data.Repositories
             return query.ToList();
         }
 
+        public virtual TEntity GetById(Guid id) => dbSet.SingleOrDefault(x => x.Id == id);
 
-        public virtual TEntity GetById(Guid id, string[] includeProperties = null)
+
+
+        public virtual TEntity GetById(Guid id, FilterParameters<TEntity> parameters)
         {
             IQueryable<TEntity> query = dbSet;
 
-            if (includeProperties == null)
-            {
-                return dbSet.Find(id);
-            }
-            else
-            {
-                query = Expand(query, includeProperties);
-                return query.SingleOrDefault(x => x.Id == id);
-            }
+            query = Expand(query, parameters.ExpandProperties);
+            return query.SingleOrDefault(x => x.Id == id);
         }
 
         public virtual void Insert(TEntity entity)

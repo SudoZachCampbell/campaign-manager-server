@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using Amazon.S3;
 using CampaignManager.Data.Contexts;
 using Microsoft.AspNetCore.Builder;

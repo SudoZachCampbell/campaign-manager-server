@@ -17,22 +17,25 @@ namespace CampaignManager.API.Controllers
 
         // GET: api/Continent
         [HttpGet]
-        public ActionResult<List<Continent>> GetContinents([FromQuery] FilterParameters<Continent> parameters)
+        public ActionResult<List<Continent>> GetContinents([FromQuery] ListingFilterParameters<Continent> parameters)
         {
             return UnitOfWork.Repository.Get(parameters).ToList();
         }
 
         // GET: api/Continent/5
         [HttpGet("{id}")]
-        public ActionResult<Continent> GetContinentById(Guid id, [FromQuery] string include)
+        public ActionResult<Continent> GetContinentById(Guid id, [FromQuery] FilterParameters<Continent> query)
         {
-            return GetGen(id, include);
+            return GetGen(id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Continent> PatchContinent(Guid id, [FromBody] JsonPatchDocument<Continent> patchDoc, [FromQuery] string include)
+        public ActionResult<Continent> PatchContinent(
+            Guid id,
+            [FromBody] JsonPatchDocument<Continent> patchDoc,
+            [FromQuery] FilterParameters<Continent> query)
         {
-            return PatchGen(id, patchDoc, include);
+            return PatchGen(id, patchDoc, query);
         }
 
         // PUT: api/Continent/5

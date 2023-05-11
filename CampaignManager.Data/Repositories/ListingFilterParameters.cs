@@ -2,18 +2,19 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Linq.Dynamic.Core;
 using CampaignManager.Data.Model;
-using System.Text.Json.Serialization;
 
 namespace CampaignManager.Data.Repositories
 {
-    public class FilterParameters<T> where T : IBase
+    public class ListingFilterParameters<T> : FilterParameters<T> where T : IBase
     {
-        public string? Include { get; set; }
-        [JsonIgnore]
-        public string[]? IncludeProperties { get { return Include?.Split(','); } }
-        public string? Expand { get; set; }
-        [JsonIgnore]
-        public string[]? ExpandProperties { get { return Expand?.Split(','); } }
+        const int maxPageSize = 50;
+        private int _pageSize = 10;
+        public int Page { get; set; } = 1;
+        public int PageSize
+        {
+            get { return _pageSize; }
+            set { _pageSize = (value > maxPageSize) ? maxPageSize : value; }
+        }
         private string filter = string.Empty;
         public string Filter
         {
@@ -23,6 +24,8 @@ namespace CampaignManager.Data.Repositories
                 filter = ParseFilterLogic(value, initial: true);
             }
         }
+        private string filterPattern = @"(AND|OR)(\(((?>\((?<c>)|[^()]+|\)(?<-c>))*(?(c)(?!)))\))";
+        public string? OrderBy { get; set; }
         private Dictionary<string, string> operators = new() {
             {"eq", "=="},
             {"gt" , ">"},
@@ -31,7 +34,6 @@ namespace CampaignManager.Data.Repositories
             {"le", "<="},
             {"neq", "!="},
         };
-        private string filterPattern = @"(AND|OR)(\(((?>\((?<c>)|[^()]+|\)(?<-c>))*(?(c)(?!)))\))";
 
         private string ParseFilterLogic(string filter, string gate = "AND", bool initial = false)
         {
@@ -77,34 +79,6 @@ namespace CampaignManager.Data.Repositories
             catch (Exception ex)
             {
                 throw new Exception("Failed to parse filter query", ex);
-            }
-        }
-    }
-    public static class QueryableExtensions
-    {
-        public static IQueryable<T> IncludeProperties<T>(this IQueryable<T> result, string[] includeProperties)
-        {
-            if (includeProperties?.Length > 0)
-            {
-                return result.Select<T>(
-                    $"new {{ {String.Join(",", includeProperties.Select(name => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name).Replace("_", "")))} }}");
-            }
-            else return result;
-        }
-
-        public static IQueryable<T> Filter<T>(this IQueryable<T> result, string filterQuery)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(filterQuery))
-                {
-                    return result.Where(filterQuery);
-                }
-                else return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to execute filter query", ex);
             }
         }
     }

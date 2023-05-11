@@ -6,6 +6,8 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using CampaignManager.Data.Repositories;
+using CampaignManager.API.ModelBinder;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.API.Controllers
 {
@@ -17,22 +19,22 @@ namespace CampaignManager.API.Controllers
 
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Monster>> GetMonsters([FromQuery] FilterParameters<Monster> query)
+        public ActionResult<List<Monster>> GetMonsters([FromQuery] ListingFilterParameters<Monster> query)
         {
             return GetGen(query);
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
-        public ActionResult<Monster> GetMonsterById(Guid id, [FromQuery] string include)
+        public ActionResult<Monster> GetMonsterById(Guid id, [FromQuery] FilterParameters<Monster> query)
         {
-            return GetGen(id, include);
+            return GetGen(id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Monster> UpdateMonster(Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] string include)
+        public ActionResult<Monster> UpdateMonster(Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] FilterParameters<Monster> query)
         {
-            return PatchGen(id, patchDoc, include);
+            return PatchGen(id, patchDoc, query);
         }
 
         // PUT: api/Monster/5
@@ -44,8 +46,11 @@ namespace CampaignManager.API.Controllers
 
         // POST: api/Monster
         [HttpPost]
-        public ActionResult<Monster> CreateMonster(Monster monster)
+        public ActionResult<Monster> CreateMonster(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Monster monster)
         {
+            monster.OwnerId = user.Id;
             return PostGen(monster);
         }
 

@@ -15,14 +15,14 @@ namespace CampaignManager.API.Controllers
         public LocalesController(IConfiguration configuration) : base(configuration) { }
 
         [HttpGet("{id}")]
-        public ActionResult<Locale> GetLocale(Guid id, [FromQuery] string include)
+        public ActionResult<Locale> GetLocale(Guid id, [FromQuery] FilterParameters<Locale> query)
         {
-            return GetGen(id, include);
+            return GetGen(id, query);
         }
 
         // GET: api/Region
         [HttpGet("Region/{regionId}")]
-        public ActionResult<List<Locale>> GetRegionsFromContinent(int regionId, [FromQuery] FilterParameters<Locale> parameters)
+        public ActionResult<List<Locale>> GetRegionsFromContinent(int regionId, [FromQuery] ListingFilterParameters<Locale> parameters)
         {
             parameters.Filter = $"regionId|eq|{regionId}";
             return UnitOfWork.Repository.Get(parameters).ToList();

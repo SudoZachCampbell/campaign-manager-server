@@ -29,7 +29,7 @@ namespace CampaignManager.API.Controllers
             return "Running";
         }
 
-        protected ActionResult<List<T>> GetGen([FromQuery] FilterParameters<T> parameters)
+        protected ActionResult<List<T>> GetGen([FromQuery] ListingFilterParameters<T> parameters)
         {
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()
@@ -46,21 +46,20 @@ namespace CampaignManager.API.Controllers
 
         }
 
-        protected ActionResult<T> GetGen(Guid id, [FromQuery] string include)
+        protected ActionResult<T> GetGen(Guid id, FilterParameters<T> parameters)
         {
-            T instance = UnitOfWork.Repository.GetById(id, includeProperties: include?.Split(','));
+            T instance = UnitOfWork.Repository.GetById(id, parameters);
 
             if (instance == null) return NotFound();
 
             return instance;
         }
 
-        protected ActionResult<T> PatchGen(Guid id, [FromBody] JsonPatchDocument<T> patchDoc, [FromQuery] string include)
+        protected ActionResult<T> PatchGen(Guid id, [FromBody] JsonPatchDocument<T> patchDoc, FilterParameters<T> parameters)
         {
             if (patchDoc != null)
             {
-                string[] includeArray = include?.Split(',');
-                T instance = UnitOfWork.Repository.GetById(id, includeProperties: includeArray);
+                T instance = UnitOfWork.Repository.GetById(id, parameters);
 
                 if (instance != null)
                 {
@@ -74,7 +73,7 @@ namespace CampaignManager.API.Controllers
                 UnitOfWork.Repository.Update(instance);
                 UnitOfWork.Save();
 
-                foreach (string prop in includeArray)
+                foreach (string prop in parameters.ExpandProperties)
                 {
                     instance = UnitOfWork.Repository.dbSet.Include(prop).SingleOrDefault(x => x.Id.Equals(instance.Id));
                 }

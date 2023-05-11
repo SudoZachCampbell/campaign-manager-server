@@ -17,7 +17,7 @@ namespace CampaignManager.API.Controllers
 
         // GET: api/Building
         [HttpGet("Locale/{localeId}")]
-        public ActionResult<List<Building>> GetBuildingsFromLocale(Guid localeId, [FromQuery] FilterParameters<Building> parameters)
+        public ActionResult<List<Building>> GetBuildingsFromLocale(Guid localeId, [FromQuery] ListingFilterParameters<Building> parameters)
         {
             parameters.Filter = $"localId|eq|{localeId}";
             return UnitOfWork.Repository.Get(parameters).ToList();
@@ -25,15 +25,15 @@ namespace CampaignManager.API.Controllers
 
         // GET: api/Building/5
         [HttpGet("{id}")]
-        public ActionResult<Building> GetBuildingById(Guid id, [FromQuery] string include)
+        public ActionResult<Building> GetBuildingById(Guid id, [FromQuery] FilterParameters<Building> query)
         {
-            return GetGen(id, include);
+            return GetGen(id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Building> PatchBuilding(Guid id, [FromBody] JsonPatchDocument<Building> patchDoc, [FromQuery] string include)
+        public ActionResult<Building> PatchBuilding(Guid id, [FromBody] JsonPatchDocument<Building> patchDoc, [FromQuery] FilterParameters<Building> query)
         {
-            return PatchGen(id, patchDoc, include);
+            return PatchGen(id, patchDoc, query);
         }
 
         // PUT: api/Building/5
