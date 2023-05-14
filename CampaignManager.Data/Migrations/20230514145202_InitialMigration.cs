@@ -34,6 +34,24 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "campaigns",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_campaigns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_campaigns_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "continents",
                 columns: table => new
                 {
@@ -117,6 +135,30 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "accounts_campaigns",
+                columns: table => new
+                {
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_accounts_campaigns", x => new { x.AccountId, x.CampaignId });
+                    table.ForeignKey(
+                        name: "FK_accounts_campaigns_accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_accounts_campaigns_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "regions",
                 columns: table => new
                 {
@@ -140,6 +182,30 @@ namespace CampaignManager.Data.Migrations
                         column: x => x.ContinentId,
                         principalTable: "continents",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "campaigns_monsters",
+                columns: table => new
+                {
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MonsterId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_campaigns_monsters", x => new { x.CampaignId, x.MonsterId });
+                    table.ForeignKey(
+                        name: "FK_campaigns_monsters_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_campaigns_monsters_monsters_MonsterId",
+                        column: x => x.MonsterId,
+                        principalTable: "monsters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -444,6 +510,11 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_accounts_campaigns_CampaignId",
+                table: "accounts_campaigns",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_buildings_LocaleId",
                 table: "buildings",
                 column: "LocaleId");
@@ -457,6 +528,16 @@ namespace CampaignManager.Data.Migrations
                 name: "IX_buildings_maps_MapId",
                 table: "buildings_maps",
                 column: "MapId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_campaigns_OwnerId",
+                table: "campaigns",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_campaigns_monsters_MonsterId",
+                table: "campaigns_monsters",
+                column: "MonsterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_continents_OwnerId",
@@ -568,7 +649,13 @@ namespace CampaignManager.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "accounts_campaigns");
+
+            migrationBuilder.DropTable(
                 name: "buildings_maps");
+
+            migrationBuilder.DropTable(
+                name: "campaigns_monsters");
 
             migrationBuilder.DropTable(
                 name: "dungeons");
@@ -590,6 +677,9 @@ namespace CampaignManager.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "maps");
+
+            migrationBuilder.DropTable(
+                name: "campaigns");
 
             migrationBuilder.DropTable(
                 name: "monsters");

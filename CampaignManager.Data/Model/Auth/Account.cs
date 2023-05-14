@@ -46,6 +46,16 @@ namespace CampaignManager.Data.Model.Auth
             return Convert.ToHexString(hash);
         }
 
+        public static Account FromCreate(CreateAttempt createAttempt)
+        {
+            return new Account()
+            {
+                Username = createAttempt.Username,
+                Password = createAttempt.Password,
+                Email = createAttempt.Email
+            };
+        }
+
     }
 
 
@@ -56,5 +66,14 @@ namespace CampaignManager.Data.Model.Auth
         public string? Password { get; set; }
         public bool ValidateLoginDetails()
             => !(string.IsNullOrEmpty(Username) && string.IsNullOrEmpty(Email)) && !string.IsNullOrEmpty(Password);
+    }
+
+    public class CreateAttempt
+    {
+        public string? Username { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public bool ValidateCreateDetails()
+            => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
     }
 }

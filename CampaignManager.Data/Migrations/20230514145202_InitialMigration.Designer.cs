@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230511164419_InitialMigration")]
+    [Migration("20230514145202_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -358,6 +358,22 @@ namespace CampaignManager.Data.Migrations
                     b.ToTable("players");
                 });
 
+            modelBuilder.Entity("CampaignManager.Data.Model.Games.Campaign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("campaigns");
+                });
+
             modelBuilder.Entity("CampaignManager.Data.Model.Items.Item", b =>
                 {
                     b.Property<Guid>("Id")
@@ -386,6 +402,21 @@ namespace CampaignManager.Data.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("CampaignManager.Data.Model.Joins.AccountCampaign", b =>
+                {
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("AccountId", "CampaignId");
+
+                    b.HasIndex("CampaignId");
+
+                    b.ToTable("accounts_campaigns");
+                });
+
             modelBuilder.Entity("CampaignManager.Data.Model.Joins.BuildingMap", b =>
                 {
                     b.Property<Guid>("BuildingId")
@@ -402,6 +433,21 @@ namespace CampaignManager.Data.Migrations
                     b.HasIndex("MapId");
 
                     b.ToTable("buildings_maps");
+                });
+
+            modelBuilder.Entity("CampaignManager.Data.Model.Joins.CampaignMonster", b =>
+                {
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("MonsterId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CampaignId", "MonsterId");
+
+                    b.HasIndex("MonsterId");
+
+                    b.ToTable("campaigns_monsters");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Joins.MonsterBuilding", b =>
@@ -708,6 +754,17 @@ namespace CampaignManager.Data.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("CampaignManager.Data.Model.Games.Campaign", b =>
+                {
+                    b.HasOne("CampaignManager.Data.Model.Auth.Account", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("CampaignManager.Data.Model.Items.Item", b =>
                 {
                     b.HasOne("CampaignManager.Data.Model.Auth.Account", "Owner")
@@ -717,6 +774,25 @@ namespace CampaignManager.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("CampaignManager.Data.Model.Joins.AccountCampaign", b =>
+                {
+                    b.HasOne("CampaignManager.Data.Model.Auth.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany("Players")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Campaign");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Joins.BuildingMap", b =>
@@ -736,6 +812,25 @@ namespace CampaignManager.Data.Migrations
                     b.Navigation("Building");
 
                     b.Navigation("Map");
+                });
+
+            modelBuilder.Entity("CampaignManager.Data.Model.Joins.CampaignMonster", b =>
+                {
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CampaignManager.Data.Model.Creatures.Monster", "Monster")
+                        .WithMany()
+                        .HasForeignKey("MonsterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+
+                    b.Navigation("Monster");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Joins.MonsterBuilding", b =>
@@ -892,6 +987,11 @@ namespace CampaignManager.Data.Migrations
                     b.Navigation("Locales");
 
                     b.Navigation("Npcs");
+                });
+
+            modelBuilder.Entity("CampaignManager.Data.Model.Games.Campaign", b =>
+                {
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Building", b =>

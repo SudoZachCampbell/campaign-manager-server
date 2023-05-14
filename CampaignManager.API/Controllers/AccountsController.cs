@@ -41,10 +41,18 @@ namespace CampaignManager.API.Controllers
 
         // POST: api/accounts
         [HttpPost]
-        public ActionResult<Account> CreateAccount(Account user)
+        public ActionResult<string> CreateAccount(CreateAttempt createAttempt)
         {
-            CreatedResult userResult = PostGen(user);
-            return userResult;
+            if (createAttempt.ValidateCreateDetails())
+            {
+                Account user = Account.FromCreate(createAttempt);
+                CreatedResult userResult = PostGen(user);
+                return Ok(Token.BuildToken(Configuration["Jwt:Key"], Configuration["Jwt:Issuer"], Configuration["Jwt:Audience"], user));
+            }
+            else
+            {
+                return BadRequest("Invalid Create Attempt");
+            }
         }
 
         // DELETE: api/accounts/{uuid}

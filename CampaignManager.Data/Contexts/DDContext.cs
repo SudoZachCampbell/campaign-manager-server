@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using CampaignManager.Data.Model.Games;
 
 namespace CampaignManager.Data.Contexts
 {
@@ -26,7 +27,8 @@ namespace CampaignManager.Data.Contexts
         public DbSet<Region> Regions { get; set; }
         public DbSet<Continent> Continents { get; set; }
         public DbSet<Dungeon> Dungeons { get; set; }
-        public DbSet<Account> CampaignUsers { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseNpgsql(@"Server=172.17.0.1:5432;Database=campaignmanager;User Id=postgres;Password=postgres");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -192,6 +194,12 @@ namespace CampaignManager.Data.Contexts
 
         public static void DefineKeys(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AccountCampaign>()
+                .HasKey(ac => new { ac.AccountId, ac.CampaignId });
+
+            modelBuilder.Entity<CampaignMonster>()
+                .HasKey(cm => new { cm.CampaignId, cm.MonsterId });
+
             modelBuilder.Entity<BuildingMap>()
                 .HasKey(bm => new { bm.BuildingId, bm.MapId });
 
