@@ -16,6 +16,12 @@ namespace CampaignManager.Data.Repositories
 
         public Account GetUserByEmail(string email)
             => dbSet.FirstOrDefault(x => x.Email == email);
+
+        public bool IsUsernameUnique(string username)
+            => !dbSet.Any(x => x.Username == username);
+
+        public bool IsEmailUnique(string email)
+            => !dbSet.Any(x => x.Email == email);
     }
 }
 

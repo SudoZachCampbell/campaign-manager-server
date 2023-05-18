@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230514145202_InitialMigration")]
+    [Migration("20230518190706_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

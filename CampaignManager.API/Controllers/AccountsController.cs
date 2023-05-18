@@ -4,6 +4,7 @@ using CampaignManager.Data.Model.Auth;
 using CampaignManager.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using System.Security.Authentication;
+using System.Collections.Generic;
 
 namespace CampaignManager.API.Controllers
 {
@@ -43,17 +44,31 @@ namespace CampaignManager.API.Controllers
         [HttpPost]
         public ActionResult<string> CreateAccount(CreateAttempt createAttempt)
         {
-            if (createAttempt.ValidateCreateDetails())
+            if (createAttempt.ValidateCreateDetails(out string error))
             {
+                if (!UnitOfWork.Repository.IsUsernameUnique(createAttempt.Username))
+                {
+                    return BadRequest("Username must be unique");
+                }
+                if (!UnitOfWork.Repository.IsEmailUnique(createAttempt.Email))
+                {
+                    return BadRequest("Email must be unique");
+                }
                 Account user = Account.FromCreate(createAttempt);
                 CreatedResult userResult = PostGen(user);
                 return Ok(Token.BuildToken(Configuration["Jwt:Key"], Configuration["Jwt:Issuer"], Configuration["Jwt:Audience"], user));
             }
             else
             {
-                return BadRequest("Invalid Create Attempt");
+                return BadRequest(error);
             }
         }
+
+        [HttpGet("validate/username/{username}")]
+        public ActionResult<bool> ValidateUsername(string username) => UnitOfWork.Repository.IsUsernameUnique(username);
+
+        [HttpGet("validate/email/{email}")]
+        public ActionResult<bool> ValidateEmail(string email) => UnitOfWork.Repository.IsEmailUnique(email);
 
         // DELETE: api/accounts/{uuid}
         [HttpDelete("{id}")]

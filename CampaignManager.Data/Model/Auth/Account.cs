@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.Data.Model.Auth
@@ -73,7 +74,40 @@ namespace CampaignManager.Data.Model.Auth
         public string? Username { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public bool ValidateCreateDetails()
-            => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
+        private const string emailRegex = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+        private const string passwordRegex = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+        public bool ValidateCreateDetails(out string error)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                error = "Username is required";
+                return false;
+            }
+            else if (string.IsNullOrEmpty(Email))
+            {
+                error = "Email is required";
+                return false;
+            }
+            else if (string.IsNullOrEmpty(Password))
+            {
+                error = "Password is required";
+                return false;
+            }
+            else if (!ValidEmail())
+            {
+                error = "Must be a valid email";
+                return false;
+            }
+            else if (!ValidPassword())
+            {
+                error = "Password must be 8 characters, contain 1 uppercase and lowercase character, a number, and a special character";
+                return false;
+            }
+            error = "";
+            return true;
+        }
+
+        private bool ValidEmail() => Regex.IsMatch(Email ?? "", emailRegex);
+        private bool ValidPassword() => Regex.IsMatch(Password ?? "", passwordRegex);
     }
 }
