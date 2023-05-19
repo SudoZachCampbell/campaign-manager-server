@@ -12,8 +12,6 @@ namespace CampaignManager.Data.Repositories
         public Account GetUserByUsername(string username)
             => dbSet.FirstOrDefault(x => x.Username == username);
 
-
-
         public Account GetUserByEmail(string email)
             => dbSet.FirstOrDefault(x => x.Email == email);
 

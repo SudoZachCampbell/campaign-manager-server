@@ -124,6 +124,8 @@ namespace CampaignManager
 
             app.UseAuthorization();
 
+            app.UseJwtMiddleware();
+
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseEndpoints(endpoints =>

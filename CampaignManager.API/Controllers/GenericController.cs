@@ -10,6 +10,7 @@ using System.Text.Json.Serialization;
 using System.Linq.Dynamic.Core;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.API.Controllers
 {
@@ -29,7 +30,7 @@ namespace CampaignManager.API.Controllers
             return "Running";
         }
 
-        protected ActionResult<List<T>> GetGen([FromQuery] ListingFilterParameters<T> parameters)
+        protected ActionResult<List<T>> GetGen(ListingFilterParameters<T> parameters)
         {
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()
@@ -43,7 +44,6 @@ namespace CampaignManager.API.Controllers
                 .OrderBy(parameters.OrderBy ?? "name")
                 .IncludeProperties<T>(parameters.IncludeProperties)
                 .ToDynamicList<T>();
-
         }
 
         protected ActionResult<T> GetGen(Guid id, FilterParameters<T> parameters)

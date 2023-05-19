@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CampaignManager.Data.Contexts;
 using CampaignManager.Data.Model;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.Data.Repositories
 {
@@ -85,7 +86,7 @@ namespace CampaignManager.Data.Repositories
         //         return query;
         // }
 
-        private IQueryable<TEntity> Expand(IQueryable<TEntity> query, string[] expandProperties = null)
+        protected IQueryable<TEntity> Expand(IQueryable<TEntity> query, string[] expandProperties = null)
         {
             if (expandProperties != null)
             {
