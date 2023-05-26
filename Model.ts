@@ -588,7 +588,7 @@ export class BuildingsClient extends Client {
     }
 }
 
-export class CampaignClient extends Client {
+export class CampaignsClient extends Client {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -599,8 +599,8 @@ export class CampaignClient extends Client {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:5000";
     }
 
-    getCampaigns(page?: number | undefined, pageSize?: number | undefined, filter?: string | null | undefined, orderBy?: string | null | undefined, include?: string | null | undefined, includeProperties?: string[] | null | undefined, expand?: string | null | undefined, expandProperties?: string[] | null | undefined): Promise<Campaign[]> {
-        let url_ = this.baseUrl + "/Campaign?";
+    getCampaigns(user?: Account | null | undefined, page?: number | undefined, pageSize?: number | undefined, filter?: string | null | undefined, orderBy?: string | null | undefined, include?: string | null | undefined, includeProperties?: string[] | null | undefined, expand?: string | null | undefined, expandProperties?: string[] | null | undefined): Promise<Campaign[]> {
+        let url_ = this.baseUrl + "/Campaigns?";
         if (page === null)
             throw new Error("The parameter 'page' cannot be null.");
         else if (page !== undefined)
@@ -626,6 +626,7 @@ export class CampaignClient extends Client {
         let options_: RequestInit = {
             method: "GET",
             headers: {
+                "Authorization": user !== undefined && user !== null ? "" + user : "",
                 "Accept": "application/json"
             }
         };
@@ -662,11 +663,11 @@ export class CampaignClient extends Client {
         return Promise.resolve<Campaign[]>(null as any);
     }
 
-    createCampaign(monster: Campaign, user?: Account | null | undefined): Promise<Campaign> {
-        let url_ = this.baseUrl + "/Campaign";
+    createCampaign(campaign: Campaign, user?: Account | null | undefined): Promise<Campaign> {
+        let url_ = this.baseUrl + "/Campaigns";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(monster);
+        const content_ = JSON.stringify(campaign);
 
         let options_: RequestInit = {
             body: content_,
@@ -704,7 +705,7 @@ export class CampaignClient extends Client {
     }
 
     getCampaignById(id: string, include?: string | null | undefined, includeProperties?: string[] | null | undefined, expand?: string | null | undefined, expandProperties?: string[] | null | undefined, filter?: string | null | undefined): Promise<Campaign> {
-        let url_ = this.baseUrl + "/Campaign/{id}?";
+        let url_ = this.baseUrl + "/Campaigns/{id}?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -753,7 +754,7 @@ export class CampaignClient extends Client {
     }
 
     updateCampaignPATCH(id: string, patchDoc: JsonPatchDocumentOfCampaign, include?: string | null | undefined, includeProperties?: string[] | null | undefined, expand?: string | null | undefined, expandProperties?: string[] | null | undefined, filter?: string | null | undefined): Promise<Campaign> {
-        let url_ = this.baseUrl + "/Campaign/{id}?";
+        let url_ = this.baseUrl + "/Campaigns/{id}?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -806,7 +807,7 @@ export class CampaignClient extends Client {
     }
 
     updateCampaignPUT(id: string, monster: Campaign): Promise<FileResponse | null> {
-        let url_ = this.baseUrl + "/Campaign/{id}";
+        let url_ = this.baseUrl + "/Campaigns/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -853,7 +854,7 @@ export class CampaignClient extends Client {
     }
 
     deleteCampaign(id: string): Promise<Campaign> {
-        let url_ = this.baseUrl + "/Campaign/{id}";
+        let url_ = this.baseUrl + "/Campaigns/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -891,8 +892,8 @@ export class CampaignClient extends Client {
         return Promise.resolve<Campaign>(null as any);
     }
 
-    getEnum(name: string | null): Promise<string[]> {
-        let url_ = this.baseUrl + "/Campaign/GetEnum/{name}";
+    enum(name: string | null): Promise<string[]> {
+        let url_ = this.baseUrl + "/Campaigns/Enum/{name}";
         if (name === undefined || name === null)
             throw new Error("The parameter 'name' must be defined.");
         url_ = url_.replace("{name}", encodeURIComponent("" + name));
@@ -908,11 +909,11 @@ export class CampaignClient extends Client {
         return this.transformOptions(options_).then(transformedOptions_ => {
             return this.http.fetch(url_, transformedOptions_);
         }).then((_response: Response) => {
-            return this.processGetEnum(_response);
+            return this.processEnum(_response);
         });
     }
 
-    protected processGetEnum(response: Response): Promise<string[]> {
+    protected processEnum(response: Response): Promise<string[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -4064,6 +4065,8 @@ export interface IIContractResolver {
 }
 
 export class Campaign extends Owned implements ICampaign {
+    name?: string | undefined;
+    type!: CampaignType;
     players?: AccountCampaign[] | undefined;
 
     constructor(data?: ICampaign) {
@@ -4073,6 +4076,8 @@ export class Campaign extends Owned implements ICampaign {
     init(_data?: any) {
         super.init(_data);
         if (_data) {
+            this.name = _data["name"];
+            this.type = _data["type"];
             if (Array.isArray(_data["players"])) {
                 this.players = [] as any;
                 for (let item of _data["players"])
@@ -4090,6 +4095,8 @@ export class Campaign extends Owned implements ICampaign {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["type"] = this.type;
         if (Array.isArray(this.players)) {
             data["players"] = [];
             for (let item of this.players)
@@ -4101,7 +4108,15 @@ export class Campaign extends Owned implements ICampaign {
 }
 
 export interface ICampaign extends IOwned {
+    name?: string | undefined;
+    type: CampaignType;
     players?: AccountCampaign[] | undefined;
+}
+
+export enum CampaignType {
+    FiveE = 0,
+    PathFinderOne = 1,
+    PathFinderTwo = 2,
 }
 
 export class AccountCampaign implements IAccountCampaign {

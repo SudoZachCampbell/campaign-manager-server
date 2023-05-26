@@ -13,9 +13,9 @@ namespace CampaignManager.API.Controllers
 {
     [Route("[controller]"), Authorize]
     [ApiController]
-    public class CampaignController : OwnedController<Campaign>
+    public class CampaignsController : OwnedController<Campaign>
     {
-        public CampaignController(IConfiguration configuration) : base(configuration) { }
+        public CampaignsController(IConfiguration configuration) : base(configuration) { }
 
         // GET: api/campaign
         [HttpGet]
@@ -64,7 +64,7 @@ namespace CampaignManager.API.Controllers
         }
 
         [HttpGet("[action]/{name}")]
-        public ActionResult<List<string>> GetEnum(string name)
+        public ActionResult<List<string>> Enum(string name)
         {
             return GetEnumGen(name);
         }
