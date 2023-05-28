@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230519155731_InitialMigration")]
+    [Migration("20230526172710_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -365,6 +365,7 @@ namespace CampaignManager.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("OwnerId")

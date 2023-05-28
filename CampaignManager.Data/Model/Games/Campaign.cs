@@ -7,7 +7,7 @@ namespace CampaignManager.Data.Model.Games
     [Table("campaigns")]
     public class Campaign : Owned
     {
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public CampaignType Type { get; set; }
 
         public List<AccountCampaign>? Players { get; set; }

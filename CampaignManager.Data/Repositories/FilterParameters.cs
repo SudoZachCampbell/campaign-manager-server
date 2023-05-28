@@ -3,16 +3,18 @@ using System.Globalization;
 using System.Linq.Dynamic.Core;
 using CampaignManager.Data.Model;
 using System.Text.Json.Serialization;
-
+using NSwag.Annotations;
 namespace CampaignManager.Data.Repositories
 {
     public class FilterParameters<T> where T : IBase
     {
         public string? Include { get; set; }
         [JsonIgnore]
+        [OpenApiIgnore]
         public string[]? IncludeProperties { get { return Include?.Split(','); } }
         public string? Expand { get; set; }
         [JsonIgnore]
+        [OpenApiIgnore]
         public string[]? ExpandProperties { get { return Expand?.Split(','); } }
         private string filter = string.Empty;
         public string Filter

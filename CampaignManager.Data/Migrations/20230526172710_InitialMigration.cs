@@ -38,7 +38,7 @@ namespace CampaignManager.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
