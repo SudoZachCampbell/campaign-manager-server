@@ -46,7 +46,8 @@ namespace CampaignManager.API.Controllers
 
         // POST: api/Monster
         [HttpPost]
-        public ActionResult<Monster> CreateMonster(
+        [ProducesResponseType(201)]
+        public ActionResult<Guid> CreateMonster(
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
             Monster monster)
         {

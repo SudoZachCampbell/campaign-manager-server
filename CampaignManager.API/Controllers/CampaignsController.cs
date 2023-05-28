@@ -48,7 +48,8 @@ namespace CampaignManager.API.Controllers
 
         // POST: api/campaign
         [HttpPost]
-        public ActionResult<Campaign> CreateCampaign(
+        [ProducesResponseType(201)]
+        public ActionResult<Guid> CreateCampaign(
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
             Campaign campaign)
         {

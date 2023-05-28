@@ -15,7 +15,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230526172710_InitialMigration")]
+    [Migration("20230528191356_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -127,9 +127,8 @@ namespace CampaignManager.Data.Migrations
                     b.Property<Dictionary<string, string>>("Senses")
                         .HasColumnType("jsonb");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Size")
+                        .HasColumnType("integer");
 
                     b.Property<List<CreatureAction>>("SpecialAbilities")
                         .HasColumnType("jsonb");
@@ -230,9 +229,8 @@ namespace CampaignManager.Data.Migrations
                     b.Property<List<CreatureAction>>("Reactions")
                         .HasColumnType("jsonb");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Size")
+                        .HasColumnType("integer");
 
                     b.Property<List<Speed>>("Speed")
                         .HasColumnType("jsonb");
@@ -334,9 +332,8 @@ namespace CampaignManager.Data.Migrations
                     b.Property<List<CreatureAction>>("Reactions")
                         .HasColumnType("jsonb");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Size")
+                        .HasColumnType("integer");
 
                     b.Property<List<Speed>>("Speed")
                         .HasColumnType("jsonb");

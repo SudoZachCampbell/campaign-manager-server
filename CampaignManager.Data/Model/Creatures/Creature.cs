@@ -22,7 +22,7 @@ namespace CampaignManager.Data.Model.Creatures
         public int ArmorClass { get; set; } = 0;
         public int HitPoints { get; set; } = 0;
         public string HitDice { get; set; } = string.Empty;
-        public string Size { get; set; } = string.Empty;
+        public Size Size { get; set; } = Size.Medium;
         [Column(TypeName = "jsonb")]
         public List<Speed>? Speed { get; set; }
         public string Languages { get; set; } = string.Empty;
@@ -45,6 +45,15 @@ namespace CampaignManager.Data.Model.Creatures
         ChaoticEvil,
         Any,
         None
+    }
+
+    public enum Size
+    {
+        Tiny,
+        Medium,
+        Large,
+        Huge,
+        Gargantuan
     }
 
 }
