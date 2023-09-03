@@ -11,12 +11,12 @@ namespace CampaignManager.Data.Model.Creatures
     public class Creature : Owned, ICreature
     {
         public string Name { get; set; } = string.Empty;
-        public int Strength { get; set; } = 0;
-        public int Dexterity { get; set; } = 0;
-        public int Constitution { get; set; } = 0;
-        public int Intelligence { get; set; } = 0;
-        public int Wisdom { get; set; } = 0;
-        public int Charisma { get; set; } = 0;
+        public int Strength { get; set; } = 10;
+        public int Dexterity { get; set; } = 10;
+        public int Constitution { get; set; } = 10;
+        public int Intelligence { get; set; } = 10;
+        public int Wisdom { get; set; } = 10;
+        public int Charisma { get; set; } = 10;
         [Column(TypeName = "jsonb")]
         public List<Proficiencies>? Proficiencies { get; set; }
         public int ArmorClass { get; set; } = 0;

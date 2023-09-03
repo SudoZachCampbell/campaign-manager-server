@@ -21,10 +21,16 @@ namespace CampaignManager.Data.Model.Creatures
         [Column(TypeName = "jsonb")]
         public List<CreatureAction>? SpecialAbilities { get; set; }
         [Column(TypeName = "jsonb")]
-        public Dictionary<string, string>? Senses { get; set; }
+        public List<Sense>? Senses { get; set; }
         public List<Npc>? Npcs { get; set; }
         public List<MonsterLocale>? Locales { get; set; }
         public List<MonsterBuilding>? Buildings { get; set; }
+    }
+
+    public class Sense
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 
     public enum MonsterType

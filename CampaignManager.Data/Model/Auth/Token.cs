@@ -24,7 +24,7 @@ namespace CampaignManager.Data.Model.Auth
                 new Claim(JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString())
              }),
-                Expires = DateTime.Now.AddHours(1),
+                Expires = DateTime.Now.AddHours(6),
                 Issuer = issuer,
                 Audience = audience,
                 SigningCredentials = new SigningCredentials
