@@ -12,8 +12,7 @@ namespace CampaignManager.Data.Model.Creatures
     {
         public double ChallengeRating { get; set; } = 0;
         public int Xp { get; set; } = 0;
-        public int PassivePerception { get; set; } = 0;
-        public MonsterType MonsterType { get; set; } = MonsterType.None;
+        public MonsterType Type { get; set; } = MonsterType.None;
         [Column(TypeName = "jsonb")]
         public List<CreatureAction>? Actions { get; set; }
         [Column(TypeName = "jsonb")]

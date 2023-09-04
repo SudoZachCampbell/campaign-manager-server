@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using CampaignManager.Data.Contexts;
 using CampaignManager.Data.Model.Attributes;
+using CampaignManager.Data.Model.Creatures;
 using CampaignManager.Data.Model.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -15,7 +16,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230528191356_InitialMigration")]
+    [Migration("20230904161308_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -101,18 +102,12 @@ namespace CampaignManager.Data.Migrations
                     b.Property<List<CreatureAction>>("LegendaryActions")
                         .HasColumnType("jsonb");
 
-                    b.Property<int>("MonsterType")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("PassivePerception")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Picture")
                         .IsRequired()
@@ -124,7 +119,7 @@ namespace CampaignManager.Data.Migrations
                     b.Property<List<CreatureAction>>("Reactions")
                         .HasColumnType("jsonb");
 
-                    b.Property<Dictionary<string, string>>("Senses")
+                    b.Property<List<Sense>>("Senses")
                         .HasColumnType("jsonb");
 
                     b.Property<int>("Size")
@@ -137,6 +132,9 @@ namespace CampaignManager.Data.Migrations
                         .HasColumnType("jsonb");
 
                     b.Property<int>("Strength")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.Property<int>("Wisdom")

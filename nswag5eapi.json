@@ -1,16 +1,16 @@
 {
-  "runtime": "NetCore21",
+  "runtime": "Net70",
   "defaultVariables": null,
   "documentGenerator": {
     "fromDocument": {
-      "url": "http://redocly.github.io/redoc/openapi.yaml",
+      "url": "https://www.dnd5eapi.co/swagger/openapi.json",
       "output": null,
       "newLineBehavior": "Auto"
     }
   },
   "codeGenerators": {
     "openApiToTypeScriptClient": {
-      "className": "{controller}Client",
+      "className": "FEClient",
       "moduleName": "",
       "namespace": "",
       "typeScriptVersion": 2.7,
@@ -25,7 +25,7 @@
       "nullValue": "Undefined",
       "generateClientClasses": true,
       "generateClientInterfaces": false,
-      "generateOptionalParameters": false,
+      "generateOptionalParameters": true,
       "exportTypes": true,
       "wrapDtoExceptions": false,
       "exceptionClass": "ApiException",
@@ -42,7 +42,7 @@
       "operationGenerationMode": "MultipleClientsFromOperationId",
       "markOptionalProperties": true,
       "generateCloneMethod": false,
-      "typeStyle": "Class",
+      "typeStyle": "Interface",
       "enumStyle": "Enum",
       "useLeafType": false,
       "classTypes": [],
@@ -53,7 +53,7 @@
       "excludedParameterNames": [],
       "handleReferences": false,
       "generateTypeCheckFunctions": false,
-      "generateConstructorInterface": true,
+      "generateConstructorInterface": false,
       "convertConstructorInterfaceData": false,
       "importRequiredTypes": true,
       "useGetBaseUrlMethod": false,
@@ -69,7 +69,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": null,
+      "output": "FEModel.ts",
       "newLineBehavior": "Auto"
     },
     "openApiToCSharpClient": {

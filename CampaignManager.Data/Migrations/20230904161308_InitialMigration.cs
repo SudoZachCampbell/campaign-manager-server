@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CampaignManager.Data.Model.Attributes;
+using CampaignManager.Data.Model.Creatures;
 using CampaignManager.Data.Model.Operations;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -100,12 +101,11 @@ namespace CampaignManager.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ChallengeRating = table.Column<double>(type: "double precision", nullable: false),
                     Xp = table.Column<int>(type: "integer", nullable: false),
-                    PassivePerception = table.Column<int>(type: "integer", nullable: false),
-                    MonsterType = table.Column<int>(type: "integer", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
                     Actions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     LegendaryActions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
                     SpecialAbilities = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
-                    Senses = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: true),
+                    Senses = table.Column<List<Sense>>(type: "jsonb", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Strength = table.Column<int>(type: "integer", nullable: false),

@@ -5,43 +5,38 @@ namespace CampaignManager.Data.Model.Operations
 {
     public class CreatureAction
     {
-        [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
-        [JsonPropertyName("type")]
-        public string Type { get; set; } = string.Empty;
-        [JsonPropertyName("desc")]
+        [JsonPropertyName("multiattack_type")]
+        public string MultiAttackType { get; set; } = string.Empty;
         public string Desc { get; set; } = string.Empty;
-        [JsonPropertyName("count")]
         public int? Count { get; set; }
-        [JsonPropertyName("attackBonus")]
         public int? AttackBonus { get; set; }
-        [JsonPropertyName("damage")]
         public List<Damage>? Damage { get; set; }
-        [JsonPropertyName("usage")]
         public Usage? Usage { get; set; }
-        [JsonPropertyName("actions")]
-        public List<CreatureAction>? Actions { get; set; }
+        public List<SubAction>? Actions { get; set; }
         [JsonPropertyName("dc")]
         public DC? DC { get; set; }
     }
 
     public class Usage
     {
-        [JsonPropertyName("type")]
         public string Type { get; set; } = string.Empty;
-        [JsonPropertyName("times")]
         public int? Times { get; set; }
-        [JsonPropertyName("minValue")]
         public int? MinValue { get; set; }
+        public string Dice { get; set; } = string.Empty;
     }
 
     public class DC
     {
-        [JsonPropertyName("dcType")]
         public string DcType { get; set; } = string.Empty;
-        [JsonPropertyName("dcValue")]
         public int DcValue { get; set; }
-        [JsonPropertyName("successType")]
         public string SuccessType { get; set; } = string.Empty;
+    }
+
+    public class SubAction
+    {
+        public string ActionName { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public int? Count { get; set; }
     }
 }
