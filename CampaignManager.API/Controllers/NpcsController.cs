@@ -5,46 +5,67 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using CampaignManager.API.ModelBinder;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize]
     [ApiController]
     public class NpcsController : GenericController<Npc>
     {
         public NpcsController(IConfiguration configuration) : base(configuration) { }
 
+        // GET: api/Npcs
         [HttpGet]
-        public ActionResult<List<Npc>> Get([FromQuery] ListingFilterParameters<Npc> parameters)
+        public ActionResult<List<Npc>> GetNpcs([FromQuery] ListingFilterParameters<Npc> query)
         {
-            return GetGen(parameters);
+            return GetGen(query);
         }
 
-
+        // GET: api/Npc/5
         [HttpGet("{id}")]
-        public ActionResult<Npc> Get(Guid id, [FromQuery] FilterParameters<Npc> query)
+        public ActionResult<Npc> GetNpcById(Guid id, [FromQuery] FilterParameters<Npc> query)
         {
             return GetGen(id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Npc> Patch(Guid id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] FilterParameters<Npc> query)
+        public ActionResult<Npc> UpdateNpc(Guid id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] FilterParameters<Npc> query)
         {
             return PatchGen(id, patchDoc, query);
         }
 
-        // [HttpGet("[action]")]
-        // public ActionResult<dynamic> Table()
-        // {
-        //     dynamic npcs = UnitOfWork.Repository.Get()
-        //         .Select(n => new
-        //         {
-        //             id = n.Id,
-        //             name = n.Name,
-        //             monsterName = n.Monster.Name,
-        //             location = n.Building.Name != null ? $"{n.Building.Name} in {n.Locale.Name}" : n.Locale.Name
-        //         }).ToList();
-        //     return npcs;
-        // }
+        // PUT: api/Npc/5
+        [HttpPut("{id}")]
+        public IActionResult UpdateNpc(Guid id, Npc npc)
+        {
+            return PutGen(id, npc);
+        }
+
+        // POST: api/Npc
+        [HttpPost]
+        [ProducesResponseType(201)]
+        public ActionResult<Guid> CreateNpc(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Npc npc)
+        {
+            npc.OwnerId = user.Id;
+            return PostGen(npc);
+        }
+
+        // DELETE: api/Npc/5
+        [HttpDelete("{id}")]
+        public ActionResult<Npc> DeleteNpc(Guid id)
+        {
+            return DeleteGen(id);
+        }
+
+        [HttpGet("[action]/{name}")]
+        public ActionResult<List<string>> GetEnum(string name)
+        {
+            return GetEnumGen(name);
+        }
     }
 }
