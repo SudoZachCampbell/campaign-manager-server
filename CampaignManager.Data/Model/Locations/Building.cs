@@ -15,7 +15,7 @@ namespace CampaignManager.Data.Model.Locations
         public string Map { get; set; } = string.Empty;
         public List<Npc>? Npcs { get; set; }
         public List<MonsterBuilding>? Monsters { get; set; }
-        public List<Player>? Players { get; set; }
+        public List<Pc>? Pcs { get; set; }
         public List<BuildingMap>? Maps { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using CampaignManager.Data.Model.Creatures;
 using CampaignManager.Data.Model.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -15,9 +16,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    partial class DDContextModelSnapshot : ModelSnapshot
+    [Migration("20230907112554_ChangeNPCJArrays")]
+    partial class ChangeNPCJArrays
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,7 +205,7 @@ namespace CampaignManager.Data.Migrations
                     b.ToTable("npcs");
                 });
 
-            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Pc", b =>
+            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Player", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,6 +223,10 @@ namespace CampaignManager.Data.Migrations
 
                     b.Property<Guid?>("BuildingId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("CharacterName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Charisma")
                         .HasColumnType("integer");
@@ -258,11 +265,11 @@ namespace CampaignManager.Data.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("PcName")
+                    b.Property<string>("Picture")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Picture")
+                    b.Property<string>("PlayerName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -296,7 +303,7 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("pcs");
+                    b.ToTable("players");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Games.Campaign", b =>
@@ -677,15 +684,15 @@ namespace CampaignManager.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Pc", b =>
+            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Player", b =>
                 {
                     b.HasOne("CampaignManager.Data.Model.Locations.Building", "Building")
-                        .WithMany("Pcs")
+                        .WithMany("Players")
                         .HasForeignKey("BuildingId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CampaignManager.Data.Model.Locations.Locale", "Locale")
-                        .WithMany("Pcs")
+                        .WithMany("Players")
                         .HasForeignKey("LocaleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -950,7 +957,7 @@ namespace CampaignManager.Data.Migrations
 
                     b.Navigation("Npcs");
 
-                    b.Navigation("Pcs");
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Continent", b =>
@@ -970,7 +977,7 @@ namespace CampaignManager.Data.Migrations
 
                     b.Navigation("Npcs");
 
-                    b.Navigation("Pcs");
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Map", b =>

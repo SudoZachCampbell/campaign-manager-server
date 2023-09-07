@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CampaignManager.Data.Model.Creatures
 {
-    [Table("players")]
-    public class Player : Creature
+    [Table("pcs")]
+    public class Pc : Creature
     {
-        public string CharacterName { get; set; } = string.Empty;
-        public string PlayerName { get; set; } = string.Empty;
+        public string PcName { get; set; } = string.Empty;
         public int Level = 1;
         public string Background { get; set; } = string.Empty;
         public string Faction { get; set; } = string.Empty;

@@ -1963,6 +1963,330 @@ export class NpcsClient extends Client {
     }
 }
 
+export class PcsClient extends Client {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        super();
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:5000";
+    }
+
+    getPcs(page?: number | undefined, pageSize?: number | undefined, filter?: string | undefined, orderBy?: string | null | undefined, include?: string | null | undefined, expand?: string | null | undefined): Promise<Pc[]> {
+        let url_ = this.baseUrl + "/Pcs?";
+        if (page === null)
+            throw new Error("The parameter 'page' cannot be null.");
+        else if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (orderBy !== undefined && orderBy !== null)
+            url_ += "OrderBy=" + encodeURIComponent("" + orderBy) + "&";
+        if (include !== undefined && include !== null)
+            url_ += "Include=" + encodeURIComponent("" + include) + "&";
+        if (expand !== undefined && expand !== null)
+            url_ += "Expand=" + encodeURIComponent("" + expand) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processGetPcs(_response);
+        });
+    }
+
+    protected processGetPcs(response: Response): Promise<Pc[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Pc[];
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Pc[]>(null as any);
+    }
+
+    createPc(pc: Pc, user?: Account | null | undefined): Promise<string> {
+        let url_ = this.baseUrl + "/Pcs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pc);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Authorization": user !== undefined && user !== null ? "" + user : "",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processCreatePc(_response);
+        });
+    }
+
+    protected processCreatePc(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            let result201: any = null;
+            result201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            return result201;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    getPcById(id: string, include?: string | null | undefined, expand?: string | null | undefined, filter?: string | undefined): Promise<Pc> {
+        let url_ = this.baseUrl + "/Pcs/{id}?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (include !== undefined && include !== null)
+            url_ += "Include=" + encodeURIComponent("" + include) + "&";
+        if (expand !== undefined && expand !== null)
+            url_ += "Expand=" + encodeURIComponent("" + expand) + "&";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processGetPcById(_response);
+        });
+    }
+
+    protected processGetPcById(response: Response): Promise<Pc> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Pc;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Pc>(null as any);
+    }
+
+    updatePcPATCH(id: string, patchDoc: JsonPatchDocumentOfPc, include?: string | null | undefined, expand?: string | null | undefined, filter?: string | undefined): Promise<Pc> {
+        let url_ = this.baseUrl + "/Pcs/{id}?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (include !== undefined && include !== null)
+            url_ += "Include=" + encodeURIComponent("" + include) + "&";
+        if (expand !== undefined && expand !== null)
+            url_ += "Expand=" + encodeURIComponent("" + expand) + "&";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(patchDoc);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processUpdatePcPATCH(_response);
+        });
+    }
+
+    protected processUpdatePcPATCH(response: Response): Promise<Pc> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Pc;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Pc>(null as any);
+    }
+
+    updatePcPUT(id: string, pc: Pc): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/Pcs/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pc);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processUpdatePcPUT(_response);
+        });
+    }
+
+    protected processUpdatePcPUT(response: Response): Promise<FileResponse | null> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse | null>(null as any);
+    }
+
+    deletePc(id: string): Promise<Pc> {
+        let url_ = this.baseUrl + "/Pcs/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processDeletePc(_response);
+        });
+    }
+
+    protected processDeletePc(response: Response): Promise<Pc> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Pc;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Pc>(null as any);
+    }
+
+    getEnum(name: string): Promise<string[]> {
+        let url_ = this.baseUrl + "/Pcs/GetEnum/{name}";
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processGetEnum(_response);
+        });
+    }
+
+    protected processGetEnum(response: Response): Promise<string[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string[];
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string[]>(null as any);
+    }
+}
+
 export class RegionsClient extends Client {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -2414,10 +2738,10 @@ export interface Sense {
 export interface Npc extends Owned {
     name: string;
     background: string;
-    noteable_events?: any[] | undefined;
-    beliefs?: any[] | undefined;
-    passions?: any[] | undefined;
-    flaws?: any[] | undefined;
+    noteable_events?: string | undefined;
+    beliefs?: string | undefined;
+    passions?: string | undefined;
+    flaws?: string | undefined;
     picture: string;
     monster_id?: string | undefined;
     monster?: Monster | undefined;
@@ -2433,7 +2757,7 @@ export interface Locale extends Owned {
     region?: Region | undefined;
     buildings?: Building[] | undefined;
     dungeons?: Dungeon[] | undefined;
-    players?: Player[] | undefined;
+    pcs?: Pc[] | undefined;
     npcs?: Npc[] | undefined;
     monsters?: MonsterLocale[] | undefined;
     maps?: Map[] | undefined;
@@ -2460,7 +2784,7 @@ export interface Building extends Owned {
     map: string;
     npcs?: Npc[] | undefined;
     monsters?: MonsterBuilding[] | undefined;
-    players?: Player[] | undefined;
+    pcs?: Pc[] | undefined;
     maps?: BuildingMap[] | undefined;
 }
 
@@ -2471,12 +2795,11 @@ export interface MonsterBuilding {
     building?: Building | undefined;
 }
 
-export interface Player extends Creature {
+export interface Pc extends Creature {
     level: number;
     xp: number;
     inspiration: boolean;
-    character_name: string;
-    player_name: string;
+    pc_name: string;
     background: string;
     faction: string;
     race: string;
@@ -2633,6 +2956,14 @@ export interface JsonPatchDocumentOfNpc {
 }
 
 export interface OperationOfNpc extends Operation {
+}
+
+export interface JsonPatchDocumentOfPc {
+    operations?: OperationOfPc[] | undefined;
+    contract_resolver?: IContractResolver | undefined;
+}
+
+export interface OperationOfPc extends Operation {
 }
 
 export interface JsonPatchDocumentOfRegion {

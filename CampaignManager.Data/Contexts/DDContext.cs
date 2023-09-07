@@ -15,7 +15,7 @@ namespace CampaignManager.Data.Contexts
 {
     public class DDContext : DbContext
     {
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Pc> Pcs { get; set; }
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Npc> Npcs { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -178,15 +178,15 @@ namespace CampaignManager.Data.Contexts
                 .HasForeignKey(n => n.BuildingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Player>()
+            modelBuilder.Entity<Pc>()
                 .HasOne(p => p.Building)
-                .WithMany(b => b.Players)
+                .WithMany(b => b.Pcs)
                 .HasForeignKey(p => p.BuildingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Player>()
+            modelBuilder.Entity<Pc>()
                 .HasOne(p => p.Locale)
-                .WithMany(l => l.Players)
+                .WithMany(l => l.Pcs)
                 .HasForeignKey(p => p.LocaleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -263,25 +263,25 @@ namespace CampaignManager.Data.Contexts
             //     v => JsonConvert.DeserializeObject<JObject>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
 
             // NPC
-            modelBuilder.Entity<Npc>().Property(c => c.NoteableEvents).HasConversion(
-               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               valueComparer);
+            // modelBuilder.Entity<Npc>().Property(c => c.NoteableEvents).HasConversion(
+            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    valueComparer);
 
-            modelBuilder.Entity<Npc>().Property(c => c.Beliefs).HasConversion(
-               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               valueComparer);
+            // modelBuilder.Entity<Npc>().Property(c => c.Beliefs).HasConversion(
+            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    valueComparer);
 
-            modelBuilder.Entity<Npc>().Property(c => c.Passions).HasConversion(
-               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               valueComparer);
+            // modelBuilder.Entity<Npc>().Property(c => c.Passions).HasConversion(
+            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    valueComparer);
 
-            modelBuilder.Entity<Npc>().Property(c => c.Flaws).HasConversion(
-               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-               valueComparer);
+            // modelBuilder.Entity<Npc>().Property(c => c.Flaws).HasConversion(
+            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+            //    valueComparer);
 
             // Map
             modelBuilder.Entity<Map>().Property(c => c.Center).HasConversion(

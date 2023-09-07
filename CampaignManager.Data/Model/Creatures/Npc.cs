@@ -10,10 +10,10 @@ namespace CampaignManager.Data.Model.Creatures
     {
         public string Name { get; set; } = string.Empty;
         public string Background { get; set; } = string.Empty;
-        public JArray? NoteableEvents { get; set; } = new JArray();
-        public JArray? Beliefs { get; set; } = new JArray();
-        public JArray? Passions { get; set; } = new JArray();
-        public JArray? Flaws { get; set; } = new JArray();
+        public string? NoteableEvents { get; set; } = string.Empty;
+        public string? Beliefs { get; set; } = string.Empty;
+        public string? Passions { get; set; } = string.Empty;
+        public string? Flaws { get; set; } = string.Empty;
         public string Picture { get; set; } = string.Empty;
         public Guid? MonsterId { get; set; }
         public Monster? Monster { get; set; }
