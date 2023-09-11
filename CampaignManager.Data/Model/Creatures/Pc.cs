@@ -2,6 +2,7 @@
 using CampaignManager.Data.Model.Locations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.Data.Model.Creatures
 {
@@ -19,6 +20,7 @@ namespace CampaignManager.Data.Model.Creatures
         public Locale? Locale { get; set; }
         public Guid? BuildingId { get; set; }
         public Building? Building { get; set; }
-
+        public Guid? PlayerId { get; set; }
+        public Account? Player { get; set; }
     }
 }
