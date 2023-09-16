@@ -71,10 +71,10 @@ namespace CampaignManager.Data.Repositories
                 }
                 else if (operations.Count > 0)
                 {
-                    query += $" {(initial ? "" : gate)} {operations[0]}";
+                    query += $"{(initial ? "" : gate)} {operations[0]}";
                 }
 
-                return $"({query})";
+                return initial ? $"{query}" : $"({query})";
             }
             catch (Exception ex)
             {

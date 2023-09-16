@@ -30,7 +30,7 @@ namespace CampaignManager.API.Controllers
             return "Running";
         }
 
-        protected ActionResult<List<T>> GetGen(ListingFilterParameters<T> parameters)
+        protected virtual ActionResult<List<T>> GetGen(ListingFilterParameters<T> parameters)
         {
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()

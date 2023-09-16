@@ -3,11 +3,12 @@ using CampaignManager.Data.Model.Locations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using CampaignManager.Data.Model.Auth;
+using CampaignManager.Data.Model.Games;
 
 namespace CampaignManager.Data.Model.Creatures
 {
     [Table("pcs")]
-    public class Pc : Creature
+    public class Pc : Creature, ICampaignBase
     {
         public string PcName { get; set; } = string.Empty;
         public int Level = 1;
@@ -16,6 +17,8 @@ namespace CampaignManager.Data.Model.Creatures
         public string Race { get; set; } = string.Empty;
         public int Xp = 0;
         public bool Inspiration = false;
+        public Guid CampaignId { get; set; }
+        public Campaign? Campaign { get; set; }
         public Guid? LocaleId { get; set; }
         public Locale? Locale { get; set; }
         public Guid? BuildingId { get; set; }

@@ -12,37 +12,37 @@ using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.API.Controllers
 {
-    [Route("[controller]"), Authorize]
+    [Route("{campaignId}/[controller]"), Authorize]
     [ApiController]
-    public class PcsController : GenericController<Pc>
+    public class PcsController : CampaignContextController<Pc>
     {
         public PcsController(IConfiguration configuration) : base(configuration) { }
 
         // GET: api/Pcs
         [HttpGet]
-        public ActionResult<List<Pc>> GetPcs([FromQuery] ListingFilterParameters<Pc> query)
+        public ActionResult<List<Pc>> GetPcs(Guid campaignId, [FromQuery] ListingFilterParameters<Pc> query)
         {
-            return GetGen(query);
+            return GetGen(campaignId, query);
         }
 
         // GET: api/Pc/5
-        [HttpGet("{id}")]
-        public ActionResult<Pc> GetPcById(Guid id, [FromQuery] FilterParameters<Pc> query)
+        [HttpGet("{pcId}")]
+        public ActionResult<Pc> GetPcById(Guid campaignId, Guid pcId, [FromQuery] FilterParameters<Pc> query)
         {
-            return GetGen(id, query);
+            return GetGen(pcId, query);
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult<Pc> UpdatePc(Guid id, [FromBody] JsonPatchDocument<Pc> patchDoc, [FromQuery] FilterParameters<Pc> query)
+        [HttpPatch("{pcId}")]
+        public ActionResult<Pc> UpdatePc(Guid campaignId, Guid pcId, [FromBody] JsonPatchDocument<Pc> patchDoc, [FromQuery] FilterParameters<Pc> query)
         {
-            return PatchGen(id, patchDoc, query);
+            return PatchGen(pcId, patchDoc, query);
         }
 
         // PUT: api/Pc/5
-        [HttpPut("{id}")]
-        public IActionResult UpdatePc(Guid id, Pc pc)
+        [HttpPut("{pcId}")]
+        public IActionResult UpdatePc(Guid campaignId, Guid pcId, Pc pc)
         {
-            return PutGen(id, pc);
+            return PutGen(pcId, pc);
         }
 
         // POST: api/Pc
@@ -52,15 +52,22 @@ namespace CampaignManager.API.Controllers
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
             Pc pc)
         {
-            pc.OwnerId = user.Id;
-            return PostGen(pc);
+            if (ValidateOwnership(pc.CampaignId, user))
+            {
+                pc.OwnerId = user.Id;
+                return PostGen(pc);
+            }
+            else
+            {
+                return Challenge();
+            }
         }
 
         // DELETE: api/Pc/5
-        [HttpDelete("{id}")]
-        public ActionResult<Pc> DeletePc(Guid id)
+        [HttpDelete("{pcId}")]
+        public ActionResult<Pc> DeletePc(Guid campaignId, Guid pcId)
         {
-            return DeleteGen(id);
+            return DeleteGen(pcId);
         }
 
         [HttpGet("[action]/{name}")]
