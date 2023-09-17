@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CampaignManager.Data.Model.Locations
 {
     [Table("locales")]
-    public class Locale : Owned, ILocation
+    public class Locale : Base, ILocation
     {
         public string Name { get; set; } = string.Empty;
         public Guid? RegionId { get; set; }

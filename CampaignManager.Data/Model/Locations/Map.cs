@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CampaignManager.Data.Model.Locations
 {
     [Table("maps")]
-    public class Map : Owned, ILocation
+    public class Map : Base, ILocation
     {
         public string Name { get; set; } = string.Empty;
         public string Variation { get; set; } = string.Empty;

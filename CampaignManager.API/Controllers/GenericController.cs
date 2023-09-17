@@ -11,6 +11,7 @@ using System.Linq.Dynamic.Core;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 using CampaignManager.Data.Model.Auth;
+using Microsoft.Identity.Client;
 
 namespace CampaignManager.API.Controllers
 {
@@ -30,7 +31,11 @@ namespace CampaignManager.API.Controllers
             return "Running";
         }
 
-        protected virtual ActionResult<List<T>> GetGen(ListingFilterParameters<T> parameters)
+        protected virtual ActionResult<List<T>> GetGen(Guid accountId, ListingFilterParameters<T> parameters)
+            => GetGenQuery(accountId, parameters).ToDynamicList<T>();
+
+
+        protected virtual IQueryable<T> GetGenQuery(Guid accountId, ListingFilterParameters<T> parameters)
         {
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(parameters, options: new JsonSerializerOptions()
@@ -39,27 +44,26 @@ namespace CampaignManager.API.Controllers
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 }
             ));
-            return UnitOfWork.Repository.Get(parameters).AsQueryable()
+            return UnitOfWork.Repository.Get(accountId, parameters).AsQueryable()
                 .Filter(parameters.Filter)
                 .OrderBy(parameters.OrderBy ?? "name")
-                .IncludeProperties<T>(parameters.IncludeProperties)
-                .ToDynamicList<T>();
+                .IncludeProperties<T>(parameters.IncludeProperties);
         }
 
-        protected ActionResult<T> GetGen(Guid id, FilterParameters<T> parameters)
+        protected ActionResult<T> GetGen(Guid accountId, Guid id, FilterParameters<T> parameters)
         {
-            T instance = UnitOfWork.Repository.GetById(id, parameters);
+            T instance = UnitOfWork.Repository.GetById(accountId, id, parameters);
 
             if (instance == null) return NotFound();
 
             return instance;
         }
 
-        protected ActionResult<T> PatchGen(Guid id, [FromBody] JsonPatchDocument<T> patchDoc, FilterParameters<T> parameters)
+        protected ActionResult<T> PatchGen(Guid accountId, Guid id, [FromBody] JsonPatchDocument<T> patchDoc, FilterParameters<T> parameters)
         {
             if (patchDoc != null)
             {
-                T instance = UnitOfWork.Repository.GetById(id, parameters);
+                T instance = UnitOfWork.Repository.GetById(accountId, id, parameters);
 
                 if (instance != null)
                 {
@@ -70,7 +74,7 @@ namespace CampaignManager.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                UnitOfWork.Repository.Update(instance);
+                UnitOfWork.Repository.Update(accountId, instance);
                 UnitOfWork.Save();
 
                 foreach (string prop in parameters.ExpandProperties)
@@ -86,22 +90,23 @@ namespace CampaignManager.API.Controllers
             }
         }
 
-        protected IActionResult PutGen(Guid id, T instance)
+        protected IActionResult PutGen(Guid accountId, Guid id, T instance)
         {
             if (id != instance.Id)
             {
                 return BadRequest();
             }
 
-            UnitOfWork.Repository.Update(instance);
+            UnitOfWork.Repository.Update(accountId, instance);
             UnitOfWork.Save();
 
             return NoContent();
         }
 
-        protected CreatedResult PostGen(T instance)
+        protected CreatedResult PostGen(Guid accountId, T instance)
         {
-            UnitOfWork.Repository.Insert(instance);
+            instance.OwnerId = accountId;
+            UnitOfWork.Repository.Insert(accountId, instance);
             int result = UnitOfWork.Save();
 
             if (result > 0)
@@ -114,15 +119,15 @@ namespace CampaignManager.API.Controllers
             }
         }
 
-        protected ActionResult<T> DeleteGen(Guid id)
+        protected ActionResult DeleteGen(Guid accountId, Guid id)
         {
-            T instance = UnitOfWork.Repository.GetById(id);
+            T instance = UnitOfWork.Repository.GetById(accountId, id);
             if (instance == null)
             {
                 return NotFound();
             }
 
-            UnitOfWork.Repository.Delete(instance);
+            UnitOfWork.Repository.Delete(accountId, instance);
             UnitOfWork.Save();
 
             return NoContent();

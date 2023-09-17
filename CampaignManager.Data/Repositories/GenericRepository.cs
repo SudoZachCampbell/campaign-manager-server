@@ -16,41 +16,47 @@ namespace CampaignManager.Data.Repositories
             dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(ListingFilterParameters<TEntity> parameters)
+        public virtual IEnumerable<TEntity> Get(Guid accountId, ListingFilterParameters<TEntity> parameters)
+            => GetQuery(accountId, parameters).ToList();
+
+
+
+        protected virtual IQueryable<TEntity> GetQuery(Guid accountId, ListingFilterParameters<TEntity> parameters)
         {
-            IQueryable<TEntity> query = dbSet;
+            IQueryable<TEntity> query = dbSet.Where(entity => entity.OwnerId == accountId);
 
             query = Expand(query, parameters.ExpandProperties)
                     .Skip((parameters.Page - 1) * parameters.PageSize)
                     .Take(parameters.PageSize);
 
-            return query.ToList();
+            return query;
         }
 
-        public virtual TEntity GetById(Guid id) => dbSet.SingleOrDefault(x => x.Id == id);
+        public virtual TEntity GetById(Guid accountId, Guid entityId) =>
+            dbSet.Where(entity => entity.OwnerId == accountId).SingleOrDefault(x => x.Id == entityId);
 
 
-
-        public virtual TEntity GetById(Guid id, FilterParameters<TEntity> parameters)
+        public virtual TEntity GetById(Guid accountId, Guid entityId, FilterParameters<TEntity> parameters)
         {
-            IQueryable<TEntity> query = dbSet;
+            IQueryable<TEntity> query = dbSet.Where(entity => entity.OwnerId == accountId);
 
             query = Expand(query, parameters.ExpandProperties);
-            return query.SingleOrDefault(x => x.Id == id);
+            return query.SingleOrDefault(entity => entity.Id == entityId);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual void Insert(Guid accountId, TEntity entity)
         {
             dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
+
+        public virtual void Delete(Guid accountId, Guid entityId)
         {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
+            TEntity entityToDelete = GetById(accountId, entityId);
+            Delete(accountId, entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public virtual void Delete(Guid accountId, TEntity entityToDelete)
         {
             if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
@@ -59,11 +65,12 @@ namespace CampaignManager.Data.Repositories
             dbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public virtual void Update(Guid accountId, TEntity entityToUpdate)
         {
             dbSet.Attach(entityToUpdate);
             _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
+
         public IEnumerable<string> GetEnum(string name)
         {
             return Enum.GetNames(Type.GetType($"{typeof(TEntity).Namespace}.{name}")).ToList();
@@ -97,7 +104,6 @@ namespace CampaignManager.Data.Repositories
             }
             return query;
         }
-
     }
 }
 

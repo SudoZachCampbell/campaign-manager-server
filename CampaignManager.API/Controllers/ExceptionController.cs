@@ -17,6 +17,7 @@ namespace CampaignManager.API.Controllers
             { "ArgumentException", 400 },
             { "InvalidEnumArgumentException", 400 },
             { "AuthenticationException", 401 },
+            { "AccessViolationException", 403 },
             { "Exception", 500 },
             { "InvalidOperationException", 422 },
             { "OutOfMemoryException", 508 }

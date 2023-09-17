@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 namespace CampaignManager.Data.Model.Creatures
 {
     [Table("npcs")]
-    public class Npc : Owned, IOwned
+    public class Npc : Base, IBase
     {
         public string Name { get; set; } = string.Empty;
         public string Background { get; set; } = string.Empty;

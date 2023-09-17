@@ -8,7 +8,7 @@ using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.Data.Model.Creatures
 {
-    public class Creature : Owned, ICreature
+    public class Creature : Base, ICreature
     {
         public string Name { get; set; } = string.Empty;
         public int Strength { get; set; } = 10;

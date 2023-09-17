@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CampaignManager.Data.Model.Items
 {
     [Table("items")]
-    public class Item : Owned, IItem
+    public class Item : Base, IItem
     {
         public string Name { get; set; } = string.Empty;
     }

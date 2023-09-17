@@ -5,7 +5,7 @@ using CampaignManager.Data.Model.Joins;
 namespace CampaignManager.Data.Model.Games
 {
     [Table("campaigns")]
-    public class Campaign : Owned
+    public class Campaign : Base
     {
         public string Name { get; set; }
         public CampaignType Type { get; set; }

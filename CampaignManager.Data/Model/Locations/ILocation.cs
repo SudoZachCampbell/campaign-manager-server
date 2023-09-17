@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CampaignManager.Data.Model.Locations
 {
-    public interface ILocation : IOwned
+    public interface ILocation : IBase
     {
 
     }

@@ -13,7 +13,7 @@ namespace CampaignManager.API.Controllers
 {
     [Route("[controller]"), Authorize]
     [ApiController]
-    public class CampaignsController : OwnedController<Campaign>
+    public class CampaignsController : GenericController<Campaign>
     {
         public CampaignsController(IConfiguration configuration) : base(configuration) { }
 
@@ -23,27 +23,33 @@ namespace CampaignManager.API.Controllers
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
             [FromQuery] ListingFilterParameters<Campaign> query)
         {
-            return GetGenOwned(user, query);
+            return GetGen(user.Id, query);
         }
 
         // GET: api/campaign/5
         [HttpGet("{id}")]
-        public ActionResult<Campaign> GetCampaignById(Guid id, [FromQuery] FilterParameters<Campaign> query)
+        public ActionResult<Campaign> GetCampaignById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id, [FromQuery] FilterParameters<Campaign> query)
         {
-            return GetGen(id, query);
+            return GetGen(user.Id, id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Campaign> UpdateCampaign(Guid id, [FromBody] JsonPatchDocument<Campaign> patchDoc, [FromQuery] FilterParameters<Campaign> query)
+        public ActionResult<Campaign> UpdateCampaign(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id, [FromBody] JsonPatchDocument<Campaign> patchDoc, [FromQuery] FilterParameters<Campaign> query)
         {
-            return PatchGen(id, patchDoc, query);
+            return PatchGen(user.Id, id, patchDoc, query);
         }
 
         // PUT: api/campaign/5
         [HttpPut("{id}")]
-        public IActionResult UpdateCampaign(Guid id, Campaign monster)
+        public IActionResult UpdateCampaign(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id, Campaign monster)
         {
-            return PutGen(id, monster);
+            return PutGen(user.Id, id, monster);
         }
 
         // POST: api/campaign
@@ -54,14 +60,16 @@ namespace CampaignManager.API.Controllers
             Campaign campaign)
         {
             campaign.OwnerId = user.Id;
-            return PostGen(campaign);
+            return PostGen(user.Id, campaign);
         }
 
         // DELETE: api/campaign/5
         [HttpDelete("{id}")]
-        public ActionResult<Campaign> DeleteCampaign(Guid id)
+        public ActionResult<Campaign> DeleteCampaign(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id)
         {
-            return DeleteGen(id);
+            return DeleteGen(user.Id, id);
         }
 
         [HttpGet("[action]/{name}")]

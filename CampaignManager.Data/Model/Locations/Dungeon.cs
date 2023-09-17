@@ -3,7 +3,7 @@
 namespace CampaignManager.Data.Model.Locations
 {
     [Table("dungeons")]
-    public class Dungeon : Owned, ILocation
+    public class Dungeon : Base, ILocation
     {
         public string Name { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;

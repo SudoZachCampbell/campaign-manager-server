@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CampaignManager.Data.Model.Items
 {
-    interface IItem : IOwned
+    interface IItem : IBase
     {
 
     }

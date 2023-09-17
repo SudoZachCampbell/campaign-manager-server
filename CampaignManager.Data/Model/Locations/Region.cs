@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CampaignManager.Data.Model.Locations
 {
     [Table("regions")]
-    public class Region : Owned, ILocation
+    public class Region : Base, ILocation
     {
         public string Name { get; set; } = string.Empty;
         public List<Locale>? Locales { get; set; }

@@ -3,7 +3,7 @@ using CampaignManager.Data.Model.Games;
 
 namespace CampaignManager.Data.Repositories
 {
-    public class CampaignContextUnitOfWork<T> : UnitOfWork<T> where T : class, IOwned, ICampaignBase
+    public class CampaignContextUnitOfWork<T> : UnitOfWork<T> where T : class, IBase, ICampaignBase
     {
         public override CampaignContextRepository<T> Repository
         {
