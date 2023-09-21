@@ -1,72 +1,75 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using CampaignManager.Data.Model.Locations;
-using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
+using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using CampaignManager.API.ModelBinder;
+using CampaignManager.Data.Model.Auth;
+using CampaignManager.Data.Model.Locations;
 
 namespace CampaignManager.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("{campaignId}/[controller]"), Authorize]
     [ApiController]
-    public class RegionsController : GenericController<Region>
+    public class RegionsController : CampaignContextController<Region>
     {
         public RegionsController(IConfiguration configuration) : base(configuration) { }
-        // GET: api/Region
-        [HttpGet("Continent/{continentId}")]
-        public ActionResult<List<Region>> GetRegionsFromContinent(Guid continentId, [FromQuery] ListingFilterParameters<Region> parameters)
+
+        // GET: api/Regions
+        [HttpGet]
+        public ActionResult<IEnumerable<Region>> GetRegions(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, [FromQuery] ListingFilterParameters<Region> query)
         {
-            parameters.Filter = $"continentId|eq|{continentId}";
-            return UnitOfWork.Repository.Get(parameters).ToList();
+            return GetGen(user.Id, campaignId, query);
         }
 
         // GET: api/Region/5
-        [HttpGet("{id}")]
-        public ActionResult<Region> GetRegionById(Guid id, [FromQuery] FilterParameters<Region> query)
+        [HttpGet("{regionId}")]
+        public ActionResult<Region> GetRegionById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid regionId, [FromQuery] FilterParameters<Region> query)
         {
-            return GetGen(id, query);
+            return GetGenById(user.Id, campaignId, regionId, query);
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult<Region> PatchRegion(Guid id, [FromBody] JsonPatchDocument<Region> patchDoc, [FromQuery] FilterParameters<Region> query)
+        [HttpPatch("{regionId}")]
+        public ActionResult<Region> UpdateRegion(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid regionId, [FromBody] JsonPatchDocument<Region> patchDoc, [FromQuery] FilterParameters<Region> query)
         {
-            return PatchGen(id, patchDoc, query);
+            return PatchGen(user.Id, campaignId, regionId, patchDoc, query);
         }
 
         // PUT: api/Region/5
-        [HttpPut("{id}")]
-        public IActionResult PutRegion(Guid id, Region region)
+        [HttpPut("{regionId}")]
+        public IActionResult UpdateRegion(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid regionId, Region region)
         {
-            return PutGen(id, region);
+            return PutGen(user.Id, campaignId, regionId, region);
         }
 
         // POST: api/Region
         [HttpPost]
-        public ActionResult<Region> PostRegion(Region region)
+        [ProducesResponseType(201)]
+        public ActionResult<Guid> CreateRegion(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Region region)
         {
-            return PostGen(region);
+            return PostGen(user.Id, campaignId, region);
         }
 
         // DELETE: api/Region/5
-        [HttpDelete("{id}")]
-        public ActionResult<Region> DeleteRegion(Guid id)
+        [HttpDelete("{regionId}")]
+        public ActionResult<Region> DeleteRegion(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid regionId)
         {
-            return DeleteGen(id);
+            return DeleteGen(user.Id, campaignId, regionId);
         }
-
-        // [HttpGet("[action]")]
-        // public ActionResult<dynamic> GetTable()
-        // {
-        //     dynamic regions = UnitOfWork.Repository.Get()
-        //         .Select(m => new
-        //         {
-        //             id = m.Id,
-        //             name = m.Name
-        //         }).ToList();
-        //     return regions;
-        // }
 
         [HttpGet("[action]/{name}")]
         public ActionResult<List<string>> GetEnum(string name)

@@ -19,29 +19,37 @@ namespace CampaignManager.API.Controllers
 
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Monster>> GetMonsters([FromQuery] ListingFilterParameters<Monster> query)
+        public ActionResult<List<Monster>> GetMonsters(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            [FromQuery] ListingFilterParameters<Monster> query)
         {
-            return GetGen(query);
+            return GetGen(user.Id, query);
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
-        public ActionResult<Monster> GetMonsterById(Guid id, [FromQuery] FilterParameters<Monster> query)
+        public ActionResult<Monster> GetMonsterById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id, [FromQuery] FilterParameters<Monster> query)
         {
-            return GetGen(id, query);
+            return GetGen(user.Id, id, query);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Monster> UpdateMonster(Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] FilterParameters<Monster> query)
+        public ActionResult<Monster> UpdateMonster(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] FilterParameters<Monster> query)
         {
-            return PatchGen(id, patchDoc, query);
+            return PatchGen(user.Id, id, patchDoc, query);
         }
 
         // PUT: api/Monster/5
         [HttpPut("{id}")]
-        public IActionResult UpdateMonster(Guid id, Monster monster)
+        public IActionResult UpdateMonster(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id, Monster monster)
         {
-            return PutGen(id, monster);
+            return PutGen(user.Id, id, monster);
         }
 
         // POST: api/Monster
@@ -52,14 +60,16 @@ namespace CampaignManager.API.Controllers
             Monster monster)
         {
             monster.OwnerId = user.Id;
-            return PostGen(monster);
+            return PostGen(user.Id, monster);
         }
 
         // DELETE: api/Monster/5
         [HttpDelete("{id}")]
-        public ActionResult<Monster> DeleteMonster(Guid id)
+        public ActionResult<Monster> DeleteMonster(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid id)
         {
-            return DeleteGen(id);
+            return DeleteGen(user.Id, id);
         }
 
         // [HttpGet("[action]")]

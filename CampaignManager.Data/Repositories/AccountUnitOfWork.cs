@@ -1,20 +1,46 @@
 ﻿using CampaignManager.Data.Contexts;
 using System;
 using CampaignManager.Data.Model;
-using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.Data.Repositories
 {
-    public class AccountUnitOfWork : UnitOfWork<Account>
+    public class AccountUnitOfWork : IDisposable
     {
-        public override AccountRepository Repository
+        protected DDContext Context = new DDContext();
+        protected AccountRepository Repo;
+
+
+        public virtual AccountRepository Repository
         {
             get
             {
-                return (AccountRepository)Repo ?? new AccountRepository(Context);
+                return Repo ?? new AccountRepository(Context);
             }
         }
 
 
+        public int Save()
+        {
+            return Context.SaveChanges();
+        }
+
+        private bool Disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.Disposed)
+            {
+                if (disposing)
+                {
+                    Context.Dispose();
+                }
+            }
+            this.Disposed = true;
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

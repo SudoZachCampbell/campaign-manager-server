@@ -26,7 +26,7 @@ namespace CampaignManager.API.Middleware
             {
                 var token = new JwtSecurityToken(tokenString);
                 Guid accountId = new(token.Claims.FirstOrDefault(claim => claim.Type == "sub").Value);
-                if (UnitOfWork.Repository.GetById(accountId, accountId) == null)
+                if (UnitOfWork.Repository.GetById(accountId) == null)
                 {
                     context.Response.ContentType = "application/json";
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;

@@ -2,7 +2,7 @@
 
 namespace CampaignManager.Data.Model.Auth
 {
-    public interface IAccount : IBase
+    public interface IAccount
     {
     }
 }

@@ -1,47 +1,55 @@
-﻿using System;
-using CampaignManager.Data.Model.Creatures;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
+using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using CampaignManager.API.ModelBinder;
 using CampaignManager.Data.Model.Auth;
+using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.API.Controllers
 {
-    [Route("[controller]"), Authorize]
+    [Route("{campaignId}/[controller]"), Authorize]
     [ApiController]
-    public class NpcsController : GenericController<Npc>
+    public class NpcsController : CampaignContextController<Npc>
     {
         public NpcsController(IConfiguration configuration) : base(configuration) { }
 
         // GET: api/Npcs
         [HttpGet]
-        public ActionResult<List<Npc>> GetNpcs([FromQuery] ListingFilterParameters<Npc> query)
+        public ActionResult<IEnumerable<Npc>> GetNpcs(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, [FromQuery] ListingFilterParameters<Npc> query)
         {
-            return GetGen(query);
+            return GetGen(user.Id, campaignId, query);
         }
 
         // GET: api/Npc/5
-        [HttpGet("{id}")]
-        public ActionResult<Npc> GetNpcById(Guid id, [FromQuery] FilterParameters<Npc> query)
+        [HttpGet("{npcId}")]
+        public ActionResult<Npc> GetNpcById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid npcId, [FromQuery] FilterParameters<Npc> query)
         {
-            return GetGen(id, query);
+            return GetGenById(user.Id, campaignId, npcId, query);
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult<Npc> UpdateNpc(Guid id, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] FilterParameters<Npc> query)
+        [HttpPatch("{npcId}")]
+        public ActionResult<Npc> UpdateNpc(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid npcId, [FromBody] JsonPatchDocument<Npc> patchDoc, [FromQuery] FilterParameters<Npc> query)
         {
-            return PatchGen(id, patchDoc, query);
+            return PatchGen(user.Id, campaignId, npcId, patchDoc, query);
         }
 
         // PUT: api/Npc/5
-        [HttpPut("{id}")]
-        public IActionResult UpdateNpc(Guid id, Npc npc)
+        [HttpPut("{npcId}")]
+        public IActionResult UpdateNpc(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid npcId, Npc npc)
         {
-            return PutGen(id, npc);
+            return PutGen(user.Id, campaignId, npcId, npc);
         }
 
         // POST: api/Npc
@@ -49,17 +57,18 @@ namespace CampaignManager.API.Controllers
         [ProducesResponseType(201)]
         public ActionResult<Guid> CreateNpc(
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Npc npc)
+            Guid campaignId, Npc npc)
         {
-            npc.OwnerId = user.Id;
-            return PostGen(npc);
+            return PostGen(user.Id, campaignId, npc);
         }
 
         // DELETE: api/Npc/5
-        [HttpDelete("{id}")]
-        public ActionResult<Npc> DeleteNpc(Guid id)
+        [HttpDelete("{npcId}")]
+        public ActionResult<Npc> DeleteNpc(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid npcId)
         {
-            return DeleteGen(id);
+            return DeleteGen(user.Id, campaignId, npcId);
         }
 
         [HttpGet("[action]/{name}")]

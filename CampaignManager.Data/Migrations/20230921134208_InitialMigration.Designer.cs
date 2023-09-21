@@ -16,7 +16,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CampaignManager.Data.Migrations
 {
     [DbContext(typeof(DDContext))]
-    [Migration("20230904161308_InitialMigration")]
+    [Migration("20230921134208_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -156,12 +156,6 @@ namespace CampaignManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Alignment")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ArmorClass")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Background")
                         .IsRequired()
                         .HasColumnType("text");
@@ -172,30 +166,10 @@ namespace CampaignManager.Data.Migrations
                     b.Property<Guid?>("BuildingId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Charisma")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Constitution")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Dexterity")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Flaws")
-                        .HasColumnType("text");
-
-                    b.Property<string>("HitDice")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Intelligence")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Languages")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid?>("LocaleId")
@@ -221,27 +195,11 @@ namespace CampaignManager.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<List<Proficiencies>>("Proficiencies")
-                        .HasColumnType("jsonb");
-
-                    b.Property<List<CreatureAction>>("Reactions")
-                        .HasColumnType("jsonb");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("integer");
-
-                    b.Property<List<Speed>>("Speed")
-                        .HasColumnType("jsonb");
-
-                    b.Property<int>("Strength")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Wisdom")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BuildingId");
+
+                    b.HasIndex("CampaignId");
 
                     b.HasIndex("LocaleId");
 
@@ -252,7 +210,7 @@ namespace CampaignManager.Data.Migrations
                     b.ToTable("npcs");
                 });
 
-            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Player", b =>
+            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Pc", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -271,9 +229,8 @@ namespace CampaignManager.Data.Migrations
                     b.Property<Guid?>("BuildingId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("CharacterName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Charisma")
                         .HasColumnType("integer");
@@ -312,13 +269,16 @@ namespace CampaignManager.Data.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("PcName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Picture")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PlayerName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid?>("PlayerId")
+                        .HasColumnType("uuid");
 
                     b.Property<List<Proficiencies>>("Proficiencies")
                         .HasColumnType("jsonb");
@@ -346,11 +306,15 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasIndex("BuildingId");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("LocaleId");
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("players");
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("pcs");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Games.Campaign", b =>
@@ -488,6 +452,9 @@ namespace CampaignManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("LocaleId")
                         .HasColumnType("uuid");
 
@@ -504,6 +471,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("LocaleId");
 
                     b.HasIndex("OwnerId");
@@ -515,6 +484,9 @@ namespace CampaignManager.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CampaignId")
                         .HasColumnType("uuid");
 
                     b.Property<byte[]>("Map")
@@ -529,6 +501,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("OwnerId");
 
                     b.ToTable("continents");
@@ -541,6 +515,9 @@ namespace CampaignManager.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("BuildingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CampaignId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("LocaleId")
@@ -564,6 +541,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasIndex("BuildingId");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("LocaleId");
 
                     b.HasIndex("OwnerId");
@@ -575,6 +554,9 @@ namespace CampaignManager.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CampaignId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -589,6 +571,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("RegionId");
@@ -600,6 +584,9 @@ namespace CampaignManager.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CampaignId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Center")
@@ -625,6 +612,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CampaignId");
+
                     b.HasIndex("LocaleId");
 
                     b.HasIndex("OwnerId");
@@ -636,6 +625,9 @@ namespace CampaignManager.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CampaignId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ContinentId")
@@ -653,6 +645,8 @@ namespace CampaignManager.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
 
                     b.HasIndex("ContinentId");
 
@@ -706,6 +700,12 @@ namespace CampaignManager.Data.Migrations
                         .HasForeignKey("BuildingId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Locations.Locale", "Locale")
                         .WithMany("Npcs")
                         .HasForeignKey("LocaleId")
@@ -724,6 +724,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.Navigation("Building");
 
+                    b.Navigation("Campaign");
+
                     b.Navigation("Locale");
 
                     b.Navigation("Monster");
@@ -731,15 +733,21 @@ namespace CampaignManager.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Player", b =>
+            modelBuilder.Entity("CampaignManager.Data.Model.Creatures.Pc", b =>
                 {
                     b.HasOne("CampaignManager.Data.Model.Locations.Building", "Building")
-                        .WithMany("Players")
+                        .WithMany("Pcs")
                         .HasForeignKey("BuildingId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Locations.Locale", "Locale")
-                        .WithMany("Players")
+                        .WithMany("Pcs")
                         .HasForeignKey("LocaleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -749,11 +757,19 @@ namespace CampaignManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CampaignManager.Data.Model.Auth.Account", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId");
+
                     b.Navigation("Building");
+
+                    b.Navigation("Campaign");
 
                     b.Navigation("Locale");
 
                     b.Navigation("Owner");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Games.Campaign", b =>
@@ -875,6 +891,12 @@ namespace CampaignManager.Data.Migrations
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Building", b =>
                 {
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Locations.Locale", "Locale")
                         .WithMany("Buildings")
                         .HasForeignKey("LocaleId");
@@ -885,6 +907,8 @@ namespace CampaignManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Campaign");
+
                     b.Navigation("Locale");
 
                     b.Navigation("Owner");
@@ -892,11 +916,19 @@ namespace CampaignManager.Data.Migrations
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Continent", b =>
                 {
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Auth.Account", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Campaign");
 
                     b.Navigation("Owner");
                 });
@@ -906,6 +938,12 @@ namespace CampaignManager.Data.Migrations
                     b.HasOne("CampaignManager.Data.Model.Locations.Building", "Building")
                         .WithMany()
                         .HasForeignKey("BuildingId");
+
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CampaignManager.Data.Model.Locations.Locale", "Locale")
                         .WithMany("Dungeons")
@@ -919,6 +957,8 @@ namespace CampaignManager.Data.Migrations
 
                     b.Navigation("Building");
 
+                    b.Navigation("Campaign");
+
                     b.Navigation("Locale");
 
                     b.Navigation("Owner");
@@ -926,6 +966,12 @@ namespace CampaignManager.Data.Migrations
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Locale", b =>
                 {
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Auth.Account", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
@@ -936,6 +982,8 @@ namespace CampaignManager.Data.Migrations
                         .WithMany("Locales")
                         .HasForeignKey("RegionId");
 
+                    b.Navigation("Campaign");
+
                     b.Navigation("Owner");
 
                     b.Navigation("Region");
@@ -943,6 +991,12 @@ namespace CampaignManager.Data.Migrations
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Map", b =>
                 {
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Locations.Locale", "Locale")
                         .WithMany("Maps")
                         .HasForeignKey("LocaleId")
@@ -955,6 +1009,8 @@ namespace CampaignManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Campaign");
+
                     b.Navigation("Locale");
 
                     b.Navigation("Owner");
@@ -962,6 +1018,12 @@ namespace CampaignManager.Data.Migrations
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Region", b =>
                 {
+                    b.HasOne("CampaignManager.Data.Model.Games.Campaign", "Campaign")
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CampaignManager.Data.Model.Locations.Continent", "Continent")
                         .WithMany("Regions")
                         .HasForeignKey("ContinentId");
@@ -971,6 +1033,8 @@ namespace CampaignManager.Data.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Campaign");
 
                     b.Navigation("Continent");
 
@@ -1004,7 +1068,7 @@ namespace CampaignManager.Data.Migrations
 
                     b.Navigation("Npcs");
 
-                    b.Navigation("Players");
+                    b.Navigation("Pcs");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Continent", b =>
@@ -1024,7 +1088,7 @@ namespace CampaignManager.Data.Migrations
 
                     b.Navigation("Npcs");
 
-                    b.Navigation("Players");
+                    b.Navigation("Pcs");
                 });
 
             modelBuilder.Entity("CampaignManager.Data.Model.Locations.Map", b =>

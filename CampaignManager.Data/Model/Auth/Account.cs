@@ -13,8 +13,10 @@ using CampaignManager.Data.Model.Creatures;
 namespace CampaignManager.Data.Model.Auth
 {
     [Table("accounts")]
-    public class Account : Base, IAccount
+    public class Account : IAccount
     {
+        [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
         public string Username { get; set; }
         [Required]

@@ -1,73 +1,75 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using CampaignManager.Data.Model.Locations;
-using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
+using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using CampaignManager.API.ModelBinder;
+using CampaignManager.Data.Model.Auth;
+using CampaignManager.Data.Model.Locations;
 
 namespace CampaignManager.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("{campaignId}/[controller]"), Authorize]
     [ApiController]
-    public class BuildingsController : GenericController<Building>
+    public class BuildingsController : CampaignContextController<Building>
     {
         public BuildingsController(IConfiguration configuration) : base(configuration) { }
 
-        // GET: api/Building
-        [HttpGet("Locale/{localeId}")]
-        public ActionResult<List<Building>> GetBuildingsFromLocale(Guid localeId, [FromQuery] ListingFilterParameters<Building> parameters)
+        // GET: api/Buildings
+        [HttpGet]
+        public ActionResult<IEnumerable<Building>> GetBuildings(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, [FromQuery] ListingFilterParameters<Building> query)
         {
-            parameters.Filter = $"localId|eq|{localeId}";
-            return UnitOfWork.Repository.Get(parameters).ToList();
+            return GetGen(user.Id, campaignId, query);
         }
 
         // GET: api/Building/5
-        [HttpGet("{id}")]
-        public ActionResult<Building> GetBuildingById(Guid id, [FromQuery] FilterParameters<Building> query)
+        [HttpGet("{buildingId}")]
+        public ActionResult<Building> GetBuildingById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid buildingId, [FromQuery] FilterParameters<Building> query)
         {
-            return GetGen(id, query);
+            return GetGenById(user.Id, campaignId, buildingId, query);
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult<Building> PatchBuilding(Guid id, [FromBody] JsonPatchDocument<Building> patchDoc, [FromQuery] FilterParameters<Building> query)
+        [HttpPatch("{buildingId}")]
+        public ActionResult<Building> UpdateBuilding(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid buildingId, [FromBody] JsonPatchDocument<Building> patchDoc, [FromQuery] FilterParameters<Building> query)
         {
-            return PatchGen(id, patchDoc, query);
+            return PatchGen(user.Id, campaignId, buildingId, patchDoc, query);
         }
 
         // PUT: api/Building/5
-        [HttpPut("{id}")]
-        public IActionResult PutBuilding(Guid id, Building building)
+        [HttpPut("{buildingId}")]
+        public IActionResult UpdateBuilding(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid buildingId, Building building)
         {
-            return PutGen(id, building);
+            return PutGen(user.Id, campaignId, buildingId, building);
         }
 
         // POST: api/Building
         [HttpPost]
-        public ActionResult<Building> PostBuilding(Building building)
+        [ProducesResponseType(201)]
+        public ActionResult<Guid> CreateBuilding(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Building building)
         {
-            return PostGen(building);
+            return PostGen(user.Id, campaignId, building);
         }
 
         // DELETE: api/Building/5
-        [HttpDelete("{id}")]
-        public ActionResult<Building> DeleteBuilding(Guid id)
+        [HttpDelete("{buildingId}")]
+        public ActionResult<Building> DeleteBuilding(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+            Guid campaignId, Guid buildingId)
         {
-            return DeleteGen(id);
+            return DeleteGen(user.Id, campaignId, buildingId);
         }
-
-        // [HttpGet("[action]")]
-        // public ActionResult<dynamic> GetTable()
-        // {
-        //     dynamic buildings = UnitOfWork.Repository.Get()
-        //         .Select(m => new
-        //         {
-        //             id = m.Id,
-        //             name = m.Name
-        //         }).ToList();
-        //     return buildings;
-        // }
 
         [HttpGet("[action]/{name}")]
         public ActionResult<List<string>> GetEnum(string name)

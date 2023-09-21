@@ -50,7 +50,7 @@
       "extensionCode": "nswag.extensions.ts",
       "generateDefaultValues": true,
       "excludedTypeNames": [],
-      "excludedParameterNames": [],
+      "excludedParameterNames": ["Authorization"],
       "handleReferences": false,
       "generateTypeCheckFunctions": false,
       "generateConstructorInterface": false,

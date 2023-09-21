@@ -10,10 +10,14 @@ namespace CampaignManager.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AccountsController : GenericController<Account>
+    public class AccountsController : ControllerBase
     {
-        protected override AccountUnitOfWork UnitOfWork { get; } = new();
-        public AccountsController(IConfiguration configuration) : base(configuration) { }
+        protected AccountUnitOfWork UnitOfWork { get; } = new();
+        protected readonly IConfiguration Configuration;
+        public AccountsController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         // PUT: api/accounts/login
         [HttpPost("[action]")]
@@ -55,8 +59,17 @@ namespace CampaignManager.API.Controllers
                     return BadRequest("Email must be unique");
                 }
                 Account user = Account.FromCreate(createAttempt);
-                CreatedResult userResult = PostGen(user);
-                return Ok(Token.BuildToken(Configuration["Jwt:Key"], Configuration["Jwt:Issuer"], Configuration["Jwt:Audience"], user));
+                UnitOfWork.Repository.Insert(user);
+                int result = UnitOfWork.Save();
+
+                if (result > 0)
+                {
+                    return Ok(Token.BuildToken(Configuration["Jwt:Key"], Configuration["Jwt:Issuer"], Configuration["Jwt:Audience"], user));
+                }
+                else
+                {
+                    throw new Exception($"Error creating {user.GetType().Name}");
+                }
             }
             else
             {
@@ -74,7 +87,16 @@ namespace CampaignManager.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Account> DeleteAccount(Guid id)
         {
-            return DeleteGen(id);
+            UnitOfWork.Repository.Delete(id);
+            int result = UnitOfWork.Save();
+            if (result > 0)
+            {
+                return NoContent();
+            }
+            else
+            {
+                throw new Exception($"Error deleting Account {id}");
+            }
         }
     }
 }

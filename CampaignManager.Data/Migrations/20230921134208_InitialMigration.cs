@@ -55,26 +55,6 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "continents",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Map = table.Column<byte[]>(type: "bytea", nullable: true),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_continents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_continents_accounts_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "items",
                 columns: table => new
                 {
@@ -161,29 +141,30 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "regions",
+                name: "continents",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ContinentId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Map = table.Column<string>(type: "text", nullable: false),
+                    Map = table.Column<byte[]>(type: "bytea", nullable: true),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_regions", x => x.Id);
+                    table.PrimaryKey("PK_continents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_regions_accounts_OwnerId",
+                        name: "FK_continents_accounts_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_regions_continents_ContinentId",
-                        column: x => x.ContinentId,
-                        principalTable: "continents",
-                        principalColumn: "Id");
+                        name: "FK_continents_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,12 +192,46 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "regions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ContinentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Map = table.Column<string>(type: "text", nullable: false),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_regions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_regions_accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_regions_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_regions_continents_ContinentId",
+                        column: x => x.ContinentId,
+                        principalTable: "continents",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "locales",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     RegionId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -226,6 +241,12 @@ namespace CampaignManager.Data.Migrations
                         name: "FK_locales_accounts_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_locales_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -243,6 +264,7 @@ namespace CampaignManager.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     Map = table.Column<string>(type: "text", nullable: false),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -252,6 +274,12 @@ namespace CampaignManager.Data.Migrations
                         name: "FK_buildings_accounts_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_buildings_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -271,6 +299,7 @@ namespace CampaignManager.Data.Migrations
                     ImageUrl = table.Column<string>(type: "text", nullable: false),
                     Center = table.Column<string>(type: "text", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -280,6 +309,12 @@ namespace CampaignManager.Data.Migrations
                         name: "FK_maps_accounts_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_maps_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -324,6 +359,7 @@ namespace CampaignManager.Data.Migrations
                     Map = table.Column<byte[]>(type: "bytea", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -340,6 +376,12 @@ namespace CampaignManager.Data.Migrations
                         column: x => x.BuildingId,
                         principalTable: "buildings",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_dungeons_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_dungeons_locales_LocaleId",
                         column: x => x.LocaleId,
@@ -376,32 +418,18 @@ namespace CampaignManager.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     Background = table.Column<string>(type: "text", nullable: false),
                     NoteableEvents = table.Column<string>(type: "text", nullable: true),
                     Beliefs = table.Column<string>(type: "text", nullable: true),
                     Passions = table.Column<string>(type: "text", nullable: true),
                     Flaws = table.Column<string>(type: "text", nullable: true),
+                    Picture = table.Column<string>(type: "text", nullable: false),
                     MonsterId = table.Column<Guid>(type: "uuid", nullable: true),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Strength = table.Column<int>(type: "integer", nullable: false),
-                    Dexterity = table.Column<int>(type: "integer", nullable: false),
-                    Constitution = table.Column<int>(type: "integer", nullable: false),
-                    Intelligence = table.Column<int>(type: "integer", nullable: false),
-                    Wisdom = table.Column<int>(type: "integer", nullable: false),
-                    Charisma = table.Column<int>(type: "integer", nullable: false),
-                    Proficiencies = table.Column<List<Proficiencies>>(type: "jsonb", nullable: true),
-                    ArmorClass = table.Column<int>(type: "integer", nullable: false),
-                    HitPoints = table.Column<int>(type: "integer", nullable: false),
-                    HitDice = table.Column<string>(type: "text", nullable: false),
-                    Size = table.Column<int>(type: "integer", nullable: false),
-                    Speed = table.Column<List<Speed>>(type: "jsonb", nullable: true),
-                    Languages = table.Column<string>(type: "text", nullable: false),
-                    Alignment = table.Column<int>(type: "integer", nullable: false),
-                    Reactions = table.Column<List<CreatureAction>>(type: "jsonb", nullable: true),
-                    Picture = table.Column<string>(type: "text", nullable: false)
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -419,6 +447,12 @@ namespace CampaignManager.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_npcs_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_npcs_locales_LocaleId",
                         column: x => x.LocaleId,
                         principalTable: "locales",
@@ -433,17 +467,18 @@ namespace CampaignManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "players",
+                name: "pcs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CharacterName = table.Column<string>(type: "text", nullable: false),
-                    PlayerName = table.Column<string>(type: "text", nullable: false),
+                    PcName = table.Column<string>(type: "text", nullable: false),
                     Background = table.Column<string>(type: "text", nullable: false),
                     Faction = table.Column<string>(type: "text", nullable: false),
                     Race = table.Column<string>(type: "text", nullable: false),
+                    CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     LocaleId = table.Column<Guid>(type: "uuid", nullable: true),
                     BuildingId = table.Column<Guid>(type: "uuid", nullable: true),
+                    PlayerId = table.Column<Guid>(type: "uuid", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Strength = table.Column<int>(type: "integer", nullable: false),
@@ -465,21 +500,32 @@ namespace CampaignManager.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_players", x => x.Id);
+                    table.PrimaryKey("PK_pcs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_players_accounts_OwnerId",
+                        name: "FK_pcs_accounts_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_players_buildings_BuildingId",
+                        name: "FK_pcs_accounts_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "accounts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_pcs_buildings_BuildingId",
                         column: x => x.BuildingId,
                         principalTable: "buildings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_players_locales_LocaleId",
+                        name: "FK_pcs_campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_pcs_locales_LocaleId",
                         column: x => x.LocaleId,
                         principalTable: "locales",
                         principalColumn: "Id",
@@ -517,6 +563,11 @@ namespace CampaignManager.Data.Migrations
                 column: "CampaignId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_buildings_CampaignId",
+                table: "buildings",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_buildings_LocaleId",
                 table: "buildings",
                 column: "LocaleId");
@@ -542,6 +593,11 @@ namespace CampaignManager.Data.Migrations
                 column: "MonsterId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_continents_CampaignId",
+                table: "continents",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_continents_OwnerId",
                 table: "continents",
                 column: "OwnerId");
@@ -550,6 +606,11 @@ namespace CampaignManager.Data.Migrations
                 name: "IX_dungeons_BuildingId",
                 table: "dungeons",
                 column: "BuildingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_dungeons_CampaignId",
+                table: "dungeons",
+                column: "CampaignId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_dungeons_LocaleId",
@@ -567,6 +628,11 @@ namespace CampaignManager.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_locales_CampaignId",
+                table: "locales",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_locales_OwnerId",
                 table: "locales",
                 column: "OwnerId");
@@ -575,6 +641,11 @@ namespace CampaignManager.Data.Migrations
                 name: "IX_locales_RegionId",
                 table: "locales",
                 column: "RegionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_maps_CampaignId",
+                table: "maps",
+                column: "CampaignId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_maps_LocaleId",
@@ -607,6 +678,11 @@ namespace CampaignManager.Data.Migrations
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_npcs_CampaignId",
+                table: "npcs",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_npcs_LocaleId",
                 table: "npcs",
                 column: "LocaleId");
@@ -622,19 +698,34 @@ namespace CampaignManager.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_players_BuildingId",
-                table: "players",
+                name: "IX_pcs_BuildingId",
+                table: "pcs",
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_players_LocaleId",
-                table: "players",
+                name: "IX_pcs_CampaignId",
+                table: "pcs",
+                column: "CampaignId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pcs_LocaleId",
+                table: "pcs",
                 column: "LocaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_players_OwnerId",
-                table: "players",
+                name: "IX_pcs_OwnerId",
+                table: "pcs",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pcs_PlayerId",
+                table: "pcs",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_regions_CampaignId",
+                table: "regions",
+                column: "CampaignId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_regions_ContinentId",
@@ -675,13 +766,10 @@ namespace CampaignManager.Data.Migrations
                 name: "npcs");
 
             migrationBuilder.DropTable(
-                name: "players");
+                name: "pcs");
 
             migrationBuilder.DropTable(
                 name: "maps");
-
-            migrationBuilder.DropTable(
-                name: "campaigns");
 
             migrationBuilder.DropTable(
                 name: "monsters");
@@ -697,6 +785,9 @@ namespace CampaignManager.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "continents");
+
+            migrationBuilder.DropTable(
+                name: "campaigns");
 
             migrationBuilder.DropTable(
                 name: "accounts");

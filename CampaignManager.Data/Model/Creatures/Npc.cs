@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using CampaignManager.Data.Model.Games;
 using CampaignManager.Data.Model.Locations;
 using Newtonsoft.Json.Linq;
 
 namespace CampaignManager.Data.Model.Creatures
 {
     [Table("npcs")]
-    public class Npc : Base, IBase
+    public class Npc : Base, IBase, ICampaignBase
     {
         public string Name { get; set; } = string.Empty;
         public string Background { get; set; } = string.Empty;
@@ -21,5 +22,7 @@ namespace CampaignManager.Data.Model.Creatures
         public Locale? Locale { get; set; }
         public Guid? BuildingId { get; set; }
         public Building? Building { get; set; }
+        public Guid CampaignId { get; set; }
+        public Campaign? Campaign { get; set; }
     }
 }
