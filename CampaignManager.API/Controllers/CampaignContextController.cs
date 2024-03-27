@@ -22,7 +22,10 @@ namespace CampaignManager.API.Controllers
                 ? Ok(CampaignContextUnitOfWork.Repository.GetWithCampaign(accountId, campaignId, parameters))
                 : throw new AccessViolationException("You do not have access to this campaign");
 
-
+        protected ActionResult<T> GetSingleByCampaign(Guid accountId, Guid campaignId) =>
+            ValidateCampaignOwnership(accountId, campaignId)
+                ? Ok(CampaignContextUnitOfWork.Repository.GetSingleByCampaign(accountId, campaignId))
+            : throw new AccessViolationException("You do not have access to this campaign");
 
         protected ActionResult<T> GetGenById(Guid accountId, Guid campaignId, Guid entityId, FilterParameters<T> parameters) =>
             ValidateCampaignOwnership(accountId, campaignId)

@@ -26,6 +26,7 @@ namespace CampaignManager.Data.Contexts
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Continent> Continents { get; set; }
+        public DbSet<World> Worlds { get; set; }
         public DbSet<Dungeon> Dungeons { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }

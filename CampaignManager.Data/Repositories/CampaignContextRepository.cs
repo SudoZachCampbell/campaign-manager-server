@@ -26,10 +26,11 @@ namespace CampaignManager.Data.Repositories
         public virtual IEnumerable<TEntity> GetWithCampaign(Guid accountId, Guid campaignId, ListingFilterParameters<TEntity> parameters)
             => GetWithCampaignQuery(accountId, campaignId, parameters).ToList();
 
+        public virtual TEntity? GetSingleByCampaign(Guid accountId, Guid campaignId)
+            => GetWithCampaignQuery(accountId, campaignId)?.FirstOrDefault();
 
-        protected virtual IQueryable<TEntity> GetWithCampaignQuery(Guid accountId, Guid campaignId, ListingFilterParameters<TEntity> parameters)
+        protected virtual IQueryable<TEntity>? GetWithCampaignQuery(Guid accountId, Guid campaignId, ListingFilterParameters<TEntity> parameters = null)
             => GetQuery(accountId, parameters).Where(x => x.CampaignId == campaignId);
-
     }
 }
 
