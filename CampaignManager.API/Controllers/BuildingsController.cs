@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using CampaignManager.API.ModelBinder;
 using CampaignManager.Data.Model.Auth;
 using CampaignManager.Data.Model.Locations;
+using CampaignManager.API.Model.Auth;
+using AutoMapper;
+using CampaignManager.API.Model.Locations;
 
 namespace CampaignManager.API.Controllers
 {
@@ -15,60 +18,60 @@ namespace CampaignManager.API.Controllers
     [ApiController]
     public class BuildingsController : CampaignContextController<Building>
     {
-        public BuildingsController(IConfiguration configuration) : base(configuration) { }
+        public BuildingsController(IConfiguration configuration, IMapper mapper) : base(configuration, mapper) { }
 
         // GET: api/Buildings
         [HttpGet]
-        public ActionResult<IEnumerable<Building>> GetBuildings(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public IEnumerable<BuildingDto> GetBuildings(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, [FromQuery] ListingFilterParameters<Building> query)
         {
-            return GetGen(user.Id, campaignId, query);
+            return Mapper.Map<IEnumerable<BuildingDto>>(GetGen(user.Id, campaignId, query));
         }
 
         // GET: api/Building/5
         [HttpGet("{buildingId}")]
-        public ActionResult<Building> GetBuildingById(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public BuildingDto GetBuildingById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid buildingId, [FromQuery] FilterParameters<Building> query)
         {
-            return GetGenById(user.Id, campaignId, buildingId, query);
+            return Mapper.Map<BuildingDto>(GetGenById(user.Id, campaignId, buildingId, query));
         }
 
         [HttpPatch("{buildingId}")]
-        public ActionResult<Building> UpdateBuilding(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public BuildingDto UpdateBuilding(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid buildingId, [FromBody] JsonPatchDocument<Building> patchDoc, [FromQuery] FilterParameters<Building> query)
         {
-            return PatchGen(user.Id, campaignId, buildingId, patchDoc, query);
+            return Mapper.Map<BuildingDto>(PatchGen(user.Id, campaignId, buildingId, patchDoc, query));
         }
 
         // PUT: api/Building/5
         [HttpPut("{buildingId}")]
         public IActionResult UpdateBuilding(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Guid buildingId, Building building)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, Guid buildingId, BuildingDto building)
         {
-            return PutGen(user.Id, campaignId, buildingId, building);
+            return PutGen(user.Id, campaignId, buildingId, Mapper.Map<Building>(building));
         }
 
         // POST: api/Building
         [HttpPost]
         [ProducesResponseType(201)]
         public ActionResult<Guid> CreateBuilding(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Building building)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, BuildingDto building)
         {
-            return PostGen(user.Id, campaignId, building);
+            return PostGen(user.Id, campaignId, Mapper.Map<Building>(building));
         }
 
         // DELETE: api/Building/5
         [HttpDelete("{buildingId}")]
-        public ActionResult<Building> DeleteBuilding(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public BuildingDto DeleteBuilding(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid buildingId)
         {
-            return DeleteGen(user.Id, campaignId, buildingId);
+            return Mapper.Map<BuildingDto>(DeleteGen(user.Id, campaignId, buildingId));
         }
 
         [HttpGet("[action]/{name}")]

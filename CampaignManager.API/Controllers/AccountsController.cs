@@ -5,6 +5,7 @@ using CampaignManager.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using System.Security.Authentication;
 using System.Collections.Generic;
+using CampaignManager.API.Model.Auth;
 
 namespace CampaignManager.API.Controllers
 {
@@ -85,7 +86,7 @@ namespace CampaignManager.API.Controllers
 
         // DELETE: api/accounts/{uuid}
         [HttpDelete("{id}")]
-        public ActionResult<Account> DeleteAccount(Guid id)
+        public ActionResult<AccountDto> DeleteAccount(Guid id)
         {
             UnitOfWork.Repository.Delete(id);
             int result = UnitOfWork.Save();

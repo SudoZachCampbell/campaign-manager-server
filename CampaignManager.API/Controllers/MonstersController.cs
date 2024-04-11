@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using CampaignManager.Data.Repositories;
 using CampaignManager.API.ModelBinder;
 using CampaignManager.Data.Model.Auth;
+using CampaignManager.API.Model.Auth;
+using CampaignManager.API.Model.Creatures;
+using AutoMapper;
 
 namespace CampaignManager.API.Controllers
 {
@@ -15,61 +18,61 @@ namespace CampaignManager.API.Controllers
     [ApiController]
     public class MonstersController : GenericController<Monster>
     {
-        public MonstersController(IConfiguration configuration) : base(configuration) { }
+        public MonstersController(IConfiguration configuration, IMapper mapper) : base(configuration, mapper) { }
 
         // GET: api/Monster
         [HttpGet]
-        public ActionResult<List<Monster>> GetMonsters(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public List<MonsterDto> GetMonsters(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             [FromQuery] ListingFilterParameters<Monster> query)
         {
-            return GetGen(user.Id, query);
+            return Mapper.Map<List<MonsterDto>>(GetGen(user.Id, query));
         }
 
         // GET: api/Monster/5
         [HttpGet("{id}")]
-        public ActionResult<Monster> GetMonsterById(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public MonsterDto GetMonsterById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid id, [FromQuery] FilterParameters<Monster> query)
         {
-            return GetGen(user.Id, id, query);
+            return Mapper.Map<MonsterDto>(GetGen(user.Id, id, query));
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Monster> UpdateMonster(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public MonsterDto UpdateMonster(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid id, [FromBody] JsonPatchDocument<Monster> patchDoc, [FromQuery] FilterParameters<Monster> query)
         {
-            return PatchGen(user.Id, id, patchDoc, query);
+            return Mapper.Map<MonsterDto>(PatchGen(user.Id, id, patchDoc, query));
         }
 
         // PUT: api/Monster/5
         [HttpPut("{id}")]
         public IActionResult UpdateMonster(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid id, Monster monster)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid id, MonsterDto monster)
         {
-            return PutGen(user.Id, id, monster);
+            return PutGen(user.Id, id, Mapper.Map<Monster>(monster));
         }
 
         // POST: api/Monster
         [HttpPost]
         [ProducesResponseType(201)]
         public ActionResult<Guid> CreateMonster(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Monster monster)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            MonsterDto monster)
         {
             monster.OwnerId = user.Id;
-            return PostGen(user.Id, monster);
+            return PostGen(user.Id, Mapper.Map<Monster>(monster));
         }
 
         // DELETE: api/Monster/5
         [HttpDelete("{id}")]
-        public ActionResult<Monster> DeleteMonster(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public MonsterDto DeleteMonster(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid id)
         {
-            return DeleteGen(user.Id, id);
+            return Mapper.Map<MonsterDto>(DeleteGen(user.Id, id));
         }
 
         // [HttpGet("[action]")]

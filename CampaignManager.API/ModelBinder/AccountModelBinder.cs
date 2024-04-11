@@ -2,7 +2,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
-using CampaignManager.Data.Model.Auth;
+using CampaignManager.API.Model.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -17,7 +17,7 @@ namespace CampaignManager.API.ModelBinder
             {
                 var token = new JwtSecurityToken(tokenString);
                 bindingContext.Result = ModelBindingResult.Success(
-                    new Account()
+                    new AccountDto()
                     {
                         Id = new Guid(token.Claims.FirstOrDefault(claim => claim.Type == "sub").Value),
                         Email = token.Claims.FirstOrDefault(claim => claim.Type == "email").Value,

@@ -6,8 +6,11 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using CampaignManager.API.ModelBinder;
-using CampaignManager.Data.Model.Auth;
 using CampaignManager.Data.Model.Locations;
+using CampaignManager.API.Model.Auth;
+using AutoMapper;
+using CampaignManager.API.Model.Locations;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace CampaignManager.API.Controllers
 {
@@ -15,60 +18,60 @@ namespace CampaignManager.API.Controllers
     [ApiController]
     public class WorldsController : CampaignContextController<World>
     {
-        public WorldsController(IConfiguration configuration) : base(configuration) { }
+        public WorldsController(IConfiguration configuration, IMapper mapper) : base(configuration, mapper) { }
 
         // GET: api/Worlds
         [HttpGet]
-        public ActionResult<IEnumerable<World>> GetWorlds(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, [FromQuery] ListingFilterParameters<World> query)
+        public IEnumerable<WorldDto> GetWorlds(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId)
         {
-            return GetGen(user.Id, campaignId, query);
+            return Mapper.Map<IEnumerable<WorldDto>>(GetGen(user.Id, campaignId));
         }
 
         // GET: api/World/5
         [HttpGet("world")]
-        public ActionResult<World> GetCampaignWorld(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, [FromQuery] FilterParameters<World> query)
+        public WorldDto GetCampaignWorld(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId)
         {
-            return GetSingleByCampaign(user.Id, campaignId);
+            return Mapper.Map<WorldDto>(GetSingleByCampaign(user.Id, campaignId));
         }
 
         [HttpPatch("{worldId}")]
-        public ActionResult<World> UpdateWorld(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Guid worldId, [FromBody] JsonPatchDocument<World> patchDoc, [FromQuery] FilterParameters<World> query)
+        public WorldDto UpdateWorld(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, Guid worldId)
         {
-            return PatchGen(user.Id, campaignId, worldId, patchDoc, query);
+            return Mapper.Map<WorldDto>(PatchGen(user.Id, campaignId, worldId, null));
         }
 
         // PUT: api/World/5
         [HttpPut("{worldId}")]
         public IActionResult UpdateWorld(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Guid worldId, World world)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, Guid worldId, WorldDto world)
         {
-            return PutGen(user.Id, campaignId, worldId, world);
+            return PutGen(user.Id, campaignId, worldId, Mapper.Map<World>(world));
         }
 
         // POST: api/World
         [HttpPost]
         [ProducesResponseType(201)]
         public ActionResult<Guid> CreateWorld(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, World world)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, WorldDto world)
         {
-            return PostGen(user.Id, campaignId, world);
+            return PostGen(user.Id, campaignId, Mapper.Map<World>(world));
         }
 
         // DELETE: api/World/5
         [HttpDelete("{worldId}")]
-        public ActionResult<World> DeleteWorld(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public WorldDto DeleteWorld(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid worldId)
         {
-            return DeleteGen(user.Id, campaignId, worldId);
+            return Mapper.Map<WorldDto>(DeleteGen(user.Id, campaignId, worldId));
         }
 
         [HttpGet("[action]/{name}")]
