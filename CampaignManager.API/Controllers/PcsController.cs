@@ -9,66 +9,70 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using CampaignManager.API.ModelBinder;
 using CampaignManager.Data.Model.Auth;
+using CampaignManager.API.Model.Auth;
+using AutoMapper;
+using CampaignManager.API.Model.Creatures;
+
 namespace CampaignManager.API.Controllers
 {
     [Route("{campaignId}/[controller]"), Authorize]
     [ApiController]
     public class PcsController : CampaignContextController<Pc>
     {
-        public PcsController(IConfiguration configuration) : base(configuration) { }
+        public PcsController(IConfiguration configuration, IMapper mapper) : base(configuration, mapper) { }
 
         // GET: api/Pcs
         [HttpGet]
-        public ActionResult<IEnumerable<Pc>> GetPcs(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public IEnumerable<PcDto> GetPcs(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, [FromQuery] ListingFilterParameters<Pc> query)
         {
-            return GetGen(user.Id, campaignId, query);
+            return Mapper.Map<IEnumerable<PcDto>>(GetGen(user.Id, campaignId, query));
         }
 
         // GET: api/Pc/5
         [HttpGet("{pcId}")]
-        public ActionResult<Pc> GetPcById(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public PcDto GetPcById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid pcId, [FromQuery] FilterParameters<Pc> query)
         {
-            return GetGenById(user.Id, campaignId, pcId, query);
+            return Mapper.Map<PcDto>(GetGenById(user.Id, campaignId, pcId, query));
         }
 
         [HttpPatch("{pcId}")]
-        public ActionResult<Pc> UpdatePc(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public PcDto UpdatePc(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid pcId, [FromBody] JsonPatchDocument<Pc> patchDoc, [FromQuery] FilterParameters<Pc> query)
         {
-            return PatchGen(user.Id, campaignId, pcId, patchDoc, query);
+            return Mapper.Map<PcDto>(PatchGen(user.Id, campaignId, pcId, patchDoc, query));
         }
 
         // PUT: api/Pc/5
         [HttpPut("{pcId}")]
         public IActionResult UpdatePc(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Guid pcId, Pc pc)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, Guid pcId, PcDto pc)
         {
-            return PutGen(user.Id, campaignId, pcId, pc);
+            return PutGen(user.Id, campaignId, pcId, Mapper.Map<Pc>(pc));
         }
 
         // POST: api/Pc
         [HttpPost]
         [ProducesResponseType(201)]
         public ActionResult<Guid> CreatePc(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Pc pc)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, PcDto pc)
         {
-            return PostGen(user.Id, campaignId, pc);
+            return PostGen(user.Id, campaignId, Mapper.Map<Pc>(pc));
         }
 
         // DELETE: api/Pc/5
         [HttpDelete("{pcId}")]
-        public ActionResult<Pc> DeletePc(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public PcDto DeletePc(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid pcId)
         {
-            return DeleteGen(user.Id, campaignId, pcId);
+            return Mapper.Map<PcDto>(DeleteGen(user.Id, campaignId, pcId));
         }
 
         [HttpGet("[action]/{name}")]

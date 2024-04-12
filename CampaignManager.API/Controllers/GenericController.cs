@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 using CampaignManager.Data.Model.Auth;
 using Microsoft.Identity.Client;
+using AutoMapper;
 
 namespace CampaignManager.API.Controllers
 {
@@ -19,10 +20,12 @@ namespace CampaignManager.API.Controllers
     {
         protected virtual UnitOfWork<T> UnitOfWork { get; } = new();
         protected readonly IConfiguration Configuration;
+        protected readonly IMapper Mapper;
 
-        public GenericController(IConfiguration configuration)
+        public GenericController(IConfiguration configuration, IMapper mapper)
         {
             Configuration = configuration;
+            Mapper = mapper;
         }
 
         [HttpGet("[action]")]
@@ -31,7 +34,7 @@ namespace CampaignManager.API.Controllers
             return "Running";
         }
 
-        protected virtual ActionResult<List<T>> GetGen(Guid accountId, ListingFilterParameters<T> parameters)
+        protected virtual List<T> GetGen(Guid accountId, ListingFilterParameters<T> parameters)
             => GetGenQuery(accountId, parameters).ToDynamicList<T>();
 
 

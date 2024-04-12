@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using CampaignManager.API.ModelBinder;
 using CampaignManager.Data.Model.Auth;
 using CampaignManager.Data.Model.Locations;
+using CampaignManager.API.Model.Auth;
+using AutoMapper;
+using CampaignManager.API.Model.Locations;
 
 namespace CampaignManager.API.Controllers
 {
@@ -15,60 +18,60 @@ namespace CampaignManager.API.Controllers
     [ApiController]
     public class RegionsController : CampaignContextController<Region>
     {
-        public RegionsController(IConfiguration configuration) : base(configuration) { }
+        public RegionsController(IConfiguration configuration, IMapper mapper) : base(configuration, mapper) { }
 
         // GET: api/Regions
         [HttpGet]
-        public ActionResult<IEnumerable<Region>> GetRegions(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public IEnumerable<RegionDto> GetRegions(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, [FromQuery] ListingFilterParameters<Region> query)
         {
-            return GetGen(user.Id, campaignId, query);
+            return Mapper.Map<List<RegionDto>>(GetGen(user.Id, campaignId, query));
         }
 
         // GET: api/Region/5
         [HttpGet("{regionId}")]
-        public ActionResult<Region> GetRegionById(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public RegionDto GetRegionById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid regionId, [FromQuery] FilterParameters<Region> query)
         {
-            return GetGenById(user.Id, campaignId, regionId, query);
+            return Mapper.Map<RegionDto>(GetGenById(user.Id, campaignId, regionId, query));
         }
 
         [HttpPatch("{regionId}")]
-        public ActionResult<Region> UpdateRegion(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public RegionDto UpdateRegion(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid regionId, [FromBody] JsonPatchDocument<Region> patchDoc, [FromQuery] FilterParameters<Region> query)
         {
-            return PatchGen(user.Id, campaignId, regionId, patchDoc, query);
+            return Mapper.Map<RegionDto>(PatchGen(user.Id, campaignId, regionId, patchDoc, query));
         }
 
         // PUT: api/Region/5
         [HttpPut("{regionId}")]
         public IActionResult UpdateRegion(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Guid regionId, Region region)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, Guid regionId, RegionDto region)
         {
-            return PutGen(user.Id, campaignId, regionId, region);
+            return PutGen(user.Id, campaignId, regionId, Mapper.Map<Region>(region));
         }
 
         // POST: api/Region
         [HttpPost]
         [ProducesResponseType(201)]
         public ActionResult<Guid> CreateRegion(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
-            Guid campaignId, Region region)
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, RegionDto region)
         {
-            return PostGen(user.Id, campaignId, region);
+            return PostGen(user.Id, campaignId, Mapper.Map<Region>(region));
         }
 
         // DELETE: api/Region/5
         [HttpDelete("{regionId}")]
-        public ActionResult<Region> DeleteRegion(
-            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] Account user,
+        public RegionDto DeleteRegion(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId, Guid regionId)
         {
-            return DeleteGen(user.Id, campaignId, regionId);
+            return Mapper.Map<RegionDto>(DeleteGen(user.Id, campaignId, regionId));
         }
 
         [HttpGet("[action]/{name}")]

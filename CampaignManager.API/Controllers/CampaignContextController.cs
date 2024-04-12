@@ -5,6 +5,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using CampaignManager.Data.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
+using AutoMapper;
 
 namespace CampaignManager.API.Controllers
 {
@@ -12,28 +13,28 @@ namespace CampaignManager.API.Controllers
     {
         protected virtual CampaignContextUnitOfWork<T> CampaignContextUnitOfWork { get; } = new();
 
-        public CampaignContextController(IConfiguration configuration) : base(configuration) { }
+        public CampaignContextController(IConfiguration configuration, IMapper mapper) : base(configuration, mapper) { }
 
         protected bool ValidateCampaignOwnership(Guid accountId, Guid campaignId) =>
             CampaignContextUnitOfWork.Repository.ValidateCampaignOwnership(campaignId, accountId);
 
-        protected ActionResult<IEnumerable<T>> GetGen(Guid accountId, Guid campaignId, ListingFilterParameters<T> parameters) =>
+        protected IEnumerable<T> GetGen(Guid accountId, Guid campaignId, ListingFilterParameters<T> parameters = null) =>
             ValidateCampaignOwnership(accountId, campaignId)
-                ? Ok(CampaignContextUnitOfWork.Repository.GetWithCampaign(accountId, campaignId, parameters))
+                ? CampaignContextUnitOfWork.Repository.GetWithCampaign(accountId, campaignId, parameters)
                 : throw new AccessViolationException("You do not have access to this campaign");
 
-        protected ActionResult<T> GetSingleByCampaign(Guid accountId, Guid campaignId) =>
+        protected T GetSingleByCampaign(Guid accountId, Guid campaignId) =>
             ValidateCampaignOwnership(accountId, campaignId)
-                ? Ok(CampaignContextUnitOfWork.Repository.GetSingleByCampaign(accountId, campaignId))
+                ? CampaignContextUnitOfWork.Repository.GetSingleByCampaign(accountId, campaignId)
             : throw new AccessViolationException("You do not have access to this campaign");
 
-        protected ActionResult<T> GetGenById(Guid accountId, Guid campaignId, Guid entityId, FilterParameters<T> parameters) =>
+        protected T GetGenById(Guid accountId, Guid campaignId, Guid entityId, FilterParameters<T> parameters) =>
             ValidateCampaignOwnership(accountId, campaignId)
-                ? Ok(CampaignContextUnitOfWork.Repository.GetById(accountId, entityId, parameters))
+                ? CampaignContextUnitOfWork.Repository.GetById(accountId, entityId, parameters)
                 : throw new AccessViolationException("You do not have access to this campaign");
 
 
-        protected ActionResult<T> PatchGen(Guid accountId, Guid campaignId, Guid entityId, JsonPatchDocument<T> patchDoc, FilterParameters<T> parameters) =>
+        protected ActionResult<T> PatchGen(Guid accountId, Guid campaignId, Guid entityId, JsonPatchDocument<T> patchDoc, FilterParameters<T> parameters = null) =>
             ValidateCampaignOwnership(accountId, campaignId)
                 ? PatchGen(accountId, entityId, patchDoc, parameters)
                 : throw new AccessViolationException("You do not have access to this campaign");

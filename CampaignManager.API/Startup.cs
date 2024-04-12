@@ -48,6 +48,8 @@ namespace CampaignManager
                 options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
             });
 
+            services.AddAutoMapper(typeof(ModelMappingProfile));
+
             services.AddMvc();
 
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
