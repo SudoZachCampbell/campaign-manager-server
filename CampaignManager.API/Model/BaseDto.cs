@@ -13,6 +13,5 @@ namespace CampaignManager.API.Model
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid OwnerId { get; set; }
-        public AccountDto? Owner { get; set; }
     }
 }

@@ -13,6 +13,5 @@ namespace CampaignManager.API.Model.Locations
         public List<RegionDto>? Regions { get; set; }
         public byte[]? Map { get; set; }
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
     }
 }

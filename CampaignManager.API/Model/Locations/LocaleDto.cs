@@ -19,6 +19,5 @@ namespace CampaignManager.API.Model.Locations
         public List<MonsterLocaleDto>? Monsters { get; set; }
         public List<MapDto>? Maps { get; set; }
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
     }
 }

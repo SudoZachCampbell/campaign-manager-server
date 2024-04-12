@@ -17,9 +17,7 @@ namespace CampaignManager.API.Model.Locations
         public string ImageUrl { get; set; } = string.Empty;
         public JArray? Center { get; set; }
         public Guid LocaleId { get; set; }
-        public LocaleDto? Locale { get; set; }
         public List<BuildingMapDto>? Buildings { get; set; }
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
     }
 }

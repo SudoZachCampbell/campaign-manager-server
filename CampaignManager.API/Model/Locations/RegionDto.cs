@@ -12,6 +12,5 @@ namespace CampaignManager.API.Model.Locations
         public ContinentDto? Continent { get; set; }
         public string Map { get; set; } = string.Empty;
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
     }
 }

@@ -16,12 +16,8 @@ namespace CampaignManager.API.Model.Creatures
         public string? Flaws { get; set; } = string.Empty;
         public string Picture { get; set; } = string.Empty;
         public Guid? MonsterId { get; set; }
-        public MonsterDto? Monster { get; set; }
         public Guid? LocaleId { get; set; }
-        public LocaleDto? Locale { get; set; }
         public Guid? BuildingId { get; set; }
-        public BuildingDto? Building { get; set; }
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
     }
 }

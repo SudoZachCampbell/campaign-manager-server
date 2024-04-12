@@ -18,6 +18,5 @@ namespace CampaignManager.API.Model.Locations
         public List<PcDto>? Pcs { get; set; }
         public List<BuildingMapDto>? Maps { get; set; }
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
     }
 }

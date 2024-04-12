@@ -17,12 +17,8 @@ namespace CampaignManager.API.Model.Creatures
         public int Xp = 0;
         public bool Inspiration = false;
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
         public Guid? LocaleId { get; set; }
-        public LocaleDto? Locale { get; set; }
         public Guid? BuildingId { get; set; }
-        public BuildingDto? Building { get; set; }
         public Guid? PlayerId { get; set; }
-        public AccountDto? Player { get; set; }
     }
 }
