@@ -1,15 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using CampaignManager.API.Model.Games;
 using CampaignManager.API.Model.Joins;
+using AutoMapper;
+using CampaignManager.Data.Model.Locations;
 
 namespace CampaignManager.API.Model.Locations
 {
+    [AutoMap(typeof(Map), ReverseMap = true)]
     public class MapDto : BaseDto
     {
         public string Name { get; set; } = string.Empty;

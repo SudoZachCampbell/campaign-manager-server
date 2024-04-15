@@ -4,9 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CampaignManager.API.Model.Auth;
 using CampaignManager.API.Model.Games;
 using CampaignManager.API.Model.Locations;
+using AutoMapper;
+using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.API.Model.Creatures
 {
+    [AutoMap(typeof(Pc), ReverseMap = true)]
     public class PcDto : CreatureDto
     {
         public string PcName { get; set; } = string.Empty;

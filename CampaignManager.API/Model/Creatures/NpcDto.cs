@@ -3,9 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CampaignManager.API.Model.Games;
 using CampaignManager.API.Model.Locations;
 using Newtonsoft.Json.Linq;
+using AutoMapper;
+using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.API.Model.Creatures
 {
+    [AutoMap(typeof(Npc), ReverseMap = true)]
     public class NpcDto : BaseDto
     {
         public string Name { get; set; } = string.Empty;

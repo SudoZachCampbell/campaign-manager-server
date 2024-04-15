@@ -3,9 +3,12 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using CampaignManager.API.Model.Joins;
 using CampaignManager.API.Model.Operations;
+using AutoMapper;
+using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.API.Model.Creatures
 {
+    [AutoMap(typeof(Monster), ReverseMap = true)]
     public class MonsterDto : CreatureDto
     {
         public double ChallengeRating { get; set; } = 0;
@@ -20,6 +23,7 @@ namespace CampaignManager.API.Model.Creatures
         public List<MonsterBuildingDto>? Buildings { get; set; }
     }
 
+    [AutoMap(typeof(Sense), ReverseMap = true)]
     public class SenseDto
     {
         public string Name { get; set; } = string.Empty;

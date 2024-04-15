@@ -63,7 +63,14 @@ namespace CampaignManager.API.Controllers
             MonsterDto monster)
         {
             monster.OwnerId = user.Id;
-            return PostGen(user.Id, Mapper.Map<Monster>(monster));
+            try
+            {
+                return PostGen(user.Id, Mapper.Map<Monster>(monster));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // DELETE: api/Monster/5

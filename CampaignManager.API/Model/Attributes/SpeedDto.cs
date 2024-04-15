@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using AutoMapper;
+using CampaignManager.Data.Model.Attributes;
 
 namespace CampaignManager.API.Model.Attributes
 {
+    [AutoMap(typeof(Speed), ReverseMap = true)]
     public class SpeedDto
     {
         [JsonPropertyName("name")]

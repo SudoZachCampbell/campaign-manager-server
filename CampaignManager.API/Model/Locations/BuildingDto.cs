@@ -4,9 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CampaignManager.API.Model.Creatures;
 using CampaignManager.API.Model.Games;
 using CampaignManager.API.Model.Joins;
+using AutoMapper;
+using CampaignManager.Data.Model.Locations;
 
 namespace CampaignManager.API.Model.Locations
 {
+    [AutoMap(typeof(Building), ReverseMap = true)]
     public class BuildingDto : BaseDto
     {
         public string Name { get; set; } = string.Empty;

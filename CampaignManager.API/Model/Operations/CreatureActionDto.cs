@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using AutoMapper;
+using CampaignManager.Data.Model.Operations;
 
 namespace CampaignManager.API.Model.Operations
 {
+    [AutoMap(typeof(CreatureAction), ReverseMap = true)]
     public class CreatureActionDto
     {
         public string Name { get; set; } = string.Empty;
@@ -18,6 +21,7 @@ namespace CampaignManager.API.Model.Operations
         public DCDto? DC { get; set; }
     }
 
+    [AutoMap(typeof(Usage), ReverseMap = true)]
     public class UsageDto
     {
         public string Type { get; set; } = string.Empty;
@@ -26,6 +30,7 @@ namespace CampaignManager.API.Model.Operations
         public string Dice { get; set; } = string.Empty;
     }
 
+    [AutoMap(typeof(DC), ReverseMap = true)]
     public class DCDto
     {
         public string DcType { get; set; } = string.Empty;
@@ -33,6 +38,7 @@ namespace CampaignManager.API.Model.Operations
         public string SuccessType { get; set; } = string.Empty;
     }
 
+    [AutoMap(typeof(SubAction), ReverseMap = true)]
     public class SubActionDto
     {
         public string ActionName { get; set; } = string.Empty;

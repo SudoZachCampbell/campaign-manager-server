@@ -53,11 +53,9 @@ namespace CampaignManager.API.Controllers
                 .IncludeProperties<T>(parameters.IncludeProperties);
         }
 
-        protected ActionResult<T> GetGen(Guid accountId, Guid id, FilterParameters<T> parameters)
+        protected T GetGen(Guid accountId, Guid id, FilterParameters<T> parameters)
         {
             T instance = UnitOfWork.Repository.GetById(accountId, id, parameters);
-
-            if (instance == null) return NotFound();
 
             return instance;
         }

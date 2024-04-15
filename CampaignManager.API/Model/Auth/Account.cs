@@ -10,9 +10,12 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using CampaignManager.API.Model.Creatures;
+using AutoMapper;
+using CampaignManager.Data.Model.Auth;
 
 namespace CampaignManager.API.Model.Auth
 {
+    [AutoMap(typeof(Account), ReverseMap = true)]
     public class AccountDto
     {
         public Guid Id { get; set; } = Guid.NewGuid();

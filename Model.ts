@@ -3320,8 +3320,8 @@ export interface AccountDto {
 }
 
 export interface BaseDto {
-    id: string;
-    owner_id: string;
+    id?: string | undefined;
+    owner_id?: string | undefined;
 }
 
 export interface CreatureDto extends BaseDto {
@@ -3538,8 +3538,7 @@ export enum AlignmentDto {
     ChaoticGood = "ChaoticGood",
     ChaoticNeutral = "ChaoticNeutral",
     ChaoticEvil = "ChaoticEvil",
-    Any = "Any",
-    None = "None",
+    Unaligned = "Unaligned",
 }
 
 export interface BuildingMapDto {

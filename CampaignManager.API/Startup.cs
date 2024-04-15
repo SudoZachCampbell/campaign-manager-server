@@ -18,6 +18,7 @@ using System.Text;
 using System;
 using CampaignManager.API.Middleware;
 using System.Text.Json;
+using AutoMapper;
 
 namespace CampaignManager
 {
@@ -48,7 +49,7 @@ namespace CampaignManager
                 options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
             });
 
-            services.AddAutoMapper(typeof(ModelMappingProfile));
+            services.AddAutoMapper(cfg => cfg.AddMaps("CampaignManager.API"));
 
             services.AddMvc();
 

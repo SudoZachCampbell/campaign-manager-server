@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using CampaignManager.API.Model.Creatures;
-using CampaignManager.API.Model.Games;
 using CampaignManager.API.Model.Joins;
+using AutoMapper;
+using CampaignManager.Data.Model.Locations;
 
 namespace CampaignManager.API.Model.Locations
 {
+    [AutoMap(typeof(Locale), ReverseMap = true)]
     public class LocaleDto : BaseDto
     {
         public string Name { get; set; } = string.Empty;

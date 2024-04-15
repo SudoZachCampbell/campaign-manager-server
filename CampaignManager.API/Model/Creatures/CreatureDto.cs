@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using CampaignManager.API.Model.Operations;
 using CampaignManager.API.Model.Attributes;
+using AutoMapper;
+using CampaignManager.Data.Model.Creatures;
 
 namespace CampaignManager.API.Model.Creatures
 {
+    [AutoMap(typeof(Creature), ReverseMap = true)]
     public class CreatureDto : BaseDto
     {
         public string Name { get; set; } = string.Empty;
@@ -22,7 +25,7 @@ namespace CampaignManager.API.Model.Creatures
         public SizeDto Size { get; set; } = SizeDto.Medium;
         public List<SpeedDto>? Speed { get; set; }
         public string Languages { get; set; } = string.Empty;
-        public AlignmentDto Alignment { get; set; } = AlignmentDto.None;
+        public AlignmentDto Alignment { get; set; } = AlignmentDto.Unaligned;
         public List<CreatureActionDto>? Reactions { get; set; }
         public string Picture { get; set; } = string.Empty;
     }
@@ -38,8 +41,7 @@ namespace CampaignManager.API.Model.Creatures
         ChaoticGood,
         ChaoticNeutral,
         ChaoticEvil,
-        Any,
-        None
+        Unaligned,
     }
 
     public enum SizeDto

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using CampaignManager.API.Model.Games;
+using System.Drawing;
+using AutoMapper;
 
 namespace CampaignManager.API.Model.Locations
 {
+    [AutoMap(typeof(Region), ReverseMap = true)]
     public class RegionDto : BaseDto
     {
         public string Name { get; set; } = string.Empty;

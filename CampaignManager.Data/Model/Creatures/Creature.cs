@@ -26,7 +26,7 @@ namespace CampaignManager.Data.Model.Creatures
         [Column(TypeName = "jsonb")]
         public List<Speed>? Speed { get; set; }
         public string Languages { get; set; } = string.Empty;
-        public Alignment Alignment { get; set; } = Alignment.None;
+        public Alignment Alignment { get; set; } = Alignment.Unaligned;
         [Column(TypeName = "jsonb")]
         public List<CreatureAction>? Reactions { get; set; }
         public string Picture { get; set; } = string.Empty;
@@ -43,8 +43,7 @@ namespace CampaignManager.Data.Model.Creatures
         ChaoticGood,
         ChaoticNeutral,
         ChaoticEvil,
-        Any,
-        None
+        Unaligned
     }
 
     public enum Size
