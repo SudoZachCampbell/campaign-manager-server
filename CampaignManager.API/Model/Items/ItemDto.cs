@@ -11,6 +11,5 @@ namespace CampaignManager.API.Model.Items
     [AutoMap(typeof(Item), ReverseMap = true)]
     public class ItemDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
     }
 }

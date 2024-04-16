@@ -1,9 +1,10 @@
-export class Client {
+export class BaseClient {
   authToken = '';
   protected constructor() {}
 
   setAuthToken(token: string) {
     this.authToken = token;
+    return this;
   }
 
   protected transformOptions = (options: RequestInit): Promise<RequestInit> => {

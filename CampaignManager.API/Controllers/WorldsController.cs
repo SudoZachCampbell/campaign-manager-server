@@ -24,18 +24,26 @@ namespace CampaignManager.API.Controllers
         [HttpGet]
         public IEnumerable<WorldDto> GetWorlds(
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
-            Guid campaignId)
+            Guid campaignId, [FromQuery] ListingFilterParameters<World> query)
         {
-            return Mapper.Map<IEnumerable<WorldDto>>(GetGen(user.Id, campaignId));
+            return Mapper.Map<IEnumerable<WorldDto>>(GetGen(user.Id, campaignId, query));
         }
 
-        // GET: api/World/5
-        [HttpGet("world")]
-        public WorldDto GetCampaignWorld(
+        // GET: api/Worlds/5
+        [HttpGet("{worldId}")]
+        public WorldDto GetWorldById(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid campaignId, Guid worldId, [FromQuery] FilterParameters<World> query)
+        {
+            return Mapper.Map<WorldDto>(GetGenById(user.Id, campaignId, worldId, query));
+        }
+
+        [HttpGet("worlds")]
+        public IEnumerable<WorldDto> GetCampaignWorlds(
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
             Guid campaignId)
         {
-            return Mapper.Map<WorldDto>(GetSingleByCampaign(user.Id, campaignId));
+            return Mapper.Map<IEnumerable<WorldDto>>(GetByCampaign(user.Id, campaignId));
         }
 
         [HttpPatch("{worldId}")]

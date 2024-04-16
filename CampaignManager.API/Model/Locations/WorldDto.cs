@@ -10,9 +10,9 @@ namespace CampaignManager.API.Model.Locations
     [AutoMap(typeof(World), ReverseMap = true)]
     public class WorldDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public List<ContinentDto>? Continents { get; set; }
         public byte[]? Map { get; set; }
-        public Guid CampaignId { get; set; }
+        public Guid? CampaignId { get; set; }
     }
 }

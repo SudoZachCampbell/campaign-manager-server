@@ -9,7 +9,7 @@ namespace CampaignManager.API.Model.Locations
     [AutoMap(typeof(Dungeon), ReverseMap = true)]
     public class DungeonDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public byte[]? Map { get; set; }
         public BuildingDto? Building { get; set; }

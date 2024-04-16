@@ -11,16 +11,10 @@ using CampaignManager.Data.Model.Games;
 namespace CampaignManager.Data.Model.Locations
 {
     [Table("maps")]
-    public class Map : Base, ILocation, ICampaignBase
+    public class Map : Base, ILocation
     {
-        public string Name { get; set; } = string.Empty;
         public string Variation { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         public JArray? Center { get; set; }
-        public Guid LocaleId { get; set; }
-        public Locale? Locale { get; set; }
-        public List<BuildingMap>? Buildings { get; set; }
-        public Guid CampaignId { get; set; }
-        public Campaign? Campaign { get; set; }
     }
 }

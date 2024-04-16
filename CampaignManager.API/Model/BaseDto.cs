@@ -14,6 +14,8 @@ namespace CampaignManager.API.Model
     public class BaseDto
     {
         public Guid? Id { get; set; } = Guid.NewGuid();
+        [Required]
+        public string Name { get; set; }
         public Guid? OwnerId { get; set; }
     }
 }

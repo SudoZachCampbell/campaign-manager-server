@@ -10,7 +10,7 @@ namespace CampaignManager.API.Model.Locations
     [AutoMap(typeof(Locale), ReverseMap = true)]
     public class LocaleDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public Guid? RegionId { get; set; }
         public RegionDto? Region { get; set; }
         public List<BuildingDto>? Buildings { get; set; }

@@ -7,9 +7,9 @@ namespace CampaignManager.Data.Model.Locations
     [Table("worlds")]
     public class World : Base, ILocation, ICampaignBase
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public List<Continent>? Continents { get; set; }
-        public byte[]? Map { get; set; }
+        public List<Map>? Maps { get; set; }
         public Guid CampaignId { get; set; }
         public Campaign? Campaign { get; set; }
     }

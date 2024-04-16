@@ -12,7 +12,7 @@ namespace CampaignManager.API.Model.Locations
     [AutoMap(typeof(Building), ReverseMap = true)]
     public class BuildingDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public Guid? LocaleId { get; set; }
         public LocaleDto? Locale { get; set; }
         public string Map { get; set; } = string.Empty;

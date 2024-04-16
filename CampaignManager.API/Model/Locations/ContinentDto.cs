@@ -10,7 +10,7 @@ namespace CampaignManager.API.Model.Locations
     [AutoMap(typeof(Continent), ReverseMap = true)]
     public class ContinentDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public Guid? WorldId { get; set; }
         public WorldDto? World { get; set; }
         public List<RegionDto>? Regions { get; set; }

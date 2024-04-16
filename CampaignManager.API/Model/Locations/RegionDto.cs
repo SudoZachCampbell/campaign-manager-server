@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using AutoMapper;
+using CampaignManager.Data.Model.Locations;
 
 namespace CampaignManager.API.Model.Locations
 {
     [AutoMap(typeof(Region), ReverseMap = true)]
     public class RegionDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public List<LocaleDto>? Locales { get; set; }
         public Guid? ContinentId { get; set; }
         public ContinentDto? Continent { get; set; }

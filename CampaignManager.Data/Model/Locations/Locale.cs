@@ -10,7 +10,7 @@ namespace CampaignManager.Data.Model.Locations
     [Table("locales")]
     public class Locale : Base, ILocation, ICampaignBase
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public Guid? RegionId { get; set; }
         public Region? Region { get; set; }
         public List<Building>? Buildings { get; set; }

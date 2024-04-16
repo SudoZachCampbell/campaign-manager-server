@@ -39,6 +39,17 @@ namespace CampaignManager.API.Controllers
             return Mapper.Map<CampaignDto>(GetGen(user.Id, id, query));
         }
 
+        [HttpGet("{id}/locations")]
+        public CampaignWithLocationsDto GetCampaignWithLocations(
+            [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,
+            Guid id, [FromQuery] FilterParameters<Campaign> query)
+        {
+            return Mapper.Map<CampaignWithLocationsDto>(GetGen(user.Id, id, new FilterParameters<Campaign>()
+            {
+                Expand = "Worlds,Continents,Regions,Locales,Buildings,Dungeons"
+            }));
+        }
+
         [HttpPatch("{id}")]
         public CampaignDto UpdateCampaign(
             [FromHeader(Name = "Authorization")][ModelBinder((typeof(AccountModelBinder)))] AccountDto user,

@@ -26,6 +26,9 @@ namespace CampaignManager.Data.Repositories
         public virtual IEnumerable<TEntity> GetWithCampaign(Guid accountId, Guid campaignId, ListingFilterParameters<TEntity> parameters)
             => GetWithCampaignQuery(accountId, campaignId, parameters).ToList();
 
+        public virtual IEnumerable<TEntity>? GetByCampaign(Guid accountId, Guid campaignId)
+            => GetWithCampaignQuery(accountId, campaignId);
+
         public virtual TEntity? GetSingleByCampaign(Guid accountId, Guid campaignId)
             => GetWithCampaignQuery(accountId, campaignId)?.FirstOrDefault();
 

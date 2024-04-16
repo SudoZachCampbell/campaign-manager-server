@@ -11,7 +11,6 @@ namespace CampaignManager.API.Model.Creatures
     [AutoMap(typeof(Npc), ReverseMap = true)]
     public class NpcDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
         public string Background { get; set; } = string.Empty;
         public string? NoteableEvents { get; set; } = string.Empty;
         public string? Beliefs { get; set; } = string.Empty;

@@ -28,6 +28,11 @@ namespace CampaignManager.API.Controllers
                 ? CampaignContextUnitOfWork.Repository.GetSingleByCampaign(accountId, campaignId)
             : throw new AccessViolationException("You do not have access to this campaign");
 
+        protected IEnumerable<T> GetByCampaign(Guid accountId, Guid campaignId) =>
+            ValidateCampaignOwnership(accountId, campaignId)
+                ? CampaignContextUnitOfWork.Repository.GetByCampaign(accountId, campaignId)
+            : throw new AccessViolationException("You do not have access to this campaign");
+
         protected T GetGenById(Guid accountId, Guid campaignId, Guid entityId, FilterParameters<T> parameters) =>
             ValidateCampaignOwnership(accountId, campaignId)
                 ? CampaignContextUnitOfWork.Repository.GetById(accountId, entityId, parameters)

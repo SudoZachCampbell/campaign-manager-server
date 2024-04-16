@@ -72,7 +72,7 @@ namespace CampaignManager
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins(new string[] { "http://localhost:3000", "http://zcampbell.duckdns.org:3000", "http://dndhub.net" })
+                        builder.WithOrigins(new string[] { "http://localhost:5173", "http://zcampbell.duckdns.org:3000", "http://dndhub.net" })
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                     });

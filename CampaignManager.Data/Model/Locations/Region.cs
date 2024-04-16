@@ -8,11 +8,11 @@ namespace CampaignManager.Data.Model.Locations
     [Table("regions")]
     public class Region : Base, ILocation, ICampaignBase
     {
-        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public List<Locale>? Locales { get; set; }
         public Guid? ContinentId { get; set; }
         public Continent? Continent { get; set; }
-        public string Map { get; set; } = string.Empty;
+        public List<Map>? Maps { get; set; }
         public Guid CampaignId { get; set; }
         public Campaign? Campaign { get; set; }
     }
