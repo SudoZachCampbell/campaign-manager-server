@@ -12,7 +12,6 @@ namespace CampaignManager.API.Model.Creatures
     [AutoMap(typeof(Pc), ReverseMap = true)]
     public class PcDto : CreatureDto
     {
-        public string PcName { get; set; } = string.Empty;
         public int Level = 1;
         public string Background { get; set; } = string.Empty;
         public string Faction { get; set; } = string.Empty;

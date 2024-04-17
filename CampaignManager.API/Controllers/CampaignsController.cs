@@ -46,7 +46,7 @@ namespace CampaignManager.API.Controllers
         {
             return Mapper.Map<CampaignWithLocationsDto>(GetGen(user.Id, id, new FilterParameters<Campaign>()
             {
-                Expand = "Worlds,Continents,Regions,Locales,Buildings,Dungeons"
+                Expand = "Worlds,Continents,Regions,Locales,Buildings"
             }));
         }
 

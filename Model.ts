@@ -3504,7 +3504,6 @@ export interface PcDto extends CreatureDto {
     level: number;
     xp: number;
     inspiration: boolean;
-    pc_name?: string | undefined;
     background?: string | undefined;
     faction?: string | undefined;
     race?: string | undefined;
