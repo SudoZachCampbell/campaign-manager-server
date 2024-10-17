@@ -13,7 +13,7 @@ namespace CampaignManager.API.Model.Joins
         public Guid BuildingId { get; set; }
         public BuildingDto? Building { get; set; }
         public Guid MapId { get; set; }
-        public MapDto? Map { get; set; }
-        public List<int>? Coords { get; set; }
+        public MapDto Map { get; set; }
+        public List<int> Coords { get; set; }
     }
 }

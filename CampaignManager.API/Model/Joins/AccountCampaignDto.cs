@@ -8,8 +8,8 @@ namespace CampaignManager.API.Model.Joins
     public class AccountCampaignDto
     {
         public Guid AccountId { get; set; }
-        public AccountDto? Account { get; set; }
+        public AccountDto Account { get; set; }
         public Guid CampaignId { get; set; }
-        public CampaignDto? Campaign { get; set; }
+        public CampaignDto Campaign { get; set; }
     }
 }

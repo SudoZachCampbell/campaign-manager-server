@@ -145,19 +145,7 @@ namespace CampaignManager.Data.Contexts
             }
         }
 
-        // public static void BuildJsonProperties(this ModelBuilder modelBuilder)
-        // {
-        //     modelBuilder.Entity<Monster>().OwnsMany(
-        //         monster => monster.Actions,
-        //         options =>
-        //         {
-        //             options.ToJson();
-        //             options.OwnsMany(action => action.Damage, actionOptions =>
-        //             {
-        //                 actionOptions.ToJson();
-        //             });
-        //         });
-        // }
+
 
         public static void BuildRelationships(this ModelBuilder modelBuilder)
         {
@@ -191,6 +179,15 @@ namespace CampaignManager.Data.Contexts
                 .HasForeignKey(p => p.LocaleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<NpcNpc>()
+                .HasOne(npc => npc.From)
+                .WithMany(npc => npc.NpcRelationShipTo)
+                .HasForeignKey(e => e.FromId);
+
+            modelBuilder.Entity<NpcNpc>()
+                .HasOne(npc => npc.To)
+                .WithMany(npc => npc.NpcRelationShipsFrom)
+                .HasForeignKey(e => e.ToId);
         }
 
         public static void DefineKeys(this ModelBuilder modelBuilder)
@@ -201,6 +198,7 @@ namespace CampaignManager.Data.Contexts
             modelBuilder.Entity<CampaignMonster>()
                 .HasKey(cm => new { cm.CampaignId, cm.MonsterId });
 
+            // Locations
             modelBuilder.Entity<BuildingMap>()
                 .HasKey(bm => new { bm.BuildingId, bm.MapId });
 
@@ -209,6 +207,13 @@ namespace CampaignManager.Data.Contexts
 
             modelBuilder.Entity<MonsterLocale>()
                 .HasKey(ml => new { ml.MonsterId, ml.LocaleId });
+
+            // Relationships
+            modelBuilder.Entity<NpcPc>()
+                .HasKey(pp => new { pp.NpcId, pp.PcId });
+
+            modelBuilder.Entity<NpcNpc>()
+                .HasKey(e => new { e.FromId, e.ToId });
         }
 
         private static IList<T> CreateTypeList<T>(Type type)
@@ -221,80 +226,17 @@ namespace CampaignManager.Data.Contexts
 
         public static void AddConversions(this ModelBuilder modelBuilder)
         {
-
             var valueComparer = new ValueComparer<JArray>(
                 (c1, c2) => c1.SequenceEqual(c2),
                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                 c => new JArray(c));
 
-            // Creature
-            // modelBuilder.Entity<Creature>().Property(c => c.Speed).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     valueComparer);
-
-            // modelBuilder.Entity<Creature>().Property(c => c.Proficiencies).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     valueComparer);
-
-            // modelBuilder.Entity<Creature>().Property(c => c.Reactions).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     valueComparer);
-
-            // Monster
-            // modelBuilder.Entity<Monster>().Property(c => c.Actions).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     valueComparer);
-
-            // modelBuilder.Entity<Monster>().Property(c => c.LegendaryActions).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     valueComparer);
-
-            // modelBuilder.Entity<Monster>().Property(c => c.SpecialAbilities).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     valueComparer);
-
-            // modelBuilder.Entity<Monster>().Property(c => c.Senses).HasConversion(
-            //     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //     v => JsonConvert.DeserializeObject<JObject>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-
-            // NPC
-            // modelBuilder.Entity<Npc>().Property(c => c.NoteableEvents).HasConversion(
-            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    valueComparer);
-
-            // modelBuilder.Entity<Npc>().Property(c => c.Beliefs).HasConversion(
-            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    valueComparer);
-
-            // modelBuilder.Entity<Npc>().Property(c => c.Passions).HasConversion(
-            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    valueComparer);
-
-            // modelBuilder.Entity<Npc>().Property(c => c.Flaws).HasConversion(
-            //    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //    valueComparer);
 
             // Map
             modelBuilder.Entity<Map>().Property(c => c.Center).HasConversion(
               v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
               v => JsonConvert.DeserializeObject<JArray>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
               valueComparer);
-
-            // Building Map
-            // modelBuilder.Entity<BuildingMap>().Property(c => c.Coords).HasConversion(
-            //  v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //  v => JsonConvert.DeserializeObject<Tuple<int, int>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            //  valueComparer);
         }
     }
 }
